@@ -1,303 +1,529 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" /> 
-    <link rel="stylesheet" href="../style.css" /> 
-    <script src="../script.js" defer></script>
-    <title>NewsBox</title>
-</head>
-<body>
-    <header>
-        <h1>NewsBox</h1>
-    </header>
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-    <nav>
-        <ul class="external-links">
-            <li class="#"><a href="#">fansided.com</a></li>
-            <li class="#"><a href="#">Our 300+ Fansided Sites</a></li>
-        </ul>
-        <ul class="accessibility-and-search">
-            <li class="accessibility-link"><a href=""><img src="../images/accessibility.png" alt="" width="20" /></a></li>
-            <li class="search-link"><a href=""><img src="../images/search.svg" alt="" width="20" /></a></li>
-        </ul>
-    </nav>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
+            integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
 
-    <main>
-        <section class="hero">
-            <div class="header">
-                <!-- <img src="" alt="" /> -->
-                <div class="logo-and-dropdown">
-                    <h2>Logo</h2>
-                    
-                    <div>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+                integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
+                crossorigin="anonymous" defer></script>
+
+        <link rel="stylesheet" href="../style.css" />
+
+        <!-- scripts -->
+        <!-- <script src="../script.js" defer></script> -->
+
+        <title>NewsBox</title>
+    </head>
+    <body>
+
+        <!-- top bar -->
+        <header class="d-flex justify-content-between align-items-center text-light px-2 pb-0" style="background-color: #330033;">
+            <h1>NewsBox</h1>
+
+            <nav class="d-md-flex justify-content-between align-items-center column-gap-4">
+                <ul class="external-links d-none d-md-flex column-gap-3">
+                    <li><a href="#" class="text-light">fansided.com</a></li>
+                    <li><a href="#" class="text-light">Our 300+ Fansided Sites</a></li>
+                </ul>
+                <ul class="accessibility-and-search d-md-flex column-gap-3">
+                    <li class="accessibility-link"><a href="">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-universal-access"
+                            viewBox="0 0 16 16">
+                            <path
+                                d="M9.5 1.5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0M6 5.5l-4.535-.442A.531.531 0 0 1 1.531 4H14.47a.531.531 0 0 1 .066 1.058L10 5.5V9l.452 6.42a.535.535 0 0 1-1.053.174L8.243 9.97c-.064-.252-.422-.252-.486 0l-1.156 5.624a.535.535 0 0 1-1.053-.174L6 9z" />
+                        </svg>
+                    </a></li>
+                    <li class="search-link d-none d-md-block"><a href="">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search"
+                            viewBox="0 0 16 16">
+                            <path
+                                d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0" />
+                        </svg>
+                    </a></li>
+                </ul>
+            </nav>
+        </header>
+        <!-- end top bar -->
+
+
+        <!-- navbar -->
+        <section class="navbar justify-content-md-center sticky-top d-block min-w-100 mb-0 mb-md-5">
+            <nav class="navbar navbar-expand-lg navbar-dark bg-transparent" aria-label="Tenth navbar example">
+                <div class="container-fluid"  style="background: #330033;">
+                    <h2><a class="navbar-brand" href="#">NewsBox</a></h2>
+                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarsExample08"
+                        aria-controls="navbarsExample08" aria-expanded="false" aria-label="Toggle navigation">
+                        <!-- <span class="navbar-toggler-icon"></span> -->
                         <img src="../images/angle-small-down.svg" alt="" width="20" class="dropdown-icon" />
-                    </div>
-                </div>
-
-                <nav class="categories">
-                    <ul>
-                        <li class="category">
-                            <a href="#">TV Shows <img src="../images/angle-small-down.svg" alt="" width="20" class="dropdown-icon" /></a>
-                            <ul>
-                                <li class="sub-category"><a href="#">American Gods</a></li>
-                                <li class="sub-category"><a href="#">American Horror Story</a></li>
-                            </ul>
-                        </li>
-                        <li class="category"><a href="#">TV Shows <img src="../images/angle-small-down.svg" alt="" width="20"
-                                    class="dropdown-icon"></a>
-                            <ul>
-                                <li class="sub-category"><a href="#">American Gods</a></li>
-                                <li class="sub-category"><a href="#">American Horror Story</a></li>
-                            </ul>
-                        </li>
-                        <li class="category"><a href="#">TV Shows <img src="../images/angle-small-down.svg" alt="" width="20"
-                                    class="dropdown-icon"></a>
-                            <ul>
-                                <li class="sub-category"><a href="#">American Gods</a></li>
-                                <li class="sub-category"><a href="#">American Horror Story</a></li>
-                            </ul>
-                        </li>
-                        <li class="category"><a href="#">TV Shows <img src="../images/angle-small-down.svg" alt="" width="20"
-                                    class="dropdown-icon"></a>
-                            <ul>
-                                <li class="sub-category"><a href="#">American Gods</a></li>
-                                <li class="sub-category"><a href="#">American Horror Story</a></li>
-                            </ul>
-                        </li>
-                        <li class="category"><a href="#">TV Shows <img src="../images/angle-small-down.svg" alt="" width="20"
-                                    class="dropdown-icon"></a>
-                            <ul>
-                                <li class="sub-category"><a href="#">American Gods</a></li>
-                                <li class="sub-category"><a href="#">American Horror Story</a></li>
-                            </ul>
-                        </li>
-                        <li class="category"><a href="#">TV Shows <img src="../images/angle-small-down.svg" alt="" width="20"
-                                    class="dropdown-icon"></a>
-                            <ul>
-                                <li class="sub-category"><a href="#">American Gods</a></li>
-                                <li class="sub-category"><a href="#">American Horror Story</a></li>
-                            </ul>
-                        </li>
-                        <li class="category"><a href="#">TV Shows <img src="../images/angle-small-down.svg" alt="" width="20"
-                                    class="dropdown-icon"></a>
-                            <ul>
-                                <li class="sub-category"><a href="#">American Gods</a></li>
-                                <li class="sub-category"><a href="#">American Horror Story</a></li>
-                            </ul>
-                        </li>
-                        <li class="category"><a href="#">TV Shows <img src="../images/angle-small-down.svg" alt="" width="20"
-                                    class="dropdown-icon"></a>
-                            <ul>
-                                <li class="sub-category"><a href="#">American Gods</a></li>
-                                <li class="sub-category"><a href="#">American Horror Story</a></li>
-                            </ul>
-                        </li>
-                        <li class="category"><a href="#">TV Shows <img src="../images/angle-small-down.svg" alt="" width="20"
-                                    class="dropdown-icon"></a>
-                            <ul>
-                                <li class="sub-category"><a href="#">American Gods</a></li>
-                                <li class="sub-category"><a href="#">American Horror Story</a></li>
-                            </ul>
-                        </li>
-                        <li class="category"><a href="#">TV Shows <img src="../images/angle-small-down.svg" alt="" width="20"
-                                    class="dropdown-icon"></a>
-                            <ul>
-                                <li class="sub-category"><a href="#">American Gods</a></li>
-                                <li class="sub-category"><a href="#">American Horror Story</a></li>
-                            </ul>
-                        </li>
-                        <li class="category"><a href="#">TV Shows <img src="../images/angle-small-down.svg" alt="" width="20"
-                                    class="dropdown-icon"></a>
-                            <ul>
-                                <li class="sub-category"><a href="#">American Gods</a></li>
-                                <li class="sub-category"><a href="#">American Horror Story</a></li>
-                            </ul>
-                        </li>
-                    </ul>
-                </nav>
-                
-                <nav class="social">
-                    <ul>
-                        <li><a href=""></a></li>
-                    </ul>
-                </nav>
-            </div>
+                    </button>
             
-            <div class="articles">
-                <article style="background: url(../images/BingWallpaper\(10\).jpg); background-repeat: no-repeat" class="middle-article">
-                    <div>
-                        <a href="">
-                            <h2>Sports</h2>
-                            <p>Sha'Carri Richardson presented with award</p>
-                            <p>by Lashaunta Moore</p>
-                        </a>
+                    <div class="collapse navbar-collapse justify-content-md-center" id="navbarsExample08">
+                        <ul class="navbar-nav">
+                            <!--<li class="nav-item">
+                                <a class="nav-link active" aria-current="page" href="#">Centered nav only</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="#">Link</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link disabled" aria-disabled="true">Disabled</a>
+                            </li> -->
+                            <li class="categories nav-item dropdown">
+                                <a class="category nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown"
+                                    aria-expanded="false">TV Shows</a>
+                                <ul class="dropdown-menu">
+                                    <li><a class="sub-category dropdown-item" href="#">American Gods</a></li>
+                                    <li><a class="sub-category dropdown-item" href="#">American Movies</a></li>
+                                    <li><a class="sub-category dropdown-item" href="#">Game of Thrones</a></li>
+                                </ul>
+                            </li>
+                            <li class="categories nav-item dropdown">
+                                <a class="category nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown"
+                                    aria-expanded="false">TV Shows</a>
+                                <ul class="dropdown-menu">
+                                    <li><a class="sub-category dropdown-item" href="#">American Gods</a></li>
+                                    <li><a class="sub-category dropdown-item" href="#">American Movies</a></li>
+                                    <li><a class="sub-category dropdown-item" href="#">Game of Thrones</a></li>
+                                </ul>
+                            </li>
+                            <li class="categories nav-item dropdown">
+                                <a class="category nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown"
+                                    aria-expanded="false">TV Shows</a>
+                                <ul class="dropdown-menu">
+                                    <li><a class="sub-category dropdown-item" href="#">American Gods</a></li>
+                                    <li><a class="sub-category dropdown-item" href="#">American Movies</a></li>
+                                    <li><a class="sub-category dropdown-item" href="#">Game of Thrones</a></li>
+                                </ul>
+                            </li>
+                            <li class="categories nav-item dropdown">
+                                <a class="category nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown"
+                                    aria-expanded="false">TV Shows</a>
+                                <ul class="dropdown-menu">
+                                    <li><a class="sub-category dropdown-item" href="#">American Gods</a></li>
+                                    <li><a class="sub-category dropdown-item" href="#">American Movies</a></li>
+                                    <li><a class="sub-category dropdown-item" href="#">Game of Thrones</a></li>
+                                </ul>
+                            </li>
+                            <li class="categories nav-item dropdown">
+                                <a class="category nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown"
+                                    aria-expanded="false">TV Shows</a>
+                                <ul class="dropdown-menu">
+                                    <li><a class="sub-category dropdown-item" href="#">American Gods</a></li>
+                                    <li><a class="sub-category dropdown-item" href="#">American Movies</a></li>
+                                    <li><a class="sub-category dropdown-item" href="#">Game of Thrones</a></li>
+                                </ul>
+                            </li>
+                            <li class="categories nav-item dropdown">
+                                <a class="category nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown"
+                                    aria-expanded="false">TV Shows</a>
+                                <ul class="dropdown-menu">
+                                    <li><a class="sub-category dropdown-item" href="#">American Gods</a></li>
+                                    <li><a class="sub-category dropdown-item" href="#">American Movies</a></li>
+                                    <li><a class="sub-category dropdown-item" href="#">Game of Thrones</a></li>
+                                </ul>
+                            </li>
+                            <li class="categories nav-item dropdown">
+                                <a class="category nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown"
+                                    aria-expanded="false">TV Shows</a>
+                                <ul class="dropdown-menu">
+                                    <li><a class="sub-category dropdown-item" href="#">American Gods</a></li>
+                                    <li><a class="sub-category dropdown-item" href="#">American Movies</a></li>
+                                    <li><a class="sub-category dropdown-item" href="#">Game of Thrones</a></li>
+                                </ul>
+                            </li>
+                            <li class="categories nav-item dropdown">
+                                <a class="category nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown"
+                                    aria-expanded="false">TV Shows</a>
+                                <ul class="dropdown-menu">
+                                    <li><a class="sub-category dropdown-item" href="#">American Gods</a></li>
+                                    <li><a class="sub-category dropdown-item" href="#">American Movies</a></li>
+                                    <li><a class="sub-category dropdown-item" href="#">Game of Thrones</a></li>
+                                </ul>
+                            </li>
+                            <li class="categories nav-item dropdown">
+                                <a class="category nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown"
+                                    aria-expanded="false">TV Shows</a>
+                                <ul class="dropdown-menu">
+                                    <li><a class="sub-category dropdown-item" href="#">American Gods</a></li>
+                                    <li><a class="sub-category dropdown-item" href="#">American Movies</a></li>
+                                    <li><a class="sub-category dropdown-item" href="#">Game of Thrones</a></li>
+                                </ul>
+                            </li>
+                            <li class="categories nav-item dropdown">
+                                <a class="category nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown"
+                                    aria-expanded="false">TV Shows</a>
+                                <ul class="dropdown-menu">
+                                    <li><a class="sub-category dropdown-item" href="#">American Gods</a></li>
+                                    <li><a class="sub-category dropdown-item" href="#">American Movies</a></li>
+                                    <li><a class="sub-category dropdown-item" href="#">Game of Thrones</a></li>
+                                </ul>
+                            </li>
+                        </ul>
+                        <ul class="social">
+                            <li><a href=""></a></li>
+                        </ul>
                     </div>
-                </article>
-                <!--<article style="background: url(../images/BingWallpaper\(10\).jpg);" class="top-side-article">
-                    <a href="">
-                        <h2>Sports</h2>
-                        <p>Sha'Carri Richardson presented with award</p>
-                        <p>by Lashaunta Moore</p>
-                    </a>
-                </article>
-                <article style="background: url(../images/BingWallpaper\(10\).jpg);" class="top-side-article">
-                    <a href="">
-                        <h2>Sports</h2>
-                        <p>Sha'Carri Richardson presented with award</p>
-                        <p>by Lashaunta Moore</p>
-                    </a>
-                </article>
-                <article style="background: url(../images/BingWallpaper\(10\).jpg);" class="bottom-side-article">
-                    <a href="">
-                        <h2>Sports</h2>
-                        <p>Sha'Carri Richardson presented with award</p>
-                        <p>by Lashaunta Moore</p>
-                    </a>
-                </article>
-                <article style="background: url(../images/BingWallpaper\(10\).jpg);" class="bottom-side-article">
-                    <a href="">
-                        <h2>Sports</h2>
-                        <p>Sha'Carri Richardson presented with award</p>
-                        <p>by Lashaunta Moore</p>
-                    </a>
-                </article> -->
-            </div>
+                </div>
+            </nav>
         </section>
+        <!-- end navbar -->
 
-        <section class="featured">
-            <article class="">
-                <a href="">
-                    <div>
-                        <img src="../images/BingWallpaper(10).jpg" alt="" />
-                    </div>
+
+        <!-- main -->
+        <main class="mb-3 px-5">
+            <section class="articles hero mb-5">
+                <!-- hero -->
+                <!-- mobile -->
+                <div id="carouselExampleCaptions" class="carousel slide d-block d-md-none" data-bs-ride="carousel">
+                    <section class="carousel-indicators">
+                        <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="0" class="active"
+                            aria-current="true" aria-label="Slide 1"></button>
+                        <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="1"
+                            aria-label="Slide 2"></button>
+                        <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="2"
+                            aria-label="Slide 3"></button>
+                        <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="3"
+                            aria-label="Slide 4"></button>
+                        <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="4"
+                            aria-label="Slide 5"></button>
+                    </section>
+                    <section class="carousel-inner">
+                        <article class="carousel-item active">
+                            <img src="../images/BingWallpaper(10).jpg" class="d-block w-100" alt="...">
+                            <div class="carousel-caption d-flex flex-column justify-content-end align-items-start">
+                                <h5 class="text-start text-uppercase fs-6 px-2" style="background-color: #ffebcd; color: #330033;">Lifestyle</h5>
+                                <p class="text-start mb-0">Some representative placeholder content for the first slide.</p>
+                                <p class="text-start fs-6 fw-light">by Lindsay Press</p>
+                            </div>
+                        </article>
+                        <article class="carousel-item active">
+                            <img src="../images/BingWallpaper(10).jpg" class="d-block w-100" alt="...">
+                            <div class="carousel-caption d-flex flex-column justify-content-end align-items-start">
+                                <h5 class="text-start text-uppercase fs-6 px-2" style="background-color: #ffebcd; color: #330033;">Lifestyle
+                                </h5>
+                                <p class="text-start mb-0">Some representative placeholder content for the first slide.</p>
+                                <p class="text-start fs-6 fw-light">by Lindsay Press</p>
+                            </div>
+                        </article>
+                        <article class="carousel-item active">
+                            <img src="../images/BingWallpaper(10).jpg" class="d-block w-100" alt="...">
+                            <div class="carousel-caption d-flex flex-column justify-content-end align-items-start">
+                                <h5 class="text-start text-uppercase fs-6 px-2" style="background-color: #ffebcd; color: #330033;">Lifestyle
+                                </h5>
+                                <p class="text-start mb-0">Some representative placeholder content for the first slide.</p>
+                                <p class="text-start fs-6 fw-light">by Lindsay Press</p>
+                            </div>
+                        </article>
+                        <article class="carousel-item active">
+                            <img src="../images/BingWallpaper(10).jpg" class="d-block w-100" alt="...">
+                            <div class="carousel-caption d-flex flex-column justify-content-end align-items-start">
+                                <h5 class="text-start text-uppercase fs-6 px-2" style="background-color: #ffebcd; color: #330033;">Lifestyle
+                                </h5>
+                                <p class="text-start mb-0">Some representative placeholder content for the first slide.</p>
+                                <p class="text-start fs-6 fw-light">by Lindsay Press</p>
+                            </div>
+                        </article>
+                        <article class="carousel-item active">
+                            <img src="../images/BingWallpaper(10).jpg" class="d-block w-100" alt="...">
+                            <div class="carousel-caption d-flex flex-column justify-content-end align-items-start">
+                                <h5 class="text-start text-uppercase fs-6 px-2" style="background-color: #ffebcd; color: #330033;">Lifestyle
+                                </h5>
+                                <p class="text-start mb-0">Some representative placeholder content for the first slide.</p>
+                                <p class="text-start fs-6 fw-light">by Lindsay Press</p>
+                            </div>
+                        </article>
+                    </section>
+                </div>
+                <!-- end mobile -->
+
+                <!-- desktop -->
+                <div class="desktop">
+                    <article class="article-1">
+                        <div class="card rounded-0 text-bg-dark">
+                            <img src="../images/BingWallpaper(10).jpg" class="card-img rounded-0 d-block" alt="...">
+                            <div class="card-img-overlay d-flex flex-column justify-content-end align-items-start">
+                                <h5 class="card-title text-start text-uppercase fs-6 px-2"
+                                    style="background-color: #ffebcd; color: #330033;">Lifestyle
+                                </h5>
+                                <p class="card-text text-start mb-0">Some representative placeholder content for the first slide.</p>
+                                <p class="card-text text-start fs-6 fw-light">by Lindsay Press</p>
+                            </div>
+                        </div>
+                    </article>
+                    <article class="article-2">
+                        <div class="card rounded-0 text-bg-dark">
+                            <img src="../images/BingWallpaper(10).jpg" class="card-img rounded-0 d-block" alt="...">
+                            <div class="card-img-overlay d-flex flex-column justify-content-end align-items-start">
+                                <h5 class="card-title text-start text-uppercase fs-6 px-2"
+                                    style="background-color: #ffebcd; color: #330033;">Lifestyle
+                                </h5>
+                                <p class="card-text text-start mb-0">Some representative placeholder content for the first slide.</p>
+                                <p class="card-text text-start fs-6 fw-light">by Lindsay Press</p>
+                            </div>
+                        </div>
+                    </article>
+                    <article class="article-3">
+                        <div class="card rounded-0 text-bg-dark">
+                            <img src="../images/BingWallpaper(10).jpg" class="card-img rounded-0 d-block" alt="...">
+                            <div class="card-img-overlay d-flex flex-column justify-content-end align-items-start">
+                                <h5 class="card-title text-start text-uppercase fs-6 px-2"
+                                    style="background-color: #ffebcd; color: #330033;">Lifestyle
+                                </h5>
+                                <p class="card-text text-start mb-0">Some representative placeholder content for the first slide.</p>
+                                <p class="card-text text-start fs-6 fw-light">by Lindsay Press</p>
+                            </div>
+                        </div>
+                    </article>
+                    <article class="article-4">
+                        <div class="card rounded-0 text-bg-dark">
+                            <img src="../images/BingWallpaper(10).jpg" class="card-img rounded-0 d-block" alt="...">
+                            <div class="card-img-overlay d-flex flex-column justify-content-end align-items-start">
+                                <h5 class="card-title text-start text-uppercase fs-6 px-2"
+                                    style="background-color: #ffebcd; color: #330033;">Lifestyle
+                                </h5>
+                                <p class="card-text text-start mb-0">Some representative placeholder content for the first slide.</p>
+                                <p class="card-text text-start fs-6 fw-light">by Lindsay Press</p>
+                            </div>
+                        </div>
+                    </article>
+                    <article class="article-5">
+                        <div class="card rounded-0 text-bg-dark">
+                            <img src="../images/BingWallpaper(10).jpg" class="card-img rounded-0 d-block" alt="...">
+                            <div class="card-img-overlay d-flex flex-column justify-content-end align-items-start">
+                                <h5 class="card-title text-start text-uppercase fs-6 px-2"
+                                    style="background-color: #ffebcd; color: #330033;">Lifestyle
+                                </h5>
+                                <p class="card-text text-start mb-0">Some representative placeholder content for the first slide.</p>
+                                <p class="card-text text-start fs-6 fw-light">by Lindsay Press</p>
+                            </div>
+                        </div>
+                    </article>
+                </div>
+                <!-- end desktop -->
+                <!-- end hero -->
+            </section>
+
+
+            <div class="row row-gap-5">
+                <div class="col-sm-12 col-md-8">
+                    <!-- featured -->
+                    <section class="featured">
+                        <article class="">
+                            <a href="#" class="text-dark d-block">
+                                <div>
+                                    <img src="../images/BingWallpaper(10).jpg" alt="" class="d-block" />
+                                </div>
                     
-                    <div>
-                        <h2>Books <span>22h ago</span></h2>
-                        <p><span>Never </span>by <span>Jessa Hastings reimagines Peter Pan in a unique way</span></p>
-                    </div>
-                </a>
-            </article>
-        </section>
+                                <div style="margin-top: -1em;">
+                                    <h2 class="d-inline px-2 py-1 fs-6 text-white" style="background-color: rebeccapurple;">Books <span>22h
+                                            ago</span></h2>
+                                    <p class="px-2 fs-2"><span>Never </span>by <span>Jessa Hastings reimagines Peter Pan in a unique
+                                            way</span></p>
+                                </div>
+                            </a>
+                        </article>
+                    </section>
+                    <!-- end featured -->
+                    
+                    <!-- categories -->
+                    <section class="categories">
+                        <div class="mt-5">
+                            <header class="row align-items-center">
+                                <h2 class="col-3 fs-6">Girl Power</h2>
+                                <span class="d-block col-8 w-70" style="height: 1.25px; background-color: rebeccapurple;"></span>
+                            </header>
+                            <div class="articles row">
+                                <div class="col-md-6">
+                                    <article class="border-bottom py-1">
+                                        <div class="card rounded-0 text-bg-dark">
+                                            <img src="../images/BingWallpaper(10).jpg" class="card-img" alt="...">
+                                            <div class="card-img-overlay d-flex flex-column justify-content-end">
+                                                <h3 class="card-title fs-2">Barbie: The Perfect Gateway To Original Content</h3>
+                                                <!-- <p class="card-text fs-2">Barbie: The Perfect Gateway To Original Content</p> -->
+                                            </div>
+                                        </div>
+                                    </article>
+                                </div>
+                                <div class="col-md-6">
+                                    <article class="row border-bottom py-1">
+                                        <img src="../images/BingWallpaper(10).jpg" alt="" class="col-3 d-block" />
+                                        <h3 class="col-8 card-title fs-6">Barbie: The Perfect Gateway To Original Content</h3>
+                                    </article>
+                                    <article class="row border-bottom py-1">
+                                        <img src="../images/BingWallpaper(10).jpg" alt="" class="col-3 d-block" />
+                                        <h3 class="col-8 card-title fs-6">Barbie: The Perfect Gateway To Original Content</h3>
+                                    </article>
+                                    <article class="row border-bottom py-1">
+                                        <img src="../images/BingWallpaper(10).jpg" alt="" class="col-3 d-block" />
+                                        <h3 class="col-8 card-title fs-6">Barbie: The Perfect Gateway To Original Content</h3>
+                                    </article>
+                                    <article class="row border-bottom py-1">
+                                        <img src="../images/BingWallpaper(10).jpg" alt="" class="col-3 d-block" />
+                                        <h3 class="col-8 card-title fs-6">Barbie: The Perfect Gateway To Original Content</h3>
+                                    </article>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                    <!--
+                    <section class="categories">
+                        <div class="mt-5">
+                            <header class="row align-items-center">
+                                <h2 class="col-3 fs-6">Girl Power</h2>
+                                <span class="d-block col-8 w-70" style="height: 1.25px; background-color: rebeccapurple;"></span>
+                            </header>
+                            <div class="articles">
+                                <article class="border-bottom py-1">
+                                    <div class="card rounded-0 text-bg-dark">
+                                        <img src="../images/BingWallpaper(10).jpg" class="card-img" alt="...">
+                                        <div class="card-img-overlay d-flex flex-column justify-content-end">
+                                            <p class="card-text fs-2">Barbie: The Perfect Gateway To Original Content</p>
+                                        </div>
+                                    </div>
+                                </article>
+                                <article class="row border-bottom py-1">
+                                    <img src="../images/BingWallpaper(10).jpg" alt="" class="col-3 d-block" />
+                                    <p class="col-8">Barbie: The Perfect Gateway To Original Content</p>
+                                </article>
+                                <article class="row border-bottom py-1">
+                                    <img src="../images/BingWallpaper(10).jpg" alt="" class="col-3 d-block" />
+                                    <p class="col-8">Barbie: The Perfect Gateway To Original Content</p>
+                                </article>
+                                <article class="row border-bottom py-1">
+                                    <img src="../images/BingWallpaper(10).jpg" alt="" class="col-3 d-block" />
+                                    <p class="col-8">Barbie: The Perfect Gateway To Original Content</p>
+                                </article>
+                                <article class="row border-bottom py-1">
+                                    <img src="../images/BingWallpaper(10).jpg" alt="" class="col-3 d-block" />
+                                    <p class="col-8">Barbie: The Perfect Gateway To Original Content</p>
+                                </article>
+                            </div>
+                        </div>
+                    </section> -->
+                    <!-- end categories -->
+                </div>
 
-        <section class="categories">
-            <h2>Girl Power</h2>
-            <div class="articles">
-                <article>
-                    <img src="" alt="" />
-                    <p>Barbie: The Perfect Gateway To Original Content</p>
-                </article>
-                <article>
-                    <img src="" alt="" />
-                    <p>Barbie: The Perfect Gateway To Original Content</p>
-                </article>
-                <article>
-                    <img src="" alt="" />
-                    <p>Barbie: The Perfect Gateway To Original Content</p>
-                </article>
-                <article>
-                    <img src="" alt="" />
-                    <p>Barbie: The Perfect Gateway To Original Content</p>
-                </article>
-                <article>
-                    <img src="" alt="" />
-                    <p>Barbie: The Perfect Gateway To Original Content</p>
-                </article>
+                <aside class="col-md-4">
+                    <h2 class="mt-1">You may also like</h2>
+                    <section class="featured mt-4">
+                        <article class="">
+                            <a href="#" class="text-dark d-block">
+                                <div>
+                                    <img src="../images/BingWallpaper(10).jpg" alt="" class="d-block" />
+                                </div>
+                    
+                                <div style="margin-top: -1em;">
+                                    <h2 class="d-inline px-2 py-1 fs-6 text-white" style="background-color: rebeccapurple;">Books <span>22h
+                                            ago</span></h2>
+                                    <p class="px-2 fs-5"><span>Never </span>by <span>Jessa Hastings reimagines Peter Pan in a unique
+                                            way</span></p>
+                                </div>
+                            </a>
+                        </article>
+                        <article class="">
+                            <a href="#" class="text-dark d-block">
+                                <div>
+                                    <img src="../images/BingWallpaper(10).jpg" alt="" class="d-block" />
+                                </div>
+                    
+                                <div style="margin-top: -1em;">
+                                    <h2 class="d-inline px-2 py-1 fs-6 text-white" style="background-color: rebeccapurple;">Books <span>22h
+                                            ago</span></h2>
+                                    <p class="px-2 fs-5"><span>Never </span>by <span>Jessa Hastings reimagines Peter Pan in a unique
+                                            way</span></p>
+                                </div>
+                            </a>
+                        </article>
+                    </section>
+                </aside>
             </div>
 
-            <h2>Girl Power</h2>
-            <div class="articles">
-                <article>
-                    <img src="" alt="" />
-                    <p>Barbie: The Perfect Gateway To Original Content</p>
-                </article>
-                <article>
-                    <img src="" alt="" />
-                    <p>Barbie: The Perfect Gateway To Original Content</p>
-                </article>
-                <article>
-                    <img src="" alt="" />
-                    <p>Barbie: The Perfect Gateway To Original Content</p>
-                </article>
-                <article>
-                    <img src="" alt="" />
-                    <p>Barbie: The Perfect Gateway To Original Content</p>
-                </article>
-                <article>
-                    <img src="" alt="" />
-                    <p>Barbie: The Perfect Gateway To Original Content</p>
-                </article>
-            </div>
-        </section>
-    </main>
+        </main>
+        <!-- end main -->
 
-    <footer>
-        <section>
-            <div>
-                <img src="" alt="">
-                <p>Your Cultures. Your Inbox. Every Day</p>
-            </div>
-            <div>
-                <p>Build your custom Culturess Daily email newsletter with news and analysis on Culturess and all your favorite sports teams, TV shows, and more.</p>
-            </div>
-            <div>
-                <form action="" method="post">
-                    <input type="text" />
-                    <button type="submit">Sign up, it's FREE</button>
-                </form>
-            </div>
-        </section>
 
-        <section>
-            <div>
-                <h4>About</h4>
-                <ul>
-                    <li><a href="#">About</a></li>
-                    <li><a href="#">Openings</a></li>
-                    <li><a href="#">Contact</a></li>
-                </ul>
-            </div>
-            <div>
-                <h4>Stay Connected</h4>
-                <ul>
-                    <li><a href="#">Our 300+ Sites</a></li>
-                    <li><a href="#">Mobile Apps</a></li>
-                    <li><a href="#">FanSided Daily</a></li>
-                    <li><a href="#">Pitch a Story</a></li>
-                </ul>
-            </div>
-            <div>
-                <h4>Legal</h4>
-                <ul>
-                    <li><a href="#">Privacy Policy</a></li>
-                    <li><a href="#">Terms of Use</a></li>
-                    <li><a href="#">Cookie Policy</a></li>
-                    <li><a href="#">Legal Disclaimer</a></li>
-                    <li><a href="#">Accessibility Statement</a></li>
-                    <li><a href="#">EU Data Subject Requests</a></li>
-                    <li><a href="#">Cookie Settings</a></li>
-                </ul>
-            </div>
-
-            <div>
-                <h4>Download our Mobile Apps</h4>
-                <p>Your favorite teams, topics, and players all on your favorite mobile devices.</p>
+        <!-- footer -->
+        <footer class="mt-5">
+            <section class="d-flex flex-column align-items-center py-3 px-5 text-center">
+                <div class="">
+                    <span class="">NewsBox</span> | 
+                    <span class="">Your Cultures. Your Inbox. Every Day</span>
+                </div>
+                <div class="mt-3">
+                    <p>Build your custom Culturess Daily email newsletter with news and analysis on Culturess and all your favorite sports teams, TV shows, and more.</p>
+                </div>
                 <div>
+                    <form action="" method="post" class="d-flex flex-column row-gap-2">
+                        <input type="text" class="py-1 px-5" style="border: 1px solid #494049;" />
+                        <button type="submit" class="py-1 px-5 text-light" style="background: #330033;">Sign up, it's FREE</button>
+                    </form>
+                </div>
+            </section>
+
+            <section class="mt-4 py-4 px-5 text-light row" style="background: #792879;">
+                <div class="col-md-1">
+                    <h4>About</h4>
                     <ul>
-                        <li><img src="#" alt="Apple App Store icon"></li>
-                        <li><img src="#" alt="Google App Store icon"></li>
+                        <li><a href="#">About</a></li>
+                        <li><a href="#">Openings</a></li>
+                        <li><a href="#">Contact</a></li>
                     </ul>
                 </div>
-            </div>
-        </section>
+                <div class="col-md-2">
+                    <h4>Stay Connected</h4>
+                    <ul>
+                        <li><a href="#">Our 300+ Sites</a></li>
+                        <li><a href="#">Mobile Apps</a></li>
+                        <li><a href="#">FanSided Daily</a></li>
+                        <li><a href="#">Pitch a Story</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-3">
+                    <h4>Legal</h4>
+                    <ul>
+                        <li><a href="#">Privacy Policy</a></li>
+                        <li><a href="#">Terms of Use</a></li>
+                        <li><a href="#">Cookie Policy</a></li>
+                        <li><a href="#">Legal Disclaimer</a></li>
+                        <li><a href="#">Accessibility Statement</a></li>
+                        <li><a href="#">EU Data Subject Requests</a></li>
+                        <li><a href="#">Cookie Settings</a></li>
+                    </ul>
+                </div>
 
-        <section>
-            <p>&copy; 2023 Minute Media - All Rights Reserved. The content on this site is for entertainment and educational purposes only.
-            All betting content is intended for an audience ages 21+. All advice, including picks and predictions, is based on
-            individual commentators’ opinions and not that of Minute Media or its related brands. All picks and predictions are
-            suggestions only. No one should expect to make money from the picks and predictions discussed on this website. For more
-            information, please read our Legal Disclaimer. If you or someone you know has a gambling problem, <a href="tel:1-800-GAMBLER">call 1-800-GAMBLER</a>.</p>
-        </section>
-    </footer>
-</body>
+                <div class="col-md-5">
+                    <h4>Download our Mobile Apps</h4>
+                    <p>Your favorite teams, topics, and players all on your favorite mobile devices.</p>
+                    <div>
+                        <ul>
+                            <li><img src="#" alt="Apple App Store icon"></li>
+                            <li><img src="#" alt="Google App Store icon"></li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+
+            <section class="pb-4 px-5 text-light text-center" style="background: #792879;">
+                <p>&copy; 2023 Minute Media - All Rights Reserved. The content on this site is for entertainment and educational purposes only.
+                All betting content is intended for an audience ages 21+. All advice, including picks and predictions, is based on
+                individual commentators’ opinions and not that of Minute Media or its related brands. All picks and predictions are
+                suggestions only. No one should expect to make money from the picks and predictions discussed on this website. For more
+                information, please read our Legal Disclaimer. If you or someone you know has a gambling problem, <a href="tel:1-800-GAMBLER">call 1-800-GAMBLER</a>.</p>
+            </section>
+        </footer>
+        <!-- end footer -->
+
+        <script>
+            // const myCarouselElement = document.querySelector('#myCarousel')
+
+            // const carousel = new bootstrap.Carousel(myCarouselElement, {
+            //     interval: 5000,
+            //     touch: false
+            // })
+        </script>
+    </body>
 </html>
