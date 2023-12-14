@@ -62,7 +62,8 @@ class Category(models.Model):
 
 class SubCategory(models.Model):
     category = models.ForeignKey(
-        Category,
+        Category, 
+        related_name='sub_categories', 
         on_delete=models.CASCADE,
         verbose_name=_('Choose a Category'
                        ))
@@ -80,7 +81,7 @@ class SubCategory(models.Model):
         help_text=_('Required and unique'),
         max_length=255,
     )
-    added_by = models.ForeignKey(User, on_delete=models.CASCADE)
+    added_by = models.ForeignKey(User, related_name='sub_categories', on_delete=models.CASCADE)
     is_active = models.BooleanField(
         verbose_name=_('Sub-Category visibility'),
         help_text=_('Change sub-category visibility'),
@@ -123,12 +124,14 @@ class SubCategory(models.Model):
 
 class Article(models.Model):
     category = models.ForeignKey(
-        Category,
+        Category, 
+        related_name='articles', 
         on_delete=models.CASCADE,
         verbose_name=_('Choose a Category'
                        ))
     sub_category = models.ForeignKey(
-        SubCategory,
+        SubCategory, 
+        related_name='articles', 
         on_delete=models.CASCADE,
         verbose_name=_('Choose a Sub-category'
                        ))
@@ -168,7 +171,7 @@ class Article(models.Model):
         upload_to='images/articles/',
         default='images/default.png',
     )
-    added_by = models.ForeignKey(User, on_delete=models.CASCADE)
+    added_by = models.ForeignKey(User, related_name='articles', on_delete=models.CASCADE)
     is_active = models.BooleanField(
         verbose_name=_('Category visibility'),
         help_text=_('Change category visibility'),
@@ -226,7 +229,7 @@ class Comment(models.Model):
         help_text=_('Message must not exceed 255 characters'),
         max_length=255
     )
-    added_by = models.ForeignKey(User, on_delete=models.CASCADE)
+    added_by = models.ForeignKey(User, related_name='comments', on_delete=models.CASCADE)
     is_active = models.BooleanField(
         verbose_name=_('Comment visibility'),
         help_text=_('Change comment visibility'),
@@ -250,25 +253,29 @@ class Comment(models.Model):
 
 class Like(models.Model):
     category = models.ForeignKey(
-        Category,
+        Category, 
+        related_name='likes', 
         on_delete=models.CASCADE,
         null=True,
         blank=True,
     )
     sub_category = models.ForeignKey(
-        SubCategory,
+        SubCategory, 
+        related_name='likes', 
         on_delete=models.CASCADE,
         null=True,
         blank=True
     )
     article = models.ForeignKey(
-        Article,
+        Article, 
+        related_name='likes', 
         on_delete=models.CASCADE,
         null=True,
         blank=True
     )
     comment = models.ForeignKey(
-        Comment,
+        Comment, 
+        related_name='likes', 
         on_delete=models.CASCADE,
         null=True,
         blank=True
@@ -284,7 +291,7 @@ class Like(models.Model):
         max_length=255,
         unique=True
     )
-    added_by = models.ForeignKey(User, on_delete=models.CASCADE)
+    added_by = models.ForeignKey(User, related_name='likes', on_delete=models.CASCADE)
     is_active = models.BooleanField(
         verbose_name=_('Like visibility'),
         help_text=_('Change like visibility'),

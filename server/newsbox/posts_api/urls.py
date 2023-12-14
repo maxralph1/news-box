@@ -12,10 +12,16 @@ urlpatterns = [
     path('categories/<int:pk>/soft-delete-or-reactivate/', views.CategorySoftDeleteOrReactivate.as_view()),
     # path('categories/<slug:like_slug>/likes/', views.CategoryLikesList.as_view()),
 
+    # # Sub-categories
+    # path('sub-categories/', views.SubCategoryList.as_view()),
+    # path('sub-categories/<int:pk>/', views.SubCategoryDetail.as_view()),
+    # path('sub-categories/<int:pk>/soft-delete-or-reactivate/', views.SubCategorySoftDeleteOrReactivate.as_view()),
+    # # path('sub-categories/<slug:like_slug>/likes/', views.SubCategoryLikesList.as_view()),
+
     # Sub-categories
-    path('sub-categories/', views.SubCategoryList.as_view()),
-    path('sub-categories/<int:pk>/', views.SubCategoryDetail.as_view()),
-    path('sub-categories/<int:pk>/soft-delete-or-reactivate/', views.SubCategorySoftDeleteOrReactivate.as_view()),
+    path('categories/<int:category_pk>/sub-categories/', views.SubCategoryList.as_view()),
+    path('categories/<int:category_pk>/sub-categories/<int:pk>/', views.SubCategoryDetail.as_view()),
+    path('categories/<int:category_pk>/sub-categories/<int:pk>/soft-delete-or-reactivate/', views.SubCategorySoftDeleteOrReactivate.as_view()),
     # path('sub-categories/<slug:like_slug>/likes/', views.SubCategoryLikesList.as_view()),
 
     # Articles

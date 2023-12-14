@@ -20,12 +20,6 @@ from posts.models import Category, SubCategory, Article, Comment, Like
 #         return instance
     
 
-class CategorySerializer(serializers.HyperlinkedModelSerializer):
-    added_by = serializers.ReadOnlyField(source='added_by.username')
-
-    class Meta:
-        model = Category
-        fields = ('id', 'title', 'description', 'added_by', 'is_active')
 
 
 class SubCategorySerializer(serializers.ModelSerializer):
@@ -35,10 +29,25 @@ class SubCategorySerializer(serializers.ModelSerializer):
         model = SubCategory
         fields = ('id', 'category', 'title', 'description', 'added_by', 'is_active')
 
-    def to_representation(self, instance):
-        data = super().to_representation(instance)
-        data['category'] = CategorySerializer(Category.objects.get(pk=data['category'])).data
-        return data
+    # def to_representation(self, instance):
+    #     data = super().to_representation(instance)
+    #     data['category'] = CategorySerializer(Category.objects.get(pk=data['category'])).data
+    #     return data
+    
+
+class CategorySerializer(serializers.ModelSerializer):
+    added_by = serializers.ReadOnlyField(source='added_by.username')
+    # sub_categories = serializers.PrimaryKeyRelatedField(many=True, queryset=SubCategory.objects.all())
+    sub_categories = SubCategorySerializer(many=True)
+    # sub_categories = serializers.HyperlinkedRelatedField(
+    #     many=True, view_name='sub_categories', read_only=True)
+    # sub_categories = serializers.PrimaryKeyRelatedField(source='sub_categories_set')
+    articles = serializers.PrimaryKeyRelatedField(many=True, queryset=Article.objects.all())
+    likes = serializers.PrimaryKeyRelatedField(many=True, queryset=Like.objects.all())
+
+    class Meta:
+        model = Category
+        fields = ('id', 'sub_categories', 'articles', 'likes', 'title', 'description', 'added_by', 'is_active',)
 
 
 class ArticleSerializer(serializers.ModelSerializer):
@@ -55,7 +64,7 @@ class ArticleSerializer(serializers.ModelSerializer):
         return data
 
 
-class CommentSerializer(serializers.ModelSerializer):
+class CommentSerializer(serializers.HyperlinkedModelSerializer):
     added_by = serializers.ReadOnlyField(source='added_by.username')
 
     class Meta:
@@ -68,7 +77,7 @@ class CommentSerializer(serializers.ModelSerializer):
         return data
 
 
-class LikeSerializer(serializers.ModelSerializer):
+class LikeSerializer(serializers.HyperlinkedModelSerializer):
     added_by = serializers.ReadOnlyField(source='added_by.username')
 
     class Meta:

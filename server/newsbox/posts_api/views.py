@@ -140,8 +140,9 @@ class SubCategoryList(APIView):
     permission_classes = (permissions.IsAuthenticatedOrReadOnly, )
 
     # List all sub-categories, or create a new category.
-    def get(self, request, format=None):
-        sub_categories = SubCategory.objects.all()
+    def get(self, request, category_pk, format=None):
+        # sub_categories = SubCategory.objects.all()
+        sub_categories = SubCategory.objects.filter(category__pk=category_pk)
         serializer = SubCategorySerializer(sub_categories, many=True)
         return Response(serializer.data)
 
