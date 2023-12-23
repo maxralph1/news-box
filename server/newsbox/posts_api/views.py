@@ -1,11 +1,11 @@
 from datetime import datetime
+from django.db import transaction
 from django.http import Http404
 from rest_framework import permissions, status
 from rest_framework.views import APIView
 from rest_framework.response import Response
-from posts.models import Category, SubCategory, Article, Comment, Like
-# from .serializers import CategorySerializer, SubCategorySerializer
-from .serializers import CategorySerializer, SubCategorySerializer, ArticleSerializer, CommentSerializer, LikeSerializer
+from posts.models import Category, SubCategory, Article, Comment, Like 
+from .serializers import CategorySerializer, SubCategorySerializer, ArticleSerializer, CommentSerializer, LikeSerializer, CategoryMainSerializer, SubCategoryMainSerializer, ArticleMainSerializer
 from .permissions import IsOwnerOrReadOnly
 
 
@@ -66,17 +66,23 @@ class CategoryList(APIView):
 
     # List all categories, or create a new category.
     def get(self, request, format=None):
-        categories = Category.objects.all()
-        serializer = CategorySerializer(categories, many=True)
+        categories = Category.objects.filter(is_active=True).order_by('-created_at')
+        serializer = CategoryMainSerializer(categories, many=True)
         return Response(serializer.data)
 
     def post(self, request, format=None):
-        
-        serializer = CategorySerializer(data=request.data)
-        if serializer.is_valid():
-            serializer.save(added_by=self.request.user)
-            return Response(serializer.data, status=status.HTTP_201_CREATED)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        categories_count = Category.objects.all().count()
+
+        # Limit categories to a maximum of 10
+        if categories_count >= 10:
+            data = f"The maximum allowed number of categories is 10. You must remove an old one to add a new one."
+            return Response({'response': data}, status=status.HTTP_400_BAD_REQUEST)
+        else:
+            serializer = CategorySerializer(data=request.data)
+            if serializer.is_valid():
+                serializer.save(added_by=self.request.user)
+                return Response(serializer.data, status=status.HTTP_201_CREATED)
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
 class CategoryDetail(APIView):
@@ -88,13 +94,13 @@ class CategoryDetail(APIView):
     
     def get_object(self, pk):
         try:
-            return Category.objects.get(pk=pk)
+            return Category.objects.get(pk=pk, is_active=True)
         except Category.DoesNotExist:
             raise Http404
 
     def get(self, request, pk, format=None):
         category = self.get_object(pk)
-        serializer = CategorySerializer(category)
+        serializer = CategoryMainSerializer(category)
         return Response(serializer.data)
     
     def put(self, request, pk, format=None):
@@ -107,6 +113,8 @@ class CategoryDetail(APIView):
 
     def delete(self, request, pk, format=None):
         category = self.get_object(pk)
+        SubCategory.objects.filter(category__pk=pk).delete()
+        Article.objects.filter(category__pk=pk).delete()
         category.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
     
@@ -140,14 +148,13 @@ class SubCategoryList(APIView):
     permission_classes = (permissions.IsAuthenticatedOrReadOnly, )
 
     # List all sub-categories, or create a new category.
-    def get(self, request, category_pk, format=None):
-        # sub_categories = SubCategory.objects.all()
-        sub_categories = SubCategory.objects.filter(category__pk=category_pk)
-        serializer = SubCategorySerializer(sub_categories, many=True)
+    def get(self, request, format=None):
+        sub_categories = SubCategory.objects.filter(is_active=True).order_by('-created_at')
+        serializer = SubCategoryMainSerializer(sub_categories, many=True)
         return Response(serializer.data)
 
     def post(self, request, format=None):
-        
+
         serializer = SubCategorySerializer(data=request.data)
         if serializer.is_valid():
             serializer.save(added_by=self.request.user)
@@ -161,18 +168,18 @@ class SubCategoryDetail(APIView):
         'put': (permissions.IsAuthenticated, permissions.IsAdminUser, ),
         'delete': (permissions.IsAuthenticated, permissions.IsAdminUser, ),
     }
-    
+
     def get_object(self, pk):
         try:
-            return SubCategory.objects.get(pk=pk)
+            return SubCategory.objects.get(pk=pk, is_active=True)
         except SubCategory.DoesNotExist:
             raise Http404
 
     def get(self, request, pk, format=None):
         sub_category = self.get_object(pk)
-        serializer = SubCategorySerializer(sub_category)
+        serializer = SubCategoryMainSerializer(sub_category)
         return Response(serializer.data)
-    
+
     def put(self, request, pk, format=None):
         sub_category = self.get_object(pk)
         serializer = SubCategorySerializer(sub_category, data=request.data)
@@ -183,18 +190,20 @@ class SubCategoryDetail(APIView):
 
     def delete(self, request, pk, format=None):
         sub_category = self.get_object(pk)
+        Article.objects.filter(sub_category__pk=pk).delete()
         sub_category.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
-    
+
+
 class SubCategorySoftDeleteOrReactivate(APIView):
     permission_classes = (permissions.IsAuthenticated, permissions.IsAdminUser, )
-  
+
     def get_object(self, pk):
         try:
             return SubCategory.objects.get(pk=pk)
         except SubCategory.DoesNotExist:
             raise Http404
-    
+
     def put(self, request, pk, format=None):
         sub_category = self.get_object(pk)
 
@@ -216,8 +225,8 @@ class ArticleList(APIView):
 
     # List all articles, or create a new article.
     def get(self, request, format=None):
-        articles = Article.objects.all()
-        serializer = ArticleSerializer(articles, many=True)
+        articles = Article.objects.filter(is_active=True).order_by('-created_at')
+        serializer = ArticleMainSerializer(articles, many=True)
         return Response(serializer.data)
 
     def post(self, request, format=None):
@@ -237,13 +246,13 @@ class ArticleDetail(APIView):
     
     def get_object(self, pk):
         try:
-            return Article.objects.get(pk=pk)
+            return Article.objects.get(pk=pk, is_active=True)
         except Article.DoesNotExist:
             raise Http404
 
     def get(self, request, pk, format=None):
         article = self.get_object(pk)
-        serializer = ArticleSerializer(article)
+        serializer = ArticleMainSerializer(article)
         return Response(serializer.data)
     
     def put(self, request, pk, format=None):
@@ -256,6 +265,8 @@ class ArticleDetail(APIView):
 
     def delete(self, request, pk, format=None):
         article = self.get_object(pk)
+        Comment.objects.filter(article__pk=pk).delete()
+        Like.objects.filter(article__pk=pk).delete()
         article.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
 
@@ -265,7 +276,7 @@ class ArticleSoftDeleteOrReactivate(APIView):
   
     def get_object(self, pk):
         try:
-            return Article.objects.get(pk=pk)
+            return Article.objects.get(pk=pk, is_active=True)
         except Article.DoesNotExist:
             raise Http404
     
@@ -279,16 +290,93 @@ class ArticleSoftDeleteOrReactivate(APIView):
             article.reactivate()
             data = f"You have successfully reactivated the article {article.title}"
             return Response({'response': data}, status=status.HTTP_200_OK)
+        
 
-    
-class ArticleCommentsList(APIView):
-    permission_classes = (permissions.IsAuthenticatedOrReadOnly, )
+# @transaction.atomic
+class ArticleSetAsFeatured(APIView):
+    permission_classes = (permissions.IsAdminUser, )
 
-    # List all comments belonging to an article.
-    def get(self, request, article_slug, format=None):
-        comments = Comment.objects.all(article__slug=slug, is_active=True)
-        serializer = CommentSerializer(comments, many=True)
-        return Response(serializer.data)
+    with transaction.atomic():
+        # Article.objects.filter(is_featured=True).update(is_featured=False)
+
+        def get_object(self, pk):
+            try:
+                return Article.objects.get(pk=pk, is_active=True)
+            except Article.DoesNotExist:
+                raise Http404
+            
+        def put(self, request, pk, format=None):
+            article = self.get_object(pk)
+
+            if article.is_featured == False:
+                Article.objects.filter(is_featured=True).update(is_featured=False)
+                Article.objects.filter(pk=pk).update(is_featured=True)
+                # article.update(is_featured=True)
+                serializer = ArticleSerializer(article)
+                return Response(serializer.data)
+        
+
+class ArticleSetAsGallery(APIView):
+    permission_classes = (permissions.IsAdminUser, )
+
+    def get_object(self, pk):
+        try:
+            return Article.objects.get(pk=pk, is_active=True)
+        except Article.DoesNotExist:
+            raise Http404
+        
+    def put(self, request, pk, format=None):
+        article = self.get_object(pk)
+
+        articles_count = Article.objects.filter(is_gallery=True).order_by('-created_at').count()
+
+        if articles_count >= 5:
+            data = f"The maximum number of articles in the gallery is 5. You must remove one from the gallery to add a new one."
+            return Response({'response': data}, status=status.HTTP_400_BAD_REQUEST)
+
+        elif articles_count < 5:
+            article = Article.objects.filter(pk=pk).update(is_gallery=True)
+            # article.update(is_gallery=True)
+            serializer = ArticleSerializer(article)
+            return Response(serializer.data)
+        
+
+# # @transaction.atomic
+# class ArticleSetAsGalleryCentered(APIView):
+#     permission_classes = (permissions.IsAdminUser, )
+
+#     with transaction.atomic():
+#         Article.objects.filter(is_gallery=True, is_gallery_centered=True).update(is_gallery_centered=False)
+
+#         def get_object(self, pk):
+#             try:
+#                 return Article.objects.get(pk=pk)
+#             except Article.DoesNotExist:
+#                 raise Http404
+            
+#         def put(self, request, pk, format=None):
+#             article = self.get_object(pk)
+
+#             if article.is_gallery == False:
+#                 data = f"You should set the article as part of the gallery before you can set it as center article in the gallery."
+#                 return Response({'response': data}, status=status.HTTP_400_BAD_REQUEST)
+
+#             if article.is_gallery_centered == False:
+#                 article.update(is_gallery_centered=True)
+#                 serializer = ArticleSerializer(article)
+#                 return Response(serializer.data)
+        
+
+
+
+# class ArticleCommentsList(APIView):
+#     permission_classes = (permissions.IsAuthenticatedOrReadOnly, )
+
+#     # List all comments belonging to an article.
+#     def get(self, request, article_slug, format=None):
+#         comments = Comment.objects.all(article__slug=article_slug, is_active=True)
+#         serializer = CommentSerializer(comments, many=True)
+#         return Response(serializer.data)
     
 
 # class ArticleLikesList(APIView):
@@ -314,7 +402,7 @@ class CommentList(APIView):
 
     # List all comments, or create a new comment.
     def get(self, request, format=None):
-        comments = Comment.objects.all()
+        comments = Comment.objects.filter(is_active=True).order_by('-created_at')
         serializer = CommentSerializer(comments, many=True)
         return Response(serializer.data)
 
@@ -333,10 +421,10 @@ class CommentDetail(APIView):
         'put': (permissions.IsAuthenticated, ),
         'delete': (permissions.IsAuthenticated, permissions.IsAdminUser, ),
     }
-    
+
     def get_object(self, pk):
         try:
-            return Comment.objects.get(pk=pk)
+            return Comment.objects.get(pk=pk, is_active=True)
         except Comment.DoesNotExist:
             raise Http404
 
@@ -355,6 +443,7 @@ class CommentDetail(APIView):
 
     def delete(self, request, pk, format=None):
         comment = self.get_object(pk)
+        Like.objects.filter(comment__pk=pk).delete()
         comment.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
 
@@ -364,7 +453,7 @@ class CommentSoftDeleteOrReactivate(APIView):
   
     def get_object(self, pk):
         try:
-            return Comment.objects.get(pk=pk)
+            return Comment.objects.get(pk=pk, is_active=True)
         except Comment.DoesNotExist:
             raise Http404
     
@@ -392,7 +481,7 @@ class LikeList(APIView):
 
     # List all likes, or create a new like.
     def get(self, request, format=None):
-        likes = Like.objects.all()
+        likes = Like.objects.filter(is_active=True).order_by('-created_at')
         serializer = LikeSerializer(likes, many=True)
         return Response(serializer.data)
 
@@ -412,7 +501,7 @@ class LikeDetail(APIView):
     
     def get_object(self, pk):
         try:
-            return Like.objects.get(pk=pk)
+            return Like.objects.get(pk=pk, is_active=True)
         except Like.DoesNotExist:
             raise Http404
 

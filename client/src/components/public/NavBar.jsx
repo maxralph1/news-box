@@ -1,11 +1,16 @@
+import { Link } from 'react-router-dom';
+import { route } from '../../routes';
 import { useCategories } from '../../hooks/useCategories';
+import { useSubCategories } from '../../hooks/useSubCategories';
 import { useCategory } from '../../hooks/useCategory';
 
 export default function NavBar() {
     const { categories, error, loading, getCategories } = useCategories();
+    const { subCategories, getSubCategories } = useSubCategories();
     const {destroyCategory, errors } = useCategory();
 
     console.log(categories);
+    console.log(subCategories);
 
     return (
         // <!-- navbar -->
@@ -22,21 +27,28 @@ export default function NavBar() {
                         <ul className="navbar-nav">
                             {(categories.length > 0 && !loading) ? categories.map(category => {
                                 return (
-                                    <>
-                                        <li key={category.id} className="categories nav-item dropdown">
-                                            <a className="category nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown"
-                                                aria-expanded="false">{category.title}</a>
-                                            {(category.sub_categories.length > 0) && 
-                                                <ul className="dropdown-menu">
-                                                    {category.sub_categories.map(subCategory => {
-                                                        return (
-                                                            <li key={subCategory.id}><a className="sub-category dropdown-item" href="#">{subCategory.title}</a></li>
-                                                        )
-                                                    })}
-                                                </ul>
-                                            }
-                                        </li>
-                                    </>
+                                    <li key={category.id} className="categories nav-item dropdown">
+                                        {(category.sub_categories.length > 0) 
+                                            ? <a className="category nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown"
+                                            aria-expanded="false">{category.title}</a>
+                                            : <a className="category nav-link" href="#" data-bs-toggle="dropdown"
+                                            aria-expanded="false">{category.title}</a>}
+                                        {(category.sub_categories.length > 0) && 
+                                            <ul className="dropdown-menu">
+                                                {category.sub_categories.map(subCategory => {
+                                                    return (
+                                                        <Link
+                                                            key={subCategory.id} 
+                                                            to={ route('sub-categories.show', { id: subCategory.id }) }
+                                                            className="sub-category dropdown-item"
+                                                        >
+                                                            {subCategory.title}
+                                                        </Link>
+                                                    )
+                                                })}
+                                            </ul>
+                                        }
+                                    </li>
                                 )
                             }) : (
                                 <>

@@ -1,4 +1,8 @@
+import { useArticles } from '../../hooks/useArticles';
+
 export default function Hero() {
+    const { articles, error, loading, getArticles } = useArticles();
+
     return (
         // <!-- hero -->
         <section className="articles hero mb-5">
@@ -17,50 +21,20 @@ export default function Hero() {
                         aria-label="Slide 5"></button>
                 </section>
                 <section className="carousel-inner">
-                    <article className="carousel-item active">
-                        <img src="../images/BingWallpaper(10).jpg" className="d-block w-100" alt="..." />
-                        <div className="carousel-caption d-flex flex-column justify-content-end align-items-start">
-                            <h5 className="text-start text-uppercase fs-6 px-2" style={{backgroundColor: '#ffebcd', color: '#330033'}}>Lifestyle</h5>
-                            <p className="text-start mb-0">Some representative placeholder content for the first slide.</p>
-                            <p className="text-start fs-6 fw-light">by Lindsay Press</p>
-                        </div>
-                    </article>
-                    <article className="carousel-item active">
-                        <img src="../images/BingWallpaper(10).jpg" className="d-block w-100" alt="..." />
-                        <div className="carousel-caption d-flex flex-column justify-content-end align-items-start">
-                            <h5 className="text-start text-uppercase fs-6 px-2" style={{backgroundColor: '#ffebcd', color: '#330033'}}>Lifestyle
-                            </h5>
-                            <p className="text-start mb-0">Some representative placeholder content for the first slide.</p>
-                            <p className="text-start fs-6 fw-light">by Lindsay Press</p>
-                        </div>
-                    </article>
-                    <article className="carousel-item active">
-                        <img src="../images/BingWallpaper(10).jpg" className="d-block w-100" alt="..." />
-                        <div className="carousel-caption d-flex flex-column justify-content-end align-items-start">
-                            <h5 className="text-start text-uppercase fs-6 px-2" style={{backgroundColor: '#ffebcd', color: '#330033'}}>Lifestyle
-                            </h5>
-                            <p className="text-start mb-0">Some representative placeholder content for the first slide.</p>
-                            <p className="text-start fs-6 fw-light">by Lindsay Press</p>
-                        </div>
-                    </article>
-                    <article className="carousel-item active">
-                        <img src="../images/BingWallpaper(10).jpg" className="d-block w-100" alt="..." />
-                        <div className="carousel-caption d-flex flex-column justify-content-end align-items-start">
-                            <h5 className="text-start text-uppercase fs-6 px-2" style={{backgroundColor: '#ffebcd', color: '#330033'}}>Lifestyle
-                            </h5>
-                            <p className="text-start mb-0">Some representative placeholder content for the first slide.</p>
-                            <p className="text-start fs-6 fw-light">by Lindsay Press</p>
-                        </div>
-                    </article>
-                    <article className="carousel-item active">
-                        <img src="../images/BingWallpaper(10).jpg" className="d-block w-100" alt="..." />
-                        <div className="carousel-caption d-flex flex-column justify-content-end align-items-start">
-                            <h5 className="text-start text-uppercase fs-6 px-2" style={{backgroundColor: '#ffebcd', color: '#330033'}}>Lifestyle
-                            </h5>
-                            <p className="text-start mb-0">Some representative placeholder content for the first slide.</p>
-                            <p className="text-start fs-6 fw-light">by Lindsay Press</p>
-                        </div>
-                    </article>
+                    {(articles.length > 0 && !loading) && articles.map(article => {
+                        if (article.is_gallery == true) {
+                            return (
+                                <article className="carousel-item active" key={article.id}>
+                                    <img src={'http://localhost:8000/' + article.image} className="d-block w-100" alt="..." />
+                                    <div className="carousel-caption d-flex flex-column justify-content-end align-items-start">
+                                        <h5 className="text-start text-uppercase fs-6 px-2" style={{backgroundColor: '#ffebcd', color: '#330033'}}>{article.category.title}</h5>
+                                        <p className="text-start mb-0">{article.title}</p>
+                                        <p className="text-start fs-6 fw-light">by {article.added_by.first_name} {article.added_by.last_name}</p>
+                                    </div>
+                                </article>
+                            )
+                        }
+                    })}
                 </section>
             </div>
             {/* <!-- end mobile --> */}

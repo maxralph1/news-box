@@ -6,10 +6,28 @@ const routeNames = {
     'sub-categories.show': '/sub-categories/:id', 
     'articles.index': '/articles', 
     'articles.show': '/articles/:id', 
+    // 'search': '/search', 
     'register': '/register', 
     'login': '/login', 
+
+    // Auth routes
     'dashboard': '/dashboard', 
-    // 'search': '/search', 
+    'dashboard.categories.index': '/dashboard/categories', 
+    'dashboard.categories.create': '/dashboard/categories/create', 
+    'dashboard.categories.show': '/dashboard/categories/:id', 
+    'dashboard.categories.edit': '/dashboard/categories/:id/edit', 
+    'dashboard.sub-categories.index': '/dashboard/sub-categories', 
+    'dashboard.sub-categories.create': '/dashboard/sub-categories/create', 
+    'dashboard.sub-categories.show': '/dashboard/sub-categories/:id', 
+    'dashboard.sub-categories.edit': '/dashboard/sub-categories/:id/edit', 
+    'dashboard.articles.index': '/dashboard/articles', 
+    'dashboard.articles.create': '/dashboard/articles/create', 
+    'dashboard.articles.show': '/dashboard/articles/:id', 
+    'dashboard.articles.edit': '/dashboard/articles/:id/edit', 
+    'dashboard.authors.index': '/dashboard/authors', 
+    'dashboard.authors.create': '/dashboard/authors/create', 
+    'dashboard.authors.show': '/dashboard/authors/:id', 
+    'dashboard.authors.edit': '/dashboard/authors/:id/edit', 
 }
 
 function route(name, params = {}) {

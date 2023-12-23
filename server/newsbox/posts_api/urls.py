@@ -12,23 +12,26 @@ urlpatterns = [
     path('categories/<int:pk>/soft-delete-or-reactivate/', views.CategorySoftDeleteOrReactivate.as_view()),
     # path('categories/<slug:like_slug>/likes/', views.CategoryLikesList.as_view()),
 
-    # # Sub-categories
-    # path('sub-categories/', views.SubCategoryList.as_view()),
-    # path('sub-categories/<int:pk>/', views.SubCategoryDetail.as_view()),
-    # path('sub-categories/<int:pk>/soft-delete-or-reactivate/', views.SubCategorySoftDeleteOrReactivate.as_view()),
-    # # path('sub-categories/<slug:like_slug>/likes/', views.SubCategoryLikesList.as_view()),
-
     # Sub-categories
-    path('categories/<int:category_pk>/sub-categories/', views.SubCategoryList.as_view()),
-    path('categories/<int:category_pk>/sub-categories/<int:pk>/', views.SubCategoryDetail.as_view()),
-    path('categories/<int:category_pk>/sub-categories/<int:pk>/soft-delete-or-reactivate/', views.SubCategorySoftDeleteOrReactivate.as_view()),
+    path('sub-categories/', views.SubCategoryList.as_view()),
+    path('sub-categories/<int:pk>/', views.SubCategoryDetail.as_view()),
+    path('sub-categories/<int:pk>/soft-delete-or-reactivate/', views.SubCategorySoftDeleteOrReactivate.as_view()),
     # path('sub-categories/<slug:like_slug>/likes/', views.SubCategoryLikesList.as_view()),
+
+    # # Sub-categories
+    # path('categories/<int:category_pk>/sub-categories/', views.SubCategoryList.as_view()),
+    # path('categories/<int:category_pk>/sub-categories/<int:pk>/', views.SubCategoryDetail.as_view()),
+    # path('categories/<int:category_pk>/sub-categories/<int:pk>/soft-delete-or-reactivate/', views.SubCategorySoftDeleteOrReactivate.as_view()),
+    # # path('sub-categories/<slug:like_slug>/likes/', views.SubCategoryLikesList.as_view()),
 
     # Articles
     path('articles/', views.ArticleList.as_view()),
     path('articles/<int:pk>/', views.ArticleDetail.as_view()),
     path('articles/<int:pk>/soft-delete-or-reactivate/', views.ArticleSoftDeleteOrReactivate.as_view()),
-    path('articles/<slug:article_slug>/comments/', views.ArticleCommentsList.as_view()),
+    # path('articles/<slug:article_slug>/comments/', views.ArticleCommentsList.as_view()),
+    path('articles/<int:pk>/set-as-featured/', views.ArticleSetAsFeatured.as_view()),
+    path('articles/<int:pk>/set-as-gallery/', views.ArticleSetAsGallery.as_view()),
+    # path('articles/<int:pk>/set-as-gallery-centered/', views.ArticleSetAsGalleryCentered.as_view()),
     # path('articles/<slug:like_slug>/likes/', views.ArticleLikesList.as_view()),
 
     # Comments

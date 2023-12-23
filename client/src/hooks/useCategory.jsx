@@ -1,6 +1,8 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import axiosInstance from '../utils/axios';
+// import axios from '../utils/axios';
+import axios from 'axios'
+import useAxios from '../utils/useAxios'
 import { route } from '../routes';
 
 
@@ -9,6 +11,7 @@ export function useCategory(id = null) {
     const [loading, setLoading] = useState(false);
     const [data, setData] = useState({});
     const navigate = useNavigate();
+    const api = useAxios();
 
     useEffect(() => {
         if (id !== null) {
@@ -23,8 +26,11 @@ export function useCategory(id = null) {
         setErrors({});
 
         console.log(category)
-        return axiosInstance.post('categories/', category)
-            .then(() => navigate(route('categories.index')))
+        return api.post('posts/categories/', {
+            title: category.title,
+            description: category.description,
+        })
+            .then(() => navigate(route('dashboard.categories.index')))
             .catch(error => {
                 console.log(error);
                 setErrors(error.response.data.errors);
@@ -35,8 +41,8 @@ export function useCategory(id = null) {
     async function getCategory(id, { signal } = {}) {
         setLoading(true);
 
-        return axiosInstance.get(`categories/${id}/`, { signal })
-            .then(response => setData(response.data.data))
+        return axios.get(`categories/${id}/`, { signal })
+            .then(response => setData(response.data))
             .catch(() => {})
             .finally(() => setLoading(false));
     }
@@ -45,7 +51,7 @@ export function useCategory(id = null) {
         setLoading(true);
         setErrors({});
 
-        return axiosInstance.put(`categories/${category.id}/`, category)
+        return axios.put(`categories/${category.id}/`, category)
             .then(() => navigate(route('categories.index')))
             .catch(error => {
                 console.log(error);
@@ -55,7 +61,7 @@ export function useCategory(id = null) {
     }
 
     async function destroyCategory(category) {
-        return axiosInstance.delete(`categories/${category.id}/`)
+        return axios.delete(`categories/${category.id}/`)
     }
 
     return {

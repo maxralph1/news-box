@@ -43,6 +43,7 @@ class Category(models.Model):
 
     def save(self, *args, **kwargs):
         self.slug = slugify(self.title, allow_unicode=False)
+        # self.is_active = True
         super().save(*args, **kwargs)
 
     def deactivate(self, *args, **kwargs):
@@ -57,7 +58,6 @@ class Category(models.Model):
 
     def __str__(self):
         return self.title
-    
 
 
 class SubCategory(models.Model):
@@ -106,6 +106,7 @@ class SubCategory(models.Model):
                 str(datetime.now()),
                 allow_unicode=False
             )
+        # self.is_active = True
         super().save(*args, **kwargs)
 
     def deactivate(self, *args, **kwargs):
@@ -120,7 +121,7 @@ class SubCategory(models.Model):
 
     def __str__(self):
         return self.title
-    
+
 
 class Article(models.Model):
     category = models.ForeignKey(
@@ -196,6 +197,7 @@ class Article(models.Model):
                 str(datetime.now()),
                 allow_unicode=False
             )
+        # self.is_active = True
         super().save(*args, **kwargs)
 
     def deactivate(self, *args, **kwargs):
@@ -213,7 +215,7 @@ class Article(models.Model):
     
 
 class Comment(models.Model):
-    article = models.ForeignKey(Article, on_delete=models.CASCADE)
+    article = models.ForeignKey(Article, related_name='comments', on_delete=models.CASCADE)
     title = models.CharField(
         verbose_name=_('Comment Title'),
         help_text=_('Comment Title'),
@@ -239,6 +241,10 @@ class Comment(models.Model):
         _('Created at'), auto_now_add=True, editable=False)
     updated_at = models.DateTimeField(_('Updated at'), auto_now=True)
     deleted_at = models.DateTimeField(null=True, blank=True)
+
+    def save(self, *args, **kwargs):
+        # self.is_active = True
+        super().save(*args, **kwargs)
 
     def deactivate(self, *args, **kwargs):
         self.is_active = False
@@ -301,3 +307,7 @@ class Like(models.Model):
         _('Created at'), auto_now_add=True, editable=False)
     updated_at = models.DateTimeField(_('Updated at'), auto_now=True)
     deleted_at = models.DateTimeField(null=True, blank=True)
+
+    def save(self, *args, **kwargs):
+        # self.is_active = True
+        super().save(*args, **kwargs)
