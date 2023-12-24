@@ -1,5 +1,17 @@
+####
+# Django 
+####
+*.log
+*.pot
+*.pyc
+__pycache__/
+
+venv/
+.env
+htmlcov
 dev-notes.txt
-server-with-dj-rest-auth/*
+
+server-with-dj-rest-auth/
 server-with-djoser-auth/
 templates/pages/index2.html
 templates/pages/index3.html

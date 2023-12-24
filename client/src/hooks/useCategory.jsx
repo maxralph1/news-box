@@ -26,10 +26,7 @@ export function useCategory(id = null) {
         setErrors({});
 
         console.log(category)
-        return api.post('posts/categories/', {
-            title: category.title,
-            description: category.description,
-        })
+        return api.post('posts/categories/', category)
             .then(() => navigate(route('dashboard.categories.index')))
             .catch(error => {
                 console.log(error);
@@ -41,7 +38,7 @@ export function useCategory(id = null) {
     async function getCategory(id, { signal } = {}) {
         setLoading(true);
 
-        return axios.get(`categories/${id}/`, { signal })
+        return axios.get(`posts/categories/${id}/`, { signal })
             .then(response => setData(response.data))
             .catch(() => {})
             .finally(() => setLoading(false));
@@ -61,11 +58,12 @@ export function useCategory(id = null) {
     }
 
     async function destroyCategory(category) {
-        return axios.delete(`categories/${category.id}/`)
+        return api.delete(`posts/categories/${category.id}/`)
     }
 
     return {
-        category: { data, setData, errors, loading },
+        category: { data, setData, errors, loading }, 
+        getCategory, 
         createCategory, 
         updateCategory, 
         destroyCategory

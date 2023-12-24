@@ -16,10 +16,14 @@ import DashboardCategories from './views/dashboard/categories/Categories.jsx';
 import DashboardCategoryCreate from './views/dashboard/categories/CreateCategory.jsx';
 import DashboardCategory from './views/dashboard/categories/Category.jsx';
 import DashboardCategoryEdit from './views/dashboard/categories/EditCategory.jsx';
-import DashboardSubCategories from './views/dashboard/sub-categories/SubCategories.jsx';
-import DashboardSubCategory from './views/dashboard/sub-categories/SubCategory.jsx';
+import DashboardSubCategories from './views/dashboard/sub-categories/SubCategories.jsx'; 
+import DashboardSubCategoryCreate from './views/dashboard/sub-categories/CreateSubCategory.jsx';
+import DashboardSubCategory from './views/dashboard/sub-categories/SubCategory.jsx'; 
+import DashboardSubCategoryEdit from './views/dashboard/sub-categories/EditSubCategory.jsx';
 import DashboardArticles from './views/dashboard/articles/Articles.jsx';
-import DashboardArticle from './views/dashboard/articles/Article.jsx';
+import DashboardArticleCreate from './views/dashboard/articles/CreateArticle.jsx';
+import DashboardArticle from './views/dashboard/articles/Article.jsx'; 
+import DashboardArticleEdit from './views/dashboard/articles/EditArticle.jsx';
 
 
 export default function App() {
@@ -46,10 +50,14 @@ export default function App() {
             <Route element={<DashboardCategoryCreate/>} path={ route('dashboard.categories.create') } />
             <Route element={<DashboardCategory/>} path={ route('dashboard.categories.show') } />
             <Route element={<DashboardCategoryEdit/>} path={ route('dashboard.categories.edit') } />
-            <Route element={<DashboardSubCategories/>} path={ route('dashboard.sub-categories.index') } />
-            <Route element={<DashboardSubCategory/>} path={ route('dashboard.sub-categories.show') } />
-            <Route element={<DashboardArticles/>} path={ route('dashboard.articles.index') } />
+            <Route element={<DashboardSubCategories/>} path={ route('dashboard.sub-categories.index') } /> 
+            <Route element={<DashboardSubCategoryCreate/>} path={ route('dashboard.sub-categories.create') } />
+            <Route element={<DashboardSubCategory/>} path={ route('dashboard.sub-categories.show') } /> 
+            <Route element={<DashboardSubCategoryEdit/>} path={ route('dashboard.sub-categories.edit') } />
+            <Route element={<DashboardArticles/>} path={ route('dashboard.articles.index') } /> 
+            <Route element={<DashboardArticleCreate/>} path={ route('dashboard.articles.create') } /> 
             <Route element={<DashboardArticle/>} path={ route('dashboard.articles.show') } />
+            <Route element={<DashboardArticleEdit/>} path={ route('dashboard.articles.edit') } />
           </Route>
 
         </Routes>

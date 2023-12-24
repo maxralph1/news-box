@@ -1,13 +1,31 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { route } from '../routes';
-import axios from 'axios';
+import { route } from '../routes'; 
+import swal from 'sweetalert2';
+import axios from 'axios'; 
+import useAxios from '../utils/useAxios';
 
 export function useArticle(id = null) {
     const [errors, setErrors] = useState({});
     const [loading, setLoading] = useState(false);
     const [data, setData] = useState({});
     const navigate = useNavigate();
+    const axiosInstance = useAxios();
+
+    const swalUnauthAlert = (error) => {
+        if (error.response.status === 401 && error.response.statusText === 'Unauthorized') {
+            swal.fire({
+                title: 'You are not logged in!',
+                icon: 'error',
+                toast: true,
+                timer: 6000,
+                position: 'top-right',
+                timerProgressBar: true,
+                showConfirmButton: false,
+            })
+            navigate(route('login'))
+        }
+    }
 
     useEffect(() => {
         if (id !== null) {
@@ -20,12 +38,14 @@ export function useArticle(id = null) {
     async function createArticle(article) {
         setLoading(true)
         setErrors({})
+        console.log(article)
 
-        return axios.post('articles', article)
-            .then(() => navigate(route('articles.index')))
+        return axiosInstance.post('posts/articles/', article)
+            .then(() => navigate(route('dashboard.articles.index')))
             .catch(error => {
                 if (error.response) {
-                    setErrors(error.response.data.errors)
+                    setErrors(error.response)
+                    swalUnauthAlert(error)
                 }
             })
             .finally(() => setLoading(false))

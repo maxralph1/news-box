@@ -1,6 +1,6 @@
 import { useContext, useState } from 'react';
 import { Link } from 'react-router-dom';
-import swal from 'sweetalert2';
+import Swal from 'sweetalert2';
 import AuthContext from '../../context/AuthContext';
 import Layout from '../../components/auth/Layout';
 import '../../assets/auth.css';
@@ -20,7 +20,7 @@ export default function Register() {
       if (password == password2) {
           registerUser(email, firstname, lastname, username, password)
       } else {
-        swal.fire({
+        Swal.fire({
               title: 'Given passwords do not match',
               icon: 'error',
               toast: true,

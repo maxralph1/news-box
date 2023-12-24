@@ -24,10 +24,23 @@ class User(AbstractUser):
 
 
 class Profile(models.Model):
+    ADMIN = "ADM"
+    AUTHOR = "AUT"
+    USER = "USR"
+    ROLE_CHOICES = {
+        ADMIN: "Admin",
+        AUTHOR: "Author", 
+        USER: "User",
+    }
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     bio = models.TextField(_('Bio'), max_length=500, blank=True)
     image = models.ImageField(_('Image'), upload_to="images/users", default="images/users/default.png")
     verified = models.BooleanField(_('Verified'), default=False)
+    role = models.CharField(
+        max_length=3,
+        choices=ROLE_CHOICES,
+        default=USER,
+    )
 
 
 def create_user_profile(sender, instance, created, **kwargs):
