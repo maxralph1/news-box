@@ -1,4 +1,7 @@
+import { useEffect, useState } from 'react'
+import axios from "axios";
 import { formatDistanceToNow, formatRFC7231, intlFormat } from 'date-fns';
+import InfiniteScroll from "react-infinite-scroll-component";
 import { Link } from 'react-router-dom';
 import { route } from '../../routes';
 import Layout from '../../components/public/Layout.jsx';
@@ -15,6 +18,25 @@ export default function Home() {
     // console.log(subCategories);
     // console.log(articles);
 
+    // Infinite scroll
+    let page = 1;
+    const fetchData = (setItems, items) => {
+        axios
+        .get(`http://localhost:8000/api/posts/articles/paginated?_page=${page}`)
+        .then((res) => {
+            setItems([...items, ...res.data]);
+            page = page + 1;
+        });
+    };
+    
+    // const refresh = (setItems) => {};
+
+    const [items, setItems] = useState([]);
+    
+    useEffect(()=>{
+        fetchData(setItems,items)
+    },[])
+    // end Infinite scroll
 
     return (
         <Layout>
@@ -69,7 +91,7 @@ export default function Home() {
                 <div className="my-3">
                     <h2 className="fw-bolder fs-4 text-uppercase" style={{color: 'blueviolet'}}>Articles</h2>
                 </div>
-                {(articles.length > 0 && !loading) ? articles.map(article => {
+                {/* {(articles.length > 0 && !loading) ? articles.map(article => {
                     return (
                         <div className="card mb-3 rounded-0 shadow-lg border-0" key={article.id}>
                             <div className="row g-0">
@@ -101,8 +123,56 @@ export default function Home() {
                             <span className="visually-hidden">Loading...</span>
                         </div>
                     </div>
-                )}
+                )} */}
                 
+
+                <InfiniteScroll
+                    dataLength={items.length}
+                    next={() => {
+                        fetchData(setItems, items);
+                    }}
+                    hasMore={true}
+                    loader={
+                        <div className="d-flex justify-content-center my-5">
+                            <div className="spinner-border" role="status">
+                                <span className="visually-hidden">Loading...</span>
+                            </div>
+                        </div>
+                    }
+                    endMessage={
+                        <p style={{ textAlign: "center" }}>
+                            <b>Yay! You have seen it all</b>
+                        </p>
+                    }
+                >
+                <div style={{ minHeight: "100vh" }}>
+                    {items.map((article) => (
+                        <div className="card mb-3 rounded-0 shadow-lg border-0" key={article.id}>
+                            <div className="row g-0">
+                                <div className="col-sm-4 col-md-6">
+                                    <img src={'http://localhost:8000/' + article.image} className="img-fluid rounded-0 h-100" alt={article.title} />
+                                </div>
+                                <div className="col-sm-8 col-md-6">
+                                    <div className="card-body d-flex flex-column justify-content-between h-100">
+                                        <div>
+                                            <h3 className="card-title fs-6 fw-semibold" style={{color: 'blueviolet'}}>{article.sub_category.title}</h3>
+                                            <p className="card-text fs-5 fw-semibold">{article.title}</p>
+                                        </div>
+                                        <div>
+                                            <p className="card-text fw-semibold text-secondary fs-6">by @{article.added_by} | {intlFormat(new Date(article.created_at), {
+                                                year: 'numeric',
+                                                month: 'short',
+                                                day: 'numeric',
+                                            })}</p>
+                                        </div>
+                                        
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    ))}
+                </div>
+            </InfiniteScroll>
             </section>
 
         </Layout>

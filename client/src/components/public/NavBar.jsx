@@ -17,7 +17,7 @@ export default function NavBar() {
 
     // console.log(categories);
     // console.log(subCategories);
-    console.log(user);
+    // console.log(user);
 
     useEffect(() => {
         if (token) {
@@ -46,7 +46,7 @@ export default function NavBar() {
                         <h1><a className="navbar-brand fw-bolder" href="#">NewsBox</a></h1>
                     </div>
                     <div>
-                        <span className="text-white me-2 d-md-none">
+                        <span className="text-white mx-2 d-md-none">
                             {token ? 
                                 <>
                                     <span className="d-none d-md-block">
@@ -140,7 +140,7 @@ export default function NavBar() {
                                     <span 
                                         role='button'
                                         onClick={logoutUser}
-                                        className='text-white'>
+                                        className='text-white mx-2'>
                                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-door-closed" viewBox="0 0 16 16">
                                             <path d="M3 2a1 1 0 0 1 1-1h8a1 1 0 0 1 1 1v13h1.5a.5.5 0 0 1 0 1h-13a.5.5 0 0 1 0-1H3zm1 13h8V2H4z"/>
                                             <path d="M9 9a1 1 0 1 0 2 0 1 1 0 0 0-2 0"/>

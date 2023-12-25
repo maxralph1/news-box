@@ -3,6 +3,7 @@ from django.db import transaction
 from django.http import Http404
 from rest_framework import permissions, status
 from rest_framework.views import APIView
+from rest_framework.pagination import PageNumberPagination
 from rest_framework.response import Response
 from posts.models import Category, SubCategory, Article, Comment, Like 
 from .serializers import CategorySerializer, SubCategorySerializer, ArticleSerializer, CommentSerializer, LikeSerializer, CategoryMainSerializer, SubCategoryMainSerializer, ArticleMainSerializer
@@ -235,6 +236,22 @@ class ArticleList(APIView):
             serializer.save(added_by=self.request.user)
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    
+
+class StandardResultsSetPagination(PageNumberPagination):
+    page_size = 2
+    page_size_query_param = 'page_size'
+    max_page_size = 5
+
+class ArticleListPaginated(APIView):
+    permission_classes = (permissions.IsAuthenticatedOrReadOnly, )
+
+    # List all articles, or create a new article.
+    def get(self, request, format=None):
+        articles = Article.objects.filter(is_active=True).order_by('-created_at')
+        serializer = ArticleMainSerializer(articles, many=True)
+        pagination_class = StandardResultsSetPagination
+        return Response(serializer.data)
 
 
 class ArticleDetail(APIView):

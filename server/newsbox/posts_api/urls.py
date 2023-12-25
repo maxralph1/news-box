@@ -26,6 +26,7 @@ urlpatterns = [
 
     # Articles
     path('articles/', views.ArticleList.as_view()),
+    path('articles/paginated/', views.ArticleListPaginated.as_view()),
     path('articles/<int:pk>/', views.ArticleDetail.as_view()),
     path('articles/<int:pk>/soft-delete-or-reactivate/', views.ArticleSoftDeleteOrReactivate.as_view()),
     # path('articles/<slug:article_slug>/comments/', views.ArticleCommentsList.as_view()),
