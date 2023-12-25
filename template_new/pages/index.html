@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
+            integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+        
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"
+            defer></script>
+        
+        <link rel="stylesheet" href="../style.css" />
+        
+        <!-- scripts -->
+        <!-- <script src="../script.js" defer></script> -->
+        
+        <title>NewsBox</title>
+    </head>
+    <body>
+        <header>
+            <nav class="navbar navbar-expand-lg navbar-dark fixed-top" aria-label="Fifth navbar example" style="background-color: blueviolet;">
+                <div class="container">
+                    <div>
+                        <a class="navbar-brand fw-bolder" href="#">NewsBox</a>
+                    </div>
+                    <div>
+                        <span class="text-white me-2 d-md-none">Hi John</span>
+                        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarsExample05"
+                            aria-controls="navbarsExample05" aria-expanded="false" aria-label="Toggle navigation">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-filter-right"
+                                viewBox="0 0 16 16">
+                                <path
+                                    d="M14 10.5a.5.5 0 0 0-.5-.5h-3a.5.5 0 0 0 0 1h3a.5.5 0 0 0 .5-.5m0-3a.5.5 0 0 0-.5-.5h-7a.5.5 0 0 0 0 1h7a.5.5 0 0 0 .5-.5m0-3a.5.5 0 0 0-.5-.5h-11a.5.5 0 0 0 0 1h11a.5.5 0 0 0 .5-.5" />
+                            </svg>
+                        </button>
+                    </div>
+                    
+            
+                    <div class="collapse navbar-collapse" id="navbarsExample05">
+                        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                            <li class="nav-item">
+                                <a class="nav-link active" aria-current="page" href="#">Home</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="#">Link</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link disabled" aria-disabled="true">Disabled</a>
+                            </li>
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown"
+                                    aria-expanded="false">Dropdown</a>
+                                <ul class="dropdown-menu">
+                                    <li><a class="dropdown-item" href="#">Action</a></li>
+                                    <li><a class="dropdown-item" href="#">Another action</a></li>
+                                    <li><a class="dropdown-item" href="#">Something else here</a></li>
+                                </ul>
+                            </li>
+                        </ul>
+                        <div class="d-flex align-items-center text-white column-gap-3">
+                            <form role="search">
+                                <input class="form-control" type="search" placeholder="Search" aria-label="Search">
+                            </form>
+                            <span class="d-none d-md-block">Hi John</span>
+                        </div>
+                        
+                    </div>
+                </div>
+            </nav>
+        </header>
+        
+        <!-- Begin page content -->
+        <!-- <main class="flex-shrink-0">
+            <div class="container">
+                <h1 class="mt-5">Sticky footer with fixed navbar</h1>
+                <p class="lead">Pin a footer to the bottom of the viewport in desktop browsers with this custom HTML and CSS. A
+                    fixed navbar has been added with <code class="small">padding-top: 60px;</code> on the <code
+                        class="small">main &gt; .container</code>.</p>
+                <p>Back to <a href="/docs/5.3/examples/sticky-footer/">the default sticky footer</a> minus the navbar.</p>
+            </div>
+        </main> -->
+
+        <main class="container my-5 py-4">
+            <section class="">
+                <h2 class="d-none">Featured Section</h2>
+                <div class="row row-gap-4">
+                    <div class="col-sm-12 col-lg-8">
+                        <div class="card text-bg-dark rounded-0">
+                            <img src="../images//BingWallpaper(10).jpg" class="card-img rounded-0" alt="...">
+                            <div class="card-img-overlay d-flex flex-column justify-content-end">
+                                <h3 class="card-title fs-5 fw-semibold p-1 align-self-start" style="background-color: blueviolet;">Books</h3>
+                                <p class="card-text fs-3 fw-semibold">What were the best books published by Sourcebooks in 2023?</p>
+                                <p class="card-text fs-5 fw-semibold"><small>Rebecca Mills | Dec 24, 2023</small></p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-12 col-lg-4 d-flex flex-column">
+                        <div class="card mb-3 shadow-lg rounded-0 border-0">
+                            <div class="card-body">
+                                <h3 class="card-title fs-6 fw-semibold" style="color: blueviolet;">Books</h3>
+                                <p class="card-text fw-semibold">What were the best books published by Sourcebooks in 2023?</p>
+                                <p class="card-text fw-semibold text-secondary fs-6">Rebecca Mills | Dec 24, 2023</p>
+                            </div>
+                        </div>
+                        <div class="card mb-3 shadow-lg rounded-0 border-0">
+                            <div class="card-body">
+                                <h3 class="card-title fs-6 fw-semibold" style="color: blueviolet;">Books</h3>
+                                <p class="card-text fw-semibold">What were the best books published by Sourcebooks in 2023?</p>
+                                <p class="card-text fw-semibold text-secondary fs-6">Rebecca Mills | Dec 24, 2023</p>
+                            </div>
+                        </div>
+                        <div class="card mb-3 shadow-lg rounded-0 border-0">
+                            <div class="card-body">
+                                <h3 class="card-title fs-6 fw-semibold" style="color: blueviolet;">Books</h3>
+                                <p class="card-text fw-semibold">What were the best books published by Sourcebooks in 2023?</p>
+                                <p class="card-text fw-semibold text-secondary fs-6">Rebecca Mills | Dec 24, 2023</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="border-top mt-4 py-2">
+                <div class="d-flex justify-content-between my-3">
+                    <h2 class="fw-bolder fs-4 text-uppercase" style="color: blueviolet;">TV</h2>
+                    <span class="text-secondary fw-bold">See more</span>
+                </div>
+                <div class="d-flex flex-wrap justify-content-around gap-2">
+                    <div class="card rounded-0 shadow-lg border-0" style="max-width: 15rem;">
+                        <img src="../images//BingWallpaper(10).jpg" class="card-img-top rounded-0" alt="...">
+                        <div class="card-body">
+                            <p class="card-text fs-5 fw-bold">Some quick example text to build on the card title and make up.</p>
+                            <p class="card-text text-secondary fw-bold mt-0">Rebecca Mills</p>
+                        </div>
+                    </div>
+                    <div class="card rounded-0 shadow-lg border-0" style="max-width: 15rem;">
+                        <img src="../images//BingWallpaper(10).jpg" class="card-img-top rounded-0" alt="...">
+                        <div class="card-body">
+                            <p class="card-text fs-5 fw-bold">Some quick example text to build on the card title and make up.</p>
+                            <p class="card-text text-secondary fw-bold mt-0">Rebecca Mills</p>
+                        </div>
+                    </div>
+                    <div class="card rounded-0 shadow-lg border-0" style="max-width: 15rem;">
+                        <img src="../images//BingWallpaper(10).jpg" class="card-img-top rounded-0" alt="...">
+                        <div class="card-body">
+                            <p class="card-text fs-5 fw-bold">Some quick example text to build on the card title and make up.</p>
+                            <p class="card-text text-secondary fw-bold mt-0">Rebecca Mills</p>
+                        </div>
+                    </div>
+                    <div class="card rounded-0 shadow-lg border-0" style="max-width: 15rem;">
+                        <img src="../images//BingWallpaper(10).jpg" class="card-img-top rounded-0" alt="...">
+                        <div class="card-body">
+                            <p class="card-text fs-5 fw-bold">Some quick example text to build on the card title and make up.</p>
+                            <p class="card-text text-secondary fw-bold mt-0">Rebecca Mills</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="border-top mt-5 pt-2">
+                <div class="my-3">
+                    <h2 class="fw-bolder fs-4 text-uppercase" style="color: blueviolet;">Articles</h2>
+                </div>
+                <div class="card mb-3 rounded-0 shadow-lg border-0">
+                    <div class="row g-0">
+                        <div class="col-sm-4 col-md-6">
+                            <img src="../images/BingWallpaper(10).jpg" class="img-fluid rounded-0 h-100" alt="...">
+                        </div>
+                        <div class="col-sm-8 col-md-6">
+                            <div class="card-body d-flex flex-column justify-content-between h-100">
+                                <div>
+                                    <h3 class="card-title fs-6 fw-semibold" style="color: blueviolet;">Books</h3>
+                                    <p class="card-text fs-5 fw-semibold">What were the best books published by Sourcebooks in 2023?</p>
+                                </div>
+                                <div>
+                                    <p class="card-text fw-semibold text-secondary fs-6">Rebecca Mills | Dec 24, 2023</p>
+                                </div>
+                                
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+        
+        <footer class="footer mt-auto py-3 text-white" style="background-color: blueviolet;">
+            <div class="container py-3">
+                <h2 class="text-center fs-5 fw-bold text-uppercase lh-1 mb-3">NewsBox</h2>
+                <ul class="list-style-none mb-3">
+                    <li>About</li>
+                    <li>Openings</li>
+                    <li>Our 300+ Sites</li>
+                    <li>Pitch a Story</li>
+                    <li>Terms of Use</li>
+                    <li>Legal Disclaimer</li>
+                    <li>A-Z Index</li>
+                    <li>Masthead</li>
+                    <li>Contact</li>
+                    <li>FanSided Daily</li>
+                    <li>Privacy Policy</li>
+                    <li>Cookie Policy</li>
+                    <li>Accessibility Statement</li>
+                    <li>Cookie Preferences</li>
+                </ul>
+                <p class="text-center fs-6 border-top pt-3">© 2023 Minute Media - All Rights Reserved. The content on this site is for entertainment and educational purposes only. All betting content is intended for an audience ages 21+. All advice, including picks and predictions, is based on individual commentators’ opinions and not that of Minute Media or its related brands. All picks and predictions are suggestions only. No one should expect to make money from the picks and predictions discussed on this website. For more information, please read our Legal Disclaimer. If you or someone you know has a gambling problem, call 1-800-GAMBLER.</p>
+            </div>
+        </footer>
+    </body>
+</html>
