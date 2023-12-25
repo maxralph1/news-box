@@ -14,7 +14,9 @@ const useAxios = () => {
         headers: {
             'Authorization': `Bearer ${authTokens?.access}`,
             // 'Content-Type': 'application/json',
-            'Content-Type': 'application/x-www-form-urlencoded',
+            // 'Content-Type': 'application/x-www-form-urlencoded', 
+            "Content-Type": "multipart/form-data",
+            // 'Content-Type': 'application/form-data',
             // 'Content-Type': 'text/plain',
             // 'Accept': 'application/json',
         },

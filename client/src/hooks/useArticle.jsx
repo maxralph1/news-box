@@ -40,7 +40,11 @@ export function useArticle(id = null) {
         setErrors({})
         console.log(article)
 
-        return axiosInstance.post('posts/articles/', article)
+        return axiosInstance.post('posts/articles/', article, {
+            headers: {
+                "Content-Type": "multipart/form-data",
+            },
+        })
             .then(() => navigate(route('dashboard.articles.index')))
             .catch(error => {
                 if (error.response) {
@@ -55,7 +59,7 @@ export function useArticle(id = null) {
         setLoading(true)
 
         return axios.get(`articles/${id}`, { signal })
-            .then(response => setData(response.data.data))
+            .then(response => setData(response.data))
             .catch(() => {})
             .finally(() => setLoading(false))
     }

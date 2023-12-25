@@ -104,7 +104,6 @@ export default function CreateArticle() {
                                     onChange={ event => article.setData({
                                         ...article.data,
                                         image: event.target.files,
-                                        // {console.log(event.target.files)}
                                     }) }
                                     className="form-control" 
                                     placeholder="Add an image..." 

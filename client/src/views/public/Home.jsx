@@ -1,144 +1,110 @@
+import { formatDistanceToNow, formatRFC7231, intlFormat } from 'date-fns';
 import { Link } from 'react-router-dom';
-// import dayjs from "dayjs";
-// const dayjs = dayjs.extend(relativeTime);
-import { formatDistanceToNow } from 'date-fns';
 import { route } from '../../routes';
 import Layout from '../../components/public/Layout.jsx';
 import Hero from '../../components/public/Hero.jsx';
-import Aside from '../../components/public/Aside.jsx';
+import { useSubCategories } from '../../hooks/useSubCategories';
+import { useSubCategory } from '../../hooks/useSubCategory';
 import { useArticles } from '../../hooks/useArticles';
-import { useState } from 'react';
-// import { useArticle } from '../../hooks/useArticle';
+import { useArticle } from '../../hooks/useArticle';
 
 export default function Home() {
+    const { subCategories, getSubCategories } = useSubCategories();
     const { articles, error, loading, getArticles } = useArticles();
-    // const {destroyArticle, errors } = useArticle();
-    const [catArticles, setCatArticles] = useState([]);
 
-    console.log(articles);
+    // console.log(subCategories);
+    // console.log(articles);
 
-    // const result = []
-    // let i = 0;
-
-    // do {
-
-    //     setCatArticles(articles[i])
-    //     i++;
-
-    // } while (i < 5);
-    // console.log(catArticles)
-
-    let count = 0;
-    console.log(count)
 
     return (
-        <>
         <Layout>
+
             <Hero />
 
-            <div className='row row-gap-5'>
-                <div className="col-sm-12 col-md-8">
-                    {/* <!-- featured --> */}
-                    <section className="featured">
-                        {(articles.length > 0 && !loading) && articles.map(article => {
-                            if (article.is_featured == true) {
-                                return (
-                                    <article className="" key={article.id}>
-                                        <a href="#" className="text-dark d-block">
-                                            <div>
-                                                <img src={'http://localhost:8000/' + article.image} alt="" className="d-block" />
-                                            </div>
-
-                                            <div style={{marginTop: '-1em'}}>
-                                                <h2 className="d-inline px-2 py-1 fs-6 text-white" style={{backgroundColor: 'rebeccapurple'}}><span>{article.category.title} {formatDistanceToNow(new Date(article.created_at))} ago</span></h2>
-                                                <p className="px-2 fs-2"><span>{article.title}</span></p>
-                                            </div>
-                                        </a>
-                                    </article>
-                                )
-                            }
-                        })}
-                    </section>
-                    {/* <!-- end featured --> */}
-                    
-                    {/* <!-- categories --> */}
-                    <section className="categories">
-                        <div className="mt-5">
-                            <header className="row align-items-center">
-                                <h2 className="col-3 fs-6">Girl Power</h2>
-                                <span className="d-block col-8 w-70" style={{height: '1.25px', backgroundColor: 'rebeccapurple'}}></span>
-                            </header>
-                            <div className="articles row">
-                                {/* {
-                                    let result = '';
-                                    let i = 0;
-
-                                    do {
-                                    i = i + 1;
-                                    result = result + i;
-                                    } while (i < 5);
-                                } */}
-                                {/* { articles.map((article, index) => 
-                                    // <ObjectRow obj={ obj } key={ index }/> ) 
+            {(subCategories.length > 0 && !loading) ? subCategories.map(subCategory => {
+                if (subCategory.articles.length > 3) {
+                    return (
+                        <section className="border-top mt-5 py-2">
+                            <div className="d-flex justify-content-between my-3">
+                                <h2 className="fw-bolder fs-4 text-uppercase" style={{color: 'blueviolet'}}>{subCategory.title}</h2>
+                                <span className="text-secondary fw-bold">
+                                    <Link 
+                                        to={ route('sub-categories.show', { id: subCategory.id }) } 
+                                        className="text-decoration-none text-secondary fw-bold">
+                                        See more
+                                    </Link>
+                                </span>
+                            </div>
+                            <div className="d-flex flex-wrap justify-content-around gap-2">
+                                {(articles.length > 0 && !loading) ? articles.filter(article => article.sub_category.title == subCategory.title).slice(0,4).map(filteredArticle => {
                                     return (
-                                        <p key={ index }>{article.title}</p>
-                                    )
-                                } */}
-                                {/* <div className="col-md-6">
-                                    <article className="border-bottom py-1">
-                                        <div className="card rounded-0 text-bg-dark">
-                                            <img src={'http://localhost:8000/' + articles[0].image} className="card-img" alt="..." />
-                                            <div className="card-img-overlay d-flex flex-column justify-content-end">
-                                                <h3 className="card-title fs-2">{articles[0].title}</h3>
+                                        <div className="card rounded-0 shadow-lg border-0" style={{maxWidth: '15rem'}}>
+                                            <img src={'http://localhost:8000/' + filteredArticle.image} className="card-img-top rounded-0" alt={filteredArticle.title} />
+                                            <div className="card-body">
+                                                <p className="card-text fs-5 fw-bold">{filteredArticle.title}</p>
+                                                <p className="card-text text-secondary fw-bold mt-0">by @{filteredArticle.added_by}</p>
                                             </div>
                                         </div>
-                                    </article>
-                                </div> */}
-                                <div className="col-md-6">
-                                    {(articles.length > 0 && !loading) && 
-                                    // articles.filter(article => article != articles[0].map(filteredArticle => {
-                                    //         <article className="row border-bottom py-1">
-                                    //             <img src="../images/BingWallpaper(10).jpg" alt="" className="col-3 d-block" />
-                                    //             <h3 className="col-8 card-title fs-6">Barbie: The Perfect Gateway To Original Content</h3>
-                                    //         </article>
-                                    //     })
-                                            
-                                            
-                                    // )}
-                                        articles.filter(article => article != articles[0]).map(filteredArticle => (
-                                            <article className="row border-bottom py-1" key={filteredArticle.id}>
-                                                <img src={'http://localhost:8000/' + filteredArticle.image} alt="" className="col-3 d-block" />
-                                                <h3 className="col-8 card-title fs-6">{filteredArticle.title}</h3>
-                                            </article>
-                                        ))
-                                    }
-                                    {/* <article className="row border-bottom py-1">
-                                        <img src="../images/BingWallpaper(10).jpg" alt="" className="col-3 d-block" />
-                                        <h3 className="col-8 card-title fs-6">Barbie: The Perfect Gateway To Original Content</h3>
-                                    </article>
-                                    <article className="row border-bottom py-1">
-                                        <img src="../images/BingWallpaper(10).jpg" alt="" className="col-3 d-block" />
-                                        <h3 className="col-8 card-title fs-6">Barbie: The Perfect Gateway To Original Content</h3>
-                                    </article>
-                                    <article className="row border-bottom py-1">
-                                        <img src="../images/BingWallpaper(10).jpg" alt="" className="col-3 d-block" />
-                                        <h3 className="col-8 card-title fs-6">Barbie: The Perfect Gateway To Original Content</h3>
-                                    </article>
-                                    <article className="row border-bottom py-1">
-                                        <img src="../images/BingWallpaper(10).jpg" alt="" className="col-3 d-block" />
-                                        <h3 className="col-8 card-title fs-6">Barbie: The Perfect Gateway To Original Content</h3>
-                                    </article> */}
+                                    )
+                                }): (
+                                    <div className="d-flex justify-content-center my-5">
+                                        <div className="spinner-border" role="status">
+                                            <span className="visually-hidden">Loading...</span>
+                                        </div>
+                                    </div>
+                                )}
+                            </div>
+                        </section>
+                    )
+                }
+            }) : (
+                <div className="d-flex justify-content-center my-5">
+                    <div className="spinner-border" role="status">
+                        <span className="visually-hidden">Loading...</span>
+                    </div>
+                </div>
+            )}
+
+            <section className="border-top mt-5 pt-2">
+                <div className="my-3">
+                    <h2 className="fw-bolder fs-4 text-uppercase" style={{color: 'blueviolet'}}>Articles</h2>
+                </div>
+                {(articles.length > 0 && !loading) ? articles.map(article => {
+                    return (
+                        <div className="card mb-3 rounded-0 shadow-lg border-0" key={article.id}>
+                            <div className="row g-0">
+                                <div className="col-sm-4 col-md-6">
+                                    <img src={'http://localhost:8000/' + article.image} className="img-fluid rounded-0 h-100" alt={article.title} />
+                                </div>
+                                <div className="col-sm-8 col-md-6">
+                                    <div className="card-body d-flex flex-column justify-content-between h-100">
+                                        <div>
+                                            <h3 className="card-title fs-6 fw-semibold" style={{color: 'blueviolet'}}>{article.sub_category.title}</h3>
+                                            <p className="card-text fs-5 fw-semibold">{article.title}</p>
+                                        </div>
+                                        <div>
+                                            <p className="card-text fw-semibold text-secondary fs-6">by @{article.added_by} | {intlFormat(new Date(article.created_at), {
+                                                year: 'numeric',
+                                                month: 'short',
+                                                day: 'numeric',
+                                            })}</p>
+                                        </div>
+                                        
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </section>
-                    {/* <!-- end categories --> */}
-                </div>
-
-                <Aside />
-            </div>
+                    )
+                }) : (
+                    <div className="d-flex justify-content-center my-5">
+                        <div className="spinner-border" role="status">
+                            <span className="visually-hidden">Loading...</span>
+                        </div>
+                    </div>
+                )}
+                
+            </section>
 
         </Layout>
-        </>
     )
 }

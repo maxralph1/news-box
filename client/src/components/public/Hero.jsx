@@ -1,109 +1,69 @@
+import { formatDistanceToNow, formatRFC7231, intlFormat } from 'date-fns';
 import { useArticles } from '../../hooks/useArticles';
+
 
 export default function Hero() {
     const { articles, error, loading, getArticles } = useArticles();
 
     return (
-        // <!-- hero -->
-        <section className="articles hero mb-5">
-            {/* <!-- mobile --> */}
-            <div id="carouselExampleCaptions" className="carousel slide d-block d-md-none" data-bs-ride="carousel">
-                <section className="carousel-indicators">
-                    <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="0" className="active"
-                        aria-current="true" aria-label="Slide 1"></button>
-                    <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="1"
-                        aria-label="Slide 2"></button>
-                    <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="2"
-                        aria-label="Slide 3"></button>
-                    <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="3"
-                        aria-label="Slide 4"></button>
-                    <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="4"
-                        aria-label="Slide 5"></button>
-                </section>
-                <section className="carousel-inner">
-                    {(articles.length > 0 && !loading) && articles.map(article => {
+        <section className="hero mt-5">
+            <h2 className="d-none">Featured Section</h2>
+            <div className="row row-gap-4">
+                {(articles.length > 0 && !loading) ? articles.map(article => {
+                    if (article.is_featured == true) {
+                        return (
+                            <section className="col-sm-12 col-lg-8">
+                                <div className="card text-bg-dark rounded-0 border-0 shadow-lg" key={article.id}>
+                                    <img src={'http://localhost:8000/' + article.image} className="card-img rounded-0" alt="..." />
+                                    <div className="card-img-overlay d-flex flex-column justify-content-end">
+                                        <h3 className="card-title fs-5 fw-semibold p-1 align-self-start" style={{backgroundColor: 'blueviolet'}}>Books</h3>
+                                        <p className="card-text fs-3 fw-semibold" style={{textShadow: '.2px .2px 1px black'}}>{article.title}</p>
+                                        <p className="card-text fs-5 fw-semibold" style={{textShadow: '.2px .2px 1px black'}}><small>by @{article.added_by} |
+                                        {intlFormat(new Date(article.created_at), {
+                                            year: 'numeric',
+                                            month: 'short',
+                                            day: 'numeric',
+                                        })}
+                                        </small></p>
+                                    </div>
+                                </div>
+                            </section>
+                        )
+                    }
+                }) : (
+                    <div className="d-flex justify-content-center my-5">
+                        <div className="spinner-border" role="status">
+                            <span className="visually-hidden">Loading...</span>
+                        </div>
+                    </div>
+                )}
+                
+                <aside className="col-sm-12 col-lg-4 d-flex flex-column">
+                    {(articles.length > 0 && !loading) ? articles.map(article => {
                         if (article.is_gallery == true) {
                             return (
-                                <article className="carousel-item active" key={article.id}>
-                                    <img src={'http://localhost:8000/' + article.image} className="d-block w-100" alt="..." />
-                                    <div className="carousel-caption d-flex flex-column justify-content-end align-items-start">
-                                        <h5 className="text-start text-uppercase fs-6 px-2" style={{backgroundColor: '#ffebcd', color: '#330033'}}>{article.category.title}</h5>
-                                        <p className="text-start mb-0">{article.title}</p>
-                                        <p className="text-start fs-6 fw-light">by {article.added_by.first_name} {article.added_by.last_name}</p>
+                                <div className="card mb-3 shadow-lg rounded-0 border-0" key={article.id}>
+                                    <div className="card-body">
+                                        <h3 className="card-title fs-6 fw-semibold" style={{color: 'blueviolet'}}>Books</h3>
+                                        <p className="card-text fw-semibold">{article.title}</p>
+                                        <p className="card-text fw-semibold text-secondary fs-6">by @{article.added_by} | {intlFormat(new Date(article.created_at), {
+                                            year: 'numeric',
+                                            month: 'short',
+                                            day: 'numeric',
+                                        })}</p>
                                     </div>
-                                </article>
+                                </div>
                             )
                         }
-                    })}
-                </section>
+                    }) : (
+                        <div className="d-flex justify-content-center my-5">
+                            <div className="spinner-border" role="status">
+                                <span className="visually-hidden">Loading...</span>
+                            </div>
+                        </div>
+                    )}
+                </aside>
             </div>
-            {/* <!-- end mobile --> */}
-
-            {/* <!-- desktop --> */}
-            <div className="desktop">
-                <article className="article-1">
-                    <div className="card rounded-0 text-bg-dark">
-                        <img src="../images/BingWallpaper(10).jpg" className="card-img rounded-0 d-block" alt="..." />
-                        <div className="card-img-overlay d-flex flex-column justify-content-end align-items-start">
-                            <h5 className="card-title text-start text-uppercase fs-6 px-2"
-                                style={{backgroundColor: '#ffebcd', color: '#330033'}}>Lifestyle
-                            </h5>
-                            <p className="card-text text-start mb-0">Some representative placeholder content for the first slide.</p>
-                            <p className="card-text text-start fs-6 fw-light">by Lindsay Press</p>
-                        </div>
-                    </div>
-                </article>
-                <article className="article-2">
-                    <div className="card rounded-0 text-bg-dark">
-                        <img src="../images/BingWallpaper(10).jpg" className="card-img rounded-0 d-block" alt="..." />
-                        <div className="card-img-overlay d-flex flex-column justify-content-end align-items-start">
-                            <h5 className="card-title text-start text-uppercase fs-6 px-2"
-                                style={{backgroundColor: '#ffebcd', color: '#330033'}}>Lifestyle
-                            </h5>
-                            <p className="card-text text-start mb-0">Some representative placeholder content for the first slide.</p>
-                            <p className="card-text text-start fs-6 fw-light">by Lindsay Press</p>
-                        </div>
-                    </div>
-                </article>
-                <article className="article-3">
-                    <div className="card rounded-0 text-bg-dark">
-                        <img src="../images/BingWallpaper(10).jpg" className="card-img rounded-0 d-block" alt="..." />
-                        <div className="card-img-overlay d-flex flex-column justify-content-end align-items-start">
-                            <h5 className="card-title text-start text-uppercase fs-6 px-2"
-                                style={{backgroundColor: '#ffebcd', color: '#330033'}}>Lifestyle
-                            </h5>
-                            <p className="card-text text-start mb-0">Some representative placeholder content for the first slide.</p>
-                            <p className="card-text text-start fs-6 fw-light">by Lindsay Press</p>
-                        </div>
-                    </div>
-                </article>
-                <article className="article-4">
-                    <div className="card rounded-0 text-bg-dark">
-                        <img src="../images/BingWallpaper(10).jpg" className="card-img rounded-0 d-block" alt="..." />
-                        <div className="card-img-overlay d-flex flex-column justify-content-end align-items-start">
-                            <h5 className="card-title text-start text-uppercase fs-6 px-2"
-                                style={{backgroundColor: '#ffebcd', color: '#330033'}}>Lifestyle
-                            </h5>
-                            <p className="card-text text-start mb-0">Some representative placeholder content for the first slide.</p>
-                            <p className="card-text text-start fs-6 fw-light">by Lindsay Press</p>
-                        </div>
-                    </div>
-                </article>
-                <article className="article-5">
-                    <div className="card rounded-0 text-bg-dark">
-                        <img src="../images/BingWallpaper(10).jpg" className="card-img rounded-0 d-block" alt="..." />
-                        <div className="card-img-overlay d-flex flex-column justify-content-end align-items-start">
-                            <h5 className="card-title text-start text-uppercase fs-6 px-2"
-                                style={{backgroundColor: '#ffebcd', color: '#330033'}}>Lifestyle
-                            </h5>
-                            <p className="card-text text-start mb-0">Some representative placeholder content for the first slide.</p>
-                            <p className="card-text text-start fs-6 fw-light">by Lindsay Press</p>
-                        </div>
-                    </div>
-                </article>
-            </div>
-            {/* <!-- end desktop --> */}
         </section>
-        // <!-- end hero -->
     )
 }

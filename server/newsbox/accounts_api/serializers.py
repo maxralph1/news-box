@@ -8,6 +8,13 @@ from posts.models import Category, SubCategory, Article, Comment, Like
 
     
 
+class UserDetailSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = ['id', 'username', 'first_name', 'last_name']
+    
+
+
 class UserSerializer(serializers.ModelSerializer):
     categories = serializers.PrimaryKeyRelatedField(many=True, queryset=Category.objects.all())
     sub_categories = serializers.PrimaryKeyRelatedField(many=True, queryset=SubCategory.objects.all())

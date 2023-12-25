@@ -10,29 +10,29 @@ export default function EditCategory() {
     const params = useParams()
     const { category, updateCategory } = useCategory(params.id)
     const navigate = useNavigate()
-    const [focusCategory, setFocusCategory] = useState({})
-    // console.log(category.data)
+    // const [focusCategory, setFocusCategory] = useState({})
+    console.log(category.data)
     // console.log(getCategory)
 
     // useEffect(() => {
     //     console.log(getCategory(params.id))
     // }, [params.id])
 
-    // Initially fetch category in question
-    useEffect(() => {
-        const controller = new AbortController()
-        getCategory(params, { signal: controller.signal })
-        return () => controller.abort()
-    }, [params.id])
+    // // Initially fetch category in question
+    // useEffect(() => {
+    //     const controller = new AbortController()
+    //     getCategory(params, { signal: controller.signal })
+    //     return () => controller.abort()
+    // }, [params.id])
 
-    async function getCategory(params, { signal } = {}) {
-        return axios.get(`http://localhost:8000/api/posts/categories/${params.id}`, { signal })
-        .then(response => {
-            setFocusCategory(response.data)
-            console.log(response.data)
-        })
-        .catch(() => {})
-    }
+    // async function getCategory(params, { signal } = {}) {
+    //     return axios.get(`http://localhost:8000/api/posts/categories/${params.id}`, { signal })
+    //     .then(response => {
+    //         setFocusCategory(response.data)
+    //         console.log(response.data)
+    //     })
+    //     .catch(() => {})
+    // }
 
     // Update category
     async function handleSubmit(event) {
@@ -40,6 +40,8 @@ export default function EditCategory() {
     
         await updateCategory(category.data)
     }
+
+    
 
     return (
         <Layout>
@@ -56,7 +58,7 @@ export default function EditCategory() {
                                     name="title" 
                                     id="title" 
                                     type="text" 
-                                    value={ focusCategory.title ?? '' }
+                                    value={ category.data.title ?? '' }
                                     onChange={ event => category.setData({
                                         ...category.data, 
                                         title: event.target.value,
@@ -72,7 +74,7 @@ export default function EditCategory() {
                                 <textarea 
                                     name="description" 
                                     id="description" 
-                                    value={ focusCategory.description ?? '' }
+                                    value={ category.data.description ?? '' }
                                     onChange={ event => category.setData({
                                         ...category.data,
                                         description: event.target.value,

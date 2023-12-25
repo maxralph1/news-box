@@ -1,40 +1,102 @@
-import { Link } from 'react-router-dom';
+import { useContext, useEffect, useState } from 'react'
+import { Link, useNavigate } from 'react-router-dom';
+import { jwtDecode } from 'jwt-decode';
 import { route } from '../../routes';
 import { useCategories } from '../../hooks/useCategories';
 import { useSubCategories } from '../../hooks/useSubCategories';
-import { useCategory } from '../../hooks/useCategory';
+import AuthContext from '../../context/AuthContext';
+// import { useSubCategory } from '../../hooks/useSubCategory';
+
 
 export default function NavBar() {
+    const [firstName, setFirstName] = useState('');
+    const {user, logoutUser} = useContext(AuthContext)
+    const token = localStorage.getItem("authTokens")
     const { categories, error, loading, getCategories } = useCategories();
     const { subCategories, getSubCategories } = useSubCategories();
-    const {destroyCategory, errors } = useCategory();
 
-    console.log(categories);
-    console.log(subCategories);
+    // console.log(categories);
+    // console.log(subCategories);
+    console.log(user);
+
+    useEffect(() => {
+        if (token) {
+            const decoded = jwtDecode(token) 
+            if (decoded.first_name == user.first_name) {
+                setFirstName(decoded.first_name)
+            } else {
+                const navigate = useNavigate();
+                navigate(route('login'));
+            }
+            
+        }
+    }, [])
+
+    const hour = new Date().getHours();
+
+    const greeting = () => {
+        
+    }
 
     return (
-        // <!-- navbar -->
-        <section className="navbar justify-content-md-center sticky-top d-block min-w-100 mb-0 mb-md-5">
-            <nav className="navbar navbar-expand-lg navbar-dark bg-transparent" aria-label="Tenth navbar example">
-                <div className="container-fluid" style={{background: "#330033"}}>
-                    <h2><a className="navbar-brand" href="#">NewsBox</a></h2>
-                    <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarsExample08"
-                        aria-controls="navbarsExample08" aria-expanded="false" aria-label="Toggle navigation">
-                        <img src="../images/angle-small-down.svg" alt="" width="20" className="dropdown-icon" />
-                    </button>
+        <header>
+            <nav className="navbar navbar-expand-lg navbar-dark fixed-top pt-0" aria-label="Fifth navbar example" style={{backgroundColor: 'blueviolet'}}>
+                <div className="container">
+                    <div>
+                        <h1><a className="navbar-brand fw-bolder" href="#">NewsBox</a></h1>
+                    </div>
+                    <div>
+                        <span className="text-white me-2 d-md-none">
+                            {token ? 
+                                <>
+                                    <span className="d-none d-md-block">
+                                        {hour <= 23 && hour >= 16 
+                                            ? 'Good evening ' 
+                                            : hour <= 15 && hour >= 12
+                                            ? 'Good afternoon ' 
+                                            : hour <= 11 && hour >= 3
+                                            ? 'Good morning '
+                                            : 'Hi '} 
+                                        {user.first_name} !
+                                    </span>
+                                    <span 
+                                        role='button'
+                                        onClick={logoutUser}
+                                        className='text-white'>
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-door-closed" viewBox="0 0 16 16">
+                                            <path d="M3 2a1 1 0 0 1 1-1h8a1 1 0 0 1 1 1v13h1.5a.5.5 0 0 1 0 1h-13a.5.5 0 0 1 0-1H3zm1 13h8V2H4z"/>
+                                            <path d="M9 9a1 1 0 1 0 2 0 1 1 0 0 0-2 0"/>
+                                        </svg>
+                                    </span>
+                                </>
+                            : (
+                                <Link to={ route('login') } className='text-decoration-none text-white'>Login</Link>
+                            )}
+                        </span>
+                        <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarsExample05"
+                            aria-controls="navbarsExample05" aria-expanded="false" aria-label="Toggle navigation">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" className="bi bi-filter-right"
+                                viewBox="0 0 16 16">
+                                <path
+                                    d="M14 10.5a.5.5 0 0 0-.5-.5h-3a.5.5 0 0 0 0 1h3a.5.5 0 0 0 .5-.5m0-3a.5.5 0 0 0-.5-.5h-7a.5.5 0 0 0 0 1h7a.5.5 0 0 0 .5-.5m0-3a.5.5 0 0 0-.5-.5h-11a.5.5 0 0 0 0 1h11a.5.5 0 0 0 .5-.5" />
+                            </svg>
+                        </button>
+                    </div>
+                    
             
-                    <div className="collapse navbar-collapse justify-content-md-center" id="navbarsExample08">
-                        <ul className="navbar-nav">
+                    <div className="collapse navbar-collapse" id="navbarsExample05">
+                        <ul className="navbar-nav me-auto mb-2 mb-lg-0">
                             {(categories.length > 0 && !loading) ? categories.map(category => {
                                 return (
                                     <li key={category.id} className="categories nav-item dropdown">
                                         {(category.sub_categories.length > 0) 
-                                            ? <a className="category nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown"
-                                            aria-expanded="false">{category.title}</a>
-                                            : <a className="category nav-link" href="#" data-bs-toggle="dropdown"
-                                            aria-expanded="false">{category.title}</a>}
+                                            ? <a className="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown"
+                                            aria-expanded="false">{category.title.slice(0, 15)}</a>
+                                            : <a className="nav-link" href="#" data-bs-toggle="dropdown"
+                                            aria-expanded="false">{category.title.slice(0, 15)}</a>}
+
                                         {(category.sub_categories.length > 0) && 
-                                            <ul className="dropdown-menu">
+                                            <ul className="dropdown-menu rounded-0">
                                                 {category.sub_categories.map(subCategory => {
                                                     return (
                                                         <Link
@@ -51,18 +113,48 @@ export default function NavBar() {
                                     </li>
                                 )
                             }) : (
-                                <>
-                                    <p>Loading...</p>
-                                </>
+                                <div className="d-flex justify-content-center my-5">
+                                    <div className="spinner-border" role="status">
+                                        <span className="visually-hidden">Loading...</span>
+                                    </div>
+                                </div>
                             )}
+                            
                         </ul>
-                        <ul className="social">
-                            <li><a href=""></a></li>
-                        </ul>
+                        <div className="d-flex align-items-center text-white column-gap-3">
+                            <form role="search">
+                                <input className="form-control rounded-0" type="search" placeholder="Search" aria-label="Search" />
+                            </form>
+                            {token ? 
+                                <>
+                                    <span className="d-none d-md-block">
+                                        {hour <= 23 && hour >= 16 
+                                            ? 'Good evening ' 
+                                            : hour <= 15 && hour >= 12
+                                            ? 'Good afternoon ' 
+                                            : hour <= 11 && hour >= 3
+                                            ? 'Good morning '
+                                            : 'Hi '} 
+                                        {firstName} !
+                                    </span>
+                                    <span 
+                                        role='button'
+                                        onClick={logoutUser}
+                                        className='text-white'>
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-door-closed" viewBox="0 0 16 16">
+                                            <path d="M3 2a1 1 0 0 1 1-1h8a1 1 0 0 1 1 1v13h1.5a.5.5 0 0 1 0 1h-13a.5.5 0 0 1 0-1H3zm1 13h8V2H4z"/>
+                                            <path d="M9 9a1 1 0 1 0 2 0 1 1 0 0 0-2 0"/>
+                                        </svg>
+                                    </span>
+                                </>
+                            : (
+                                <Link to={ route('login') } className='text-decoration-none text-white'>Login</Link>
+                            )}
+                        </div>
+                        
                     </div>
                 </div>
             </nav>
-        </section>
-        // <!-- end navbar -->
+        </header>
     )
 }

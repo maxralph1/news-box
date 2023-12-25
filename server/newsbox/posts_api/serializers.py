@@ -1,5 +1,7 @@
 from rest_framework import serializers
-from posts.models import Category, SubCategory, Article, Comment, Like
+from posts.models import Category, SubCategory, Article, Comment, Like 
+from accounts.models import User
+from accounts_api.serializers import UserDetailSerializer
 
 
 # class CategorySerializer(serializers.Serializer):
@@ -59,6 +61,7 @@ class SubCategorySerializer(serializers.ModelSerializer):
 
 class ArticleSerializer(serializers.ModelSerializer):
     added_by = serializers.ReadOnlyField(source='added_by.username')
+    image = serializers.ImageField(required=False)
 
     class Meta:
         model = Article
@@ -133,4 +136,5 @@ class ArticleMainSerializer(serializers.ModelSerializer):
         data = super().to_representation(instance)
         data['category'] = CategorySerializer(Category.objects.get(pk=data['category'])).data
         data['sub_category'] = SubCategorySerializer(SubCategory.objects.get(pk=data['sub_category'])).data
+        # data['added_by'] = UserDetailSerializer(User.objects.get(pk=data['added_by'])).data
         return data

@@ -1,128 +1,29 @@
-@import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@200;500;700&display=swap");
+@import url('https://fonts.googleapis.com/css2?family=Varela+Round&display=swap');
 
-*,
-*::before,
-*::after {
-    box-sizing: border-box;
-    margin: 0;
-    border: 0;
-    padding: 0;
+
+main>.container {
+    padding: 60px 15px 0;
 }
 
 body {
     display: grid;
     grid-gap: 1em;
     gap: 1em;
-    grid-template-rows: auto auto 1fr auto;
+    grid-template-rows: auto 1fr auto;
     min-height: 100vh;
-    font-family: "Montserrat", sans-serif;
-}
-
-body header nav .external-links li {
-    list-style: none;
-}
-
-body header nav .external-links li a {
-    text-decoration: none;
-}
-
-body header nav .accessibility-and-search li {
-    list-style: none;
-}
-
-body .navbar .logo-and-dropdown {
-    /* display on only mobile */
-    background: #330033;
-    color: #f5f5f5;
-}
-
-body .navbar .logo-and-dropdown div img {
-    background-color: #f5f5f5;
-}
-
-body main .featured {
-    margin-top: 1em;
-}
-
-body main .featured article {
-    /* width: 100%; */
-    /* margin: 2em; */
-}
-
-body main .featured article a {
-    /* display: block; */
-}
-
-body main .featured article a div img {
-    height: 50vh;
-    width: 100%;
+    font-family: 'Varela Round', sans-serif;
 }
 
 img {
     object-fit: cover;
 }
 
-a {
-    text-decoration: none;
-    color: white;
-    text-shadow: 0.25px 0.25px 0.25px black;
+footer ul {
+    column-width: 200px;
 }
 
-li {
+footer li {
     list-style-type: none;
 }
 
-ul {
-    padding-left: 0;
-}
 
-.desktop {
-    display: none;
-}
-
-.aside {
-    display: none;
-}
-
-@media only screen and (min-width: 768px) {
-    .desktop {
-        display: grid;
-        grid-template-areas:
-            "article-1 article-2 article-3"
-            "article-4 article-2 article-5";
-        grid-template-columns: 1fr 2fr 1fr;
-        gap: 0.25em;
-        max-width: 100%;
-    }
-
-    .desktop .article-1 {
-        grid-area: article-1;
-    }
-
-    .desktop .article-2 {
-        grid-area: article-2;
-    }
-
-    .desktop .article-3 {
-        grid-area: article-3;
-    }
-
-    .desktop .article-4 {
-        grid-area: article-4;
-    }
-
-    .desktop .article-5 {
-        grid-area: article-5;
-    }
-
-    .featured img {
-        height: 55vh;
-    }
-
-    aside {
-        flex: 0 0 auto;
-        width: 33.33333333%;
-    }
-}
-
-/*# sourceMappingURL=style.css.map */
