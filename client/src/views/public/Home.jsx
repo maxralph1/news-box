@@ -1,8 +1,8 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react';
+import { Link, useParams, useNavigate } from 'react-router-dom';
 import axios from "axios";
 import { formatDistanceToNow, formatRFC7231, intlFormat } from 'date-fns';
 import InfiniteScroll from "react-infinite-scroll-component";
-import { Link } from 'react-router-dom';
 import { route } from '../../routes';
 import Layout from '../../components/public/Layout.jsx';
 import Hero from '../../components/public/Hero.jsx';
@@ -89,7 +89,7 @@ export default function Home() {
 
             <section className="border-top mt-5 pt-2">
                 <div className="my-3">
-                    <h2 className="fw-bolder fs-4 text-uppercase" style={{color: 'blueviolet'}}>Articles</h2>
+                    <h2 className="fw-bolder fs-4" style={{color: 'blueviolet'}}>Articles</h2>
                 </div>
                 {/* {(articles.length > 0 && !loading) ? articles.map(article => {
                     return (
@@ -145,34 +145,34 @@ export default function Home() {
                         </p>
                     }
                 >
-                <div style={{ minHeight: "100vh" }}>
-                    {items.map((article) => (
-                        <div className="card mb-3 rounded-0 shadow-lg border-0" key={article.id}>
-                            <div className="row g-0">
-                                <div className="col-sm-4 col-md-6">
-                                    <img src={'http://localhost:8000/' + article.image} className="img-fluid rounded-0 h-100" alt={article.title} />
-                                </div>
-                                <div className="col-sm-8 col-md-6">
-                                    <div className="card-body d-flex flex-column justify-content-between h-100">
-                                        <div>
-                                            <h3 className="card-title fs-6 fw-semibold" style={{color: 'blueviolet'}}>{article.sub_category.title}</h3>
-                                            <p className="card-text fs-5 fw-semibold">{article.title}</p>
+                    <div style={{ minHeight: "100vh" }}>
+                        {items.map((article) => (
+                            <div className="card mb-3 rounded-0 shadow-lg border-end" key={article.id}>
+                                <div className="row g-0">
+                                    <div className="col-sm-4 col-md-6">
+                                        <img src={'http://localhost:8000/' + article.image} className="img-fluid rounded-0 h-100" alt={article.title} />
+                                    </div>
+                                    <div className="col-sm-8 col-md-6">
+                                        <div className="card-body d-flex flex-column justify-content-between h-100">
+                                            <div>
+                                                <h3 className="card-title fs-6 fw-semibold" style={{color: 'blueviolet'}}>{article.sub_category.title}</h3>
+                                                <p className="card-text fs-5 fw-semibold">{article.title}</p>
+                                            </div>
+                                            <div>
+                                                <p className="card-text fw-semibold text-secondary fs-6">by @{article.added_by} | {intlFormat(new Date(article.created_at), {
+                                                    year: 'numeric',
+                                                    month: 'short',
+                                                    day: 'numeric',
+                                                })}</p>
+                                            </div>
+                                            
                                         </div>
-                                        <div>
-                                            <p className="card-text fw-semibold text-secondary fs-6">by @{article.added_by} | {intlFormat(new Date(article.created_at), {
-                                                year: 'numeric',
-                                                month: 'short',
-                                                day: 'numeric',
-                                            })}</p>
-                                        </div>
-                                        
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                    ))}
-                </div>
-            </InfiniteScroll>
+                        ))}
+                    </div>
+                </InfiniteScroll>
             </section>
 
         </Layout>

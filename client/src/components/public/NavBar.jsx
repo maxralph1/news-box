@@ -6,6 +6,7 @@ import { useCategories } from '../../hooks/useCategories';
 import { useSubCategories } from '../../hooks/useSubCategories';
 import AuthContext from '../../context/AuthContext';
 // import { useSubCategory } from '../../hooks/useSubCategory';
+import logo from '../../assets/images/logo.png';
 
 
 export default function NavBar() {
@@ -43,7 +44,9 @@ export default function NavBar() {
             <nav className="navbar navbar-expand-lg navbar-dark fixed-top pt-0" aria-label="Fifth navbar example" style={{backgroundColor: 'blueviolet'}}>
                 <div className="container">
                     <div>
-                        <h1><a className="navbar-brand fw-bolder" href="#">NewsBox</a></h1>
+                        <h1><a className="navbar-brand fw-bolder" href="#">
+                            <img src={logo} alt="NewsBox" width='90' />
+                        </a></h1>
                     </div>
                     <div>
                         <span className="text-white mx-2 d-md-none">
@@ -99,13 +102,13 @@ export default function NavBar() {
                                             <ul className="dropdown-menu rounded-0">
                                                 {category.sub_categories.map(subCategory => {
                                                     return (
-                                                        <Link
+                                                        <a
                                                             key={subCategory.id} 
-                                                            to={ route('sub-categories.show', { id: subCategory.id }) }
+                                                            href={ route('sub-categories.show', { id: subCategory.id }) }
                                                             className="sub-category dropdown-item"
                                                         >
                                                             {subCategory.title}
-                                                        </Link>
+                                                        </a>
                                                     )
                                                 })}
                                             </ul>

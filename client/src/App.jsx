@@ -9,6 +9,8 @@ import SubCategories from './views/public/SubCategories.jsx';
 import SubCategory from './views/public/SubCategory.jsx'; 
 import Articles from './views/public/Articles.jsx';
 import Article from './views/public/Article.jsx';
+import Author from './views/public/Author.jsx';
+import Search from './views/public/Search.jsx';
 import Register from './views/auth/Register.jsx';
 import Login from './views/auth/Login.jsx';
 import Dashboard from './views/dashboard/Index.jsx';
@@ -40,6 +42,8 @@ export default function App() {
           <Route element={<SubCategory />} path={ route('sub-categories.show') } />
           <Route element={<Articles />} path={ route('articles.index') } />
           <Route element={<Article />} path={ route('articles.show') } />
+          <Route element={<Author />} path={ route('authors.show') } />
+          <Route element={<Search />} path={ route('search') } />
           <Route element={<Login />} path={ route('login') } />
           <Route element={<Register />} path={ route('register') } />
 

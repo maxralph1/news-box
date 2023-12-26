@@ -1,9 +1,10 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import swal from 'sweetalert2';
 import { route } from '../routes';
 // import axios from 'axios';
 import useAxios from '../utils/useAxios';
-import swal from 'sweetalert2';
+
 
 export function useSubCategory(id = null) {
     const [errors, setErrors] = useState({});

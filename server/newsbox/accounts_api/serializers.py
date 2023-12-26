@@ -2,7 +2,7 @@ from django.contrib.auth.password_validation import validate_password
 from rest_framework import serializers
 from rest_framework.validators import UniqueValidator
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
-from accounts.models import User
+from accounts.models import User, Profile
 # from django.contrib.auth.models import User
 from posts.models import Category, SubCategory, Article, Comment, Like
 
@@ -16,6 +16,7 @@ class UserDetailSerializer(serializers.ModelSerializer):
 
 
 class UserSerializer(serializers.ModelSerializer):
+    # profile = serializers.PrimaryKeyRelatedField(queryset=Profile.objects.all())
     categories = serializers.PrimaryKeyRelatedField(many=True, queryset=Category.objects.all())
     sub_categories = serializers.PrimaryKeyRelatedField(many=True, queryset=SubCategory.objects.all())
     articles = serializers.PrimaryKeyRelatedField(many=True, queryset=Article.objects.all())
@@ -25,3 +26,4 @@ class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
         fields = ['id', 'username', 'first_name', 'last_name', 'categories', 'sub_categories', 'articles', 'comments', 'likes']
+        # fields = ['id', 'username', 'first_name', 'last_name', 'profile', 'categories', 'sub_categories', 'articles', 'comments', 'likes']

@@ -1,7 +1,7 @@
 from datetime import datetime
 from django.db import transaction
 from django.http import Http404
-from rest_framework import permissions, status
+from rest_framework import generics, permissions, status
 from rest_framework.views import APIView
 from rest_framework.pagination import PageNumberPagination
 from rest_framework.response import Response
@@ -237,21 +237,37 @@ class ArticleList(APIView):
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
     
-
+'''
+For Infinite Scroll for Articles
+'''
 class StandardResultsSetPagination(PageNumberPagination):
-    page_size = 2
+    page_size = 10
     page_size_query_param = 'page_size'
-    max_page_size = 5
+    max_page_size = 1000
 
-class ArticleListPaginated(APIView):
+class ArticleListPaginated(generics.ListAPIView):
     permission_classes = (permissions.IsAuthenticatedOrReadOnly, )
+    pagination_class = StandardResultsSetPagination
 
     # List all articles, or create a new article.
     def get(self, request, format=None):
         articles = Article.objects.filter(is_active=True).order_by('-created_at')
         serializer = ArticleMainSerializer(articles, many=True)
-        pagination_class = StandardResultsSetPagination
         return Response(serializer.data)
+
+class ArticleListForSubCategoryPaginated(generics.ListAPIView):
+    permission_classes = (permissions.IsAuthenticatedOrReadOnly, )
+    pagination_class = StandardResultsSetPagination
+
+    # List all articles, or create a new article.
+    def get(self, request, sub_category_pk, format=None):
+        articles = Article.objects.filter(sub_category=sub_category_pk, is_active=True).order_by('-created_at')
+        serializer = ArticleMainSerializer(articles, many=True)
+        return Response(serializer.data)
+    
+'''
+End of Infinite Scroll for Articles
+'''
 
 
 class ArticleDetail(APIView):

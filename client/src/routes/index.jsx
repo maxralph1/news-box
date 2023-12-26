@@ -6,7 +6,8 @@ const routeNames = {
     'sub-categories.show': '/sub-categories/:id', 
     'articles.index': '/articles', 
     'articles.show': '/articles/:id', 
-    // 'search': '/search', 
+    'authors.show': '/authors/:id', 
+    'search': '/search', 
     'register': '/register', 
     'login': '/login', 
 

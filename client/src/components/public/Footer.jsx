@@ -1,8 +1,12 @@
+import footerLogo from '../../assets/images/default.png';
+
 export default function Footer() {
     return (
-        <footer className="footer mt-auto py-3 text-white" style={{backgroundColor: 'blueviolet'}}>
-            <div className="container py-3">
-                <h2 className="text-center fs-5 fw-bold text-uppercase lh-1 mb-3">NewsBox</h2>
+        <footer className="footer mt-auto pb-3 text-white" style={{backgroundColor: 'blueviolet'}}>
+            <div className="container">
+                <div className='d-flex justify-content-center border-bottom mb-3 pb-0'>
+                    <img src={footerLogo} alt="NewsBox" width='110' />
+                </div>
                 <ul className="list-style-none mb-3">
                     <li>About</li>
                     <li>Openings</li>

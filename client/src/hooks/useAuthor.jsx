@@ -5,7 +5,7 @@ import { route } from '../routes';
 import axios from 'axios'; 
 import useAxios from '../utils/useAxios';
 
-export function useArticle(id = null) {
+export function useAuthor(id = null) {
     const [errors, setErrors] = useState({});
     const [loading, setLoading] = useState(false);
     const [data, setData] = useState({});
@@ -30,22 +30,22 @@ export function useArticle(id = null) {
     useEffect(() => {
         if (id !== null) {
             const controller = new AbortController();
-            getArticle(id, { signal: controller.signal });
+            getAuthor(id, { signal: controller.signal });
             return () => controller.abort()
         }
     }, [id])
 
-    async function createArticle(article) {
+    async function createAuthor(author) {
         setLoading(true)
         setErrors({})
-        console.log(article)
+        console.log(author)
 
-        return axiosInstance.post('posts/articles/', article, {
+        return axiosInstance.post('accounts/authors/', author, {
             headers: {
                 "Content-Type": "multipart/form-data",
             },
         })
-            .then(() => navigate(route('dashboard.articles.index')))
+            .then(() => navigate(route('dashboard.authors.index')))
             .catch(error => {
                 if (error.response) {
                     setErrors(error.response)
@@ -55,21 +55,21 @@ export function useArticle(id = null) {
             .finally(() => setLoading(false))
     }
 
-    async function getArticle(id, { signal } = {}) {
+    async function getAuthor(id, { signal } = {}) {
         setLoading(true)
 
-        return axios.get(`http://127.0.0.1:8000/api/posts/articles/${id}`, { signal })
+        return axios.get(`http://127.0.0.1:8000/api/accounts/authors/${id}`, { signal })
             .then(response => setData(response.data))
             .catch(() => {})
             .finally(() => setLoading(false))
     }
 
-    async function updateArticle(article) {
+    async function updateAuthor(author) {
         setLoading(true)
         setErrors({})
 
-        return axios.put(`articles/${article.id}`, article)
-            .then(() => navigate(route('articles.index')))
+        return axios.put(`authors/${author.id}`, author)
+            .then(() => navigate(route('authors.index')))
             .catch(error => {
                 if (error.response) {
                     setErrors(error.response.data.errors)
@@ -78,14 +78,14 @@ export function useArticle(id = null) {
             .finally(() => setLoading(false))
     }
 
-    async function destroyArticle(article) {
-        return axios.delete(`articles/${article.id}`)
+    async function destroyAuthor(author) {
+        return axios.delete(`authors/${author.id}`)
     }
 
     return {
-        article: { data, setData, errors, loading }, 
-        createArticle, 
-        updateArticle, 
-        destroyArticle, 
+        author: { data, setData, errors, loading }, 
+        createAuthor, 
+        updateAuthor, 
+        destroyAuthor, 
     }
 }
