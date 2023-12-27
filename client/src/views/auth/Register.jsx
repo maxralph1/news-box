@@ -1,5 +1,6 @@
 import { useContext, useState } from 'react';
 import { Link } from 'react-router-dom';
+import { route } from '../../routes';
 import Swal from 'sweetalert2';
 import AuthContext from '../../context/AuthContext';
 import Layout from '../../components/auth/Layout';
@@ -43,7 +44,7 @@ export default function Register() {
             name="email" 
             id="email" 
             type="email" 
-            className="form-control" 
+            className="form-control rounded-0" 
             placeholder="name@example.com" 
             onChange={e => setEmail(e.target.value)} />
           <label htmlFor="email">Email address</label>
@@ -53,7 +54,7 @@ export default function Register() {
             name="username" 
             id="username" 
             type="text" 
-            className="form-control" 
+            className="form-control rounded-0" 
             placeholder="user123" 
             onChange={e => setUsername(e.target.value)} />
           <label htmlFor="username">Username</label>
@@ -63,7 +64,7 @@ export default function Register() {
             name="firstname" 
             id="firstname" 
             type="text" 
-            className="form-control" 
+            className="form-control rounded-0" 
             placeholder="John" 
             onChange={e => setFirstname(e.target.value)} />
           <label htmlFor="firstname">First Name</label>
@@ -73,17 +74,17 @@ export default function Register() {
             name="lastname" 
             id="lastname" 
             type="text" 
-            className="form-control" 
+            className="form-control rounded-0" 
             placeholder="John" 
             onChange={e => setLastname(e.target.value)} />
           <label htmlFor="lastname">Last Name</label>
         </div>
-        <div className="form-floating">
+        <div className="form-floating mb-0 pb-0">
           <input 
             name="password" 
             id="password" 
             type="password" 
-            className="form-control"
+            className="form-control rounded-0"
             placeholder="Password" 
             onChange={e => setPassword(e.target.value)} />
           <label htmlFor="password">Password</label>
@@ -93,7 +94,7 @@ export default function Register() {
             name="password2" 
             id="password2" 
             type="password" 
-            className="form-control"
+            className="form-control rounded-0"
             placeholder="Repeat Password" 
             onChange={e => setPassword2(e.target.value)} />
           <label htmlFor="password">Repeat Password</label>
@@ -107,6 +108,13 @@ export default function Register() {
         </div>
 
         <button className="btn btn-secondary w-100 py-2 rounded-0" type="submit">Register</button>
+
+        <div className='mt-4'>
+            <p className=''>Already have an account?{' '} 
+                <Link to={ route('login') } className='fw-semibold' style={{ color: 'blueviolet' }}>Sign In</Link>
+            </p>
+        </div>
+
         <p className="mt-5 mb-3 text-body-secondary">&copy; 2017–{new Date().getFullYear()}</p>
       </form>
     </Layout>

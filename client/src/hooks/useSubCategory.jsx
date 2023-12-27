@@ -77,6 +77,7 @@ export function useSubCategory(id = null) {
     async function updateSubCategory(subCategory) {
         setLoading(true)
         setErrors({})
+        console.log(subCategory)
 
         return axiosInstance.put(`posts/sub-categories/${subCategory.id}/`, subCategory)
             .then(() => navigate(route('dashboard.sub-categories.index')))

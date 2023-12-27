@@ -1,8 +1,5 @@
-// import React, { Component } from 'react';
 import { CKEditor } from '@ckeditor/ckeditor5-react';
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
-import { Link, useNavigate } from 'react-router-dom';
-import { route } from '../../../routes';
 import { useCategories } from '../../../hooks/useCategories';
 import { useSubCategories } from '../../../hooks/useSubCategories';
 import { useArticle } from '../../../hooks/useArticle';
@@ -13,7 +10,6 @@ export default function CreateArticle() {
     const { categories } = useCategories()
     const { subCategories } = useSubCategories()
     const { article, createArticle } = useArticle()
-    const navigate = useNavigate()
     
     async function handleSubmit(event) {
         event.preventDefault()
@@ -23,11 +19,11 @@ export default function CreateArticle() {
 
     return (
         <Layout>
-            <div className="container w-100">
+            <section className="container-fluid w-100 my-4">
 
-                <h2 className='my-4'>Create Article</h2>
+                <h2 className='mb-4 fw-bold' style={{ color: 'blueviolet'}}>Create Article</h2>
 
-                <div className="container card shadow py-4">
+                <div className="container-fluid card rounded-0 shadow py-4">
                     <form onSubmit={ handleSubmit } encType="multipart/form-data" className="needs-validation">
                         <div className="row g-3">
                             <div className="mb-3 col-sm-12">
@@ -40,7 +36,7 @@ export default function CreateArticle() {
                                         ...article.data,
                                         title: event.target.value,
                                     }) }
-                                    className="form-control" 
+                                    className="form-control rounded-0" 
                                     placeholder="Sample title" 
                                     disabled={ article.loading } 
                                     required 
@@ -58,7 +54,7 @@ export default function CreateArticle() {
                                     category: event.target.value,
                                     }) }
                                     disabled={ article.loading }
-                                    className="form-select" 
+                                    className="form-select rounded-0" 
                                     // required
                                 >
                                     <option>Select a category ...</option>
@@ -81,7 +77,7 @@ export default function CreateArticle() {
                                     sub_category: event.target.value,
                                     }) }
                                     disabled={ article.loading }
-                                    className="form-select" 
+                                    className="form-select rounded-0" 
                                     // required
                                 >
                                     <option>Select a sub-category ...</option>
@@ -105,10 +101,27 @@ export default function CreateArticle() {
                                         ...article.data,
                                         image: event.target.files,
                                     }) }
-                                    className="form-control" 
+                                    className="form-control rounded-0" 
                                     placeholder="Add an image..." 
                                     disabled={ article.loading }
                                     // required 
+                                />
+                            </div>
+                            <div className="mb-3 col-sm-12">
+                                <label htmlFor="image_description" className="form-label"> Image Description</label>
+                                <input 
+                                    name="image_description" 
+                                    id="image_description" 
+                                    type="text" 
+                                    value={ article.data.image_description ?? '' }
+                                    onChange={ event => article.setData({
+                                        ...article.data,
+                                        image_description: event.target.value,
+                                    }) }
+                                    className="form-control rounded-0" 
+                                    placeholder="e.g. Daenarys Stormborn on the Dragon" 
+                                    disabled={ article.loading }
+                                    required 
                                 />
                             </div>
                             <div className="mb-3 col-sm-12">
@@ -142,13 +155,13 @@ export default function CreateArticle() {
                         <hr className="my-4" />
 
                         <div className='d-flex justify-content-end'>
-                            <button className="btn btn-secondary text-end" type="submit">Save</button>
+                            <button className="btn btn-secondary rounded-0" type="submit">Save</button>
                         </div>
                         
                     </form>
                 </div>
 
-            </div>
+            </section>
         </Layout>
     )
 }

@@ -147,29 +147,31 @@ export default function Home() {
                 >
                     <div style={{ minHeight: "100vh" }}>
                         {items.map((article) => (
-                            <div className="card mb-3 rounded-0 shadow-lg border-end" key={article.id}>
-                                <div className="row g-0">
-                                    <div className="col-sm-4 col-md-6">
-                                        <img src={'http://localhost:8000/' + article.image} className="img-fluid rounded-0 h-100" alt={article.title} />
-                                    </div>
-                                    <div className="col-sm-8 col-md-6">
-                                        <div className="card-body d-flex flex-column justify-content-between h-100">
-                                            <div>
-                                                <h3 className="card-title fs-6 fw-semibold" style={{color: 'blueviolet'}}>{article.sub_category.title}</h3>
-                                                <p className="card-text fs-5 fw-semibold">{article.title}</p>
+                            <Link to={ route('articles.show', { id: article.id }) } >
+                                <div className="card mb-3 rounded-0 shadow-lg border-end" key={article.id}>
+                                    <div className="row g-0">
+                                        <div className="col-sm-4 col-md-6">
+                                            <img src={'http://localhost:8000/' + article.image} className="img-fluid rounded-0 h-100" alt={article.title} />
+                                        </div>
+                                        <div className="col-sm-8 col-md-6">
+                                            <div className="card-body d-flex flex-column justify-content-between h-100">
+                                                <div>
+                                                    <h3 className="card-title fs-6 fw-semibold" style={{color: 'blueviolet'}}>{article.sub_category.title}</h3>
+                                                    <p className="card-text fs-5 fw-semibold">{article.title}</p>
+                                                </div>
+                                                <div>
+                                                    <p className="card-text fw-semibold text-secondary fs-6">by @{article.added_by} | {intlFormat(new Date(article.created_at), {
+                                                        year: 'numeric',
+                                                        month: 'short',
+                                                        day: 'numeric',
+                                                    })}</p>
+                                                </div>
+                                                
                                             </div>
-                                            <div>
-                                                <p className="card-text fw-semibold text-secondary fs-6">by @{article.added_by} | {intlFormat(new Date(article.created_at), {
-                                                    year: 'numeric',
-                                                    month: 'short',
-                                                    day: 'numeric',
-                                                })}</p>
-                                            </div>
-                                            
                                         </div>
                                     </div>
                                 </div>
-                            </div>
+                            </Link>
                         ))}
                     </div>
                 </InfiniteScroll>

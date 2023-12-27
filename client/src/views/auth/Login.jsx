@@ -1,5 +1,6 @@
 import { useContext } from 'react';
 import { Link } from 'react-router-dom';
+import { route } from '../../routes';
 import AuthContext from '../../context/AuthContext';
 import Layout from '../../components/auth/Layout';
 import '../../assets/auth.css';
@@ -21,11 +22,11 @@ export default function Login() {
         <h2 className="h3 mb-3 fw-normal">Sign In</h2>
 
         <div className="form-floating">
-          <input name="username" id="username" type="text" className="form-control" placeholder="user123" />
+          <input name="username" id="username" type="text" className="form-control rounded-0" placeholder="user123" />
           <label htmlFor="username">Username</label>
         </div>
         <div className="form-floating">
-          <input name="password" id="password" type="password" className="form-control" placeholder="Password" />
+          <input name="password" id="password" type="password" className="form-control rounded-0" placeholder="Password" />
           <label htmlFor="password">Password</label>
         </div>
 
@@ -37,9 +38,9 @@ export default function Login() {
         </div>
         <button className="btn btn-secondary w-100 py-2 rounded-0" type="submit">Sign in</button>
 
-        <div>
+        <div className='mt-4'>
             <p className=''>Don't have an account?{' '} 
-                <Link to='/register'>Register Now</Link>
+                <Link to={ route('register') } className='fw-semibold' style={{ color: 'blueviolet' }}>Register Now</Link>
             </p>
         </div>
 

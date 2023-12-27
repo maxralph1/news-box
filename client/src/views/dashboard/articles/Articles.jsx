@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom';
+import dayjs from 'dayjs';
 import { route } from '../../../routes';
 import { useArticles } from '../../../hooks/useArticles';
 import { useArticle } from '../../../hooks/useArticle';
@@ -11,12 +12,12 @@ export default function Articles() {
 
     return (
         <Layout>
-            <h2 className='my-4'>Articles</h2>
+            <h2 className='my-4 fw-bold' style={{ color: 'blueviolet'}}>Articles</h2>
 
             <div className="d-grid gap-2 d-md-flex justify-content-md-end mb-3">
                 <Link 
                     to={ route('dashboard.articles.create') } 
-                    className="btn btn-sm btn-outline-secondary" type="button">
+                    className="btn btn-sm btn-outline-secondary rounded-0" type="button">
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-pen" viewBox="0 0 16 16">
                         <path d="m13.498.795.149-.149a1.207 1.207 0 1 1 1.707 1.708l-.149.148a1.5 1.5 0 0 1-.059 2.059L4.854 14.854a.5.5 0 0 1-.233.131l-4 1a.5.5 0 0 1-.606-.606l1-4a.5.5 0 0 1 .131-.232l9.642-9.642a.5.5 0 0 0-.642.056L6.854 4.854a.5.5 0 1 1-.708-.708L9.44.854A1.5 1.5 0 0 1 11.5.796a1.5 1.5 0 0 1 1.998-.001m-.644.766a.5.5 0 0 0-.707 0L1.95 11.756l-.764 3.057 3.057-.764L14.44 3.854a.5.5 0 0 0 0-.708l-1.585-1.585z"/>
                     </svg> &nbsp;
@@ -25,7 +26,7 @@ export default function Articles() {
             </div>
 
             <section className='mb-5'>
-                <div className="card w-100 shadow">
+                <div className="card rounded-0 w-100 shadow">
 
                     <ul className="list-group list-group-flush">
                         {(articles.length > 0) ? articles.map(article => {
@@ -34,7 +35,7 @@ export default function Articles() {
                                 <div className="d-grid gap-2 d-md-flex justify-content-end mb-3">
                                     <Link 
                                         to={ route('dashboard.articles.edit', { id: article.id }) }
-                                        className="btn btn-sm btn-outline-warning me-md-2 text-dark" type="button">
+                                        className="btn btn-sm btn-outline-warning me-md-2 text-dark rounded-0" type="button">
                                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-pencil-square" viewBox="0 0 16 16">
                                             <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/>
                                             <path fillRule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5z"/>
@@ -57,9 +58,14 @@ export default function Articles() {
                                 <Link 
                                     to={ route('dashboard.articles.show', { id: article.id }) }   className='text-dark'>
                                     <h4 className='fw-bold fs-5'>{article.title.substring(0, 25)}</h4>
-                                    <p>{article.body.substring(0, 50)}</p>
+                                    <p dangerouslySetInnerHTML={{ __html: article.body.substring(0, 50) }}></p>
                                 </Link>
-                                <p><span className='fw-light fs-italic'>by </span>@{article.added_by}</p>
+                                <span className='text-secondary fw-semibold'>added by @
+                                    <Link 
+                                        to={ route('dashboard.authors.show', { id: article.added_by }) }>
+                                        <span style={{color: 'blueviolet'}}>{article.added_by}</span>
+                                    </Link> | {dayjs(article.created_at).format('MMM D, YYYY')}
+                                </span>
                             </li>
                         )}) : (
                             <div className="d-flex justify-content-center my-5">

@@ -65,7 +65,7 @@ class ArticleSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Article
-        fields = ('id', 'category', 'sub_category', 'is_featured', 'is_gallery', 'is_gallery_centered', 'title', 'body', 'image', 'added_by', 'created_at', )
+        fields = ('id', 'category', 'sub_category', 'is_featured', 'is_gallery', 'is_gallery_centered', 'title', 'body', 'image', 'image_description', 'added_by', 'created_at', )
 
     # def to_representation(self, instance):
     #     data = super().to_representation(instance)
@@ -105,7 +105,7 @@ class LikeSerializer(serializers.HyperlinkedModelSerializer):
 
 # Explicit
 
-class CategoryMainSerializer(serializers.ModelSerializer):
+class CategoryExplicitSerializer(serializers.ModelSerializer):
     added_by = serializers.ReadOnlyField(source='added_by.username')
     sub_categories = SubCategorySerializer(many=True)
     articles = ArticleSerializer(many=True)
@@ -113,24 +113,26 @@ class CategoryMainSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Category
-        fields = ('id', 'sub_categories', 'articles', 'likes', 'title', 'description', 'added_by', )
+        fields = ('id', 'sub_categories', 'articles', 'likes', 'title', 'description', 'added_by', 'created_at', )
 
-class SubCategoryMainSerializer(serializers.ModelSerializer):
+class SubCategoryExplicitSerializer(serializers.ModelSerializer):
     added_by = serializers.ReadOnlyField(source='added_by.username')
+    category = serializers.ReadOnlyField(source='category.title')
     articles = ArticleSerializer(many=True)
     likes = LikeSerializer(many=True)
 
     class Meta:
         model = SubCategory
-        fields = ('id', 'articles', 'likes', 'title', 'description', 'added_by', )
+        fields = ('id', 'articles', 'likes', 'title', 'description', 'category', 'added_by', 'created_at', )
 
-class ArticleMainSerializer(serializers.ModelSerializer):
+class ArticleExplicitSerializer(serializers.ModelSerializer):
     added_by = serializers.ReadOnlyField(source='added_by.username')
+    comments = CommentSerializer(many=True)
     likes = LikeSerializer(many=True)
 
     class Meta:
         model = Article
-        fields = ('id', 'likes', 'category', 'sub_category', 'is_featured', 'is_gallery', 'is_gallery_centered', 'title', 'body', 'image', 'added_by', 'is_active', 'created_at', )
+        fields = ('id', 'comments', 'likes', 'category', 'sub_category', 'is_featured', 'is_gallery', 'is_gallery_centered', 'title', 'body', 'image', 'image_description', 'added_by', 'is_active', 'created_at', )
 
     def to_representation(self, instance):
         data = super().to_representation(instance)

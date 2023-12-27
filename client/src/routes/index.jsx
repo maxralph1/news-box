@@ -29,6 +29,7 @@ const routeNames = {
     'dashboard.authors.create': '/dashboard/authors/create', 
     'dashboard.authors.show': '/dashboard/authors/:id', 
     'dashboard.authors.edit': '/dashboard/authors/:id/edit', 
+    'dashboard.profile': '/dashboard/profile', 
 }
 
 function route(name, params = {}) {

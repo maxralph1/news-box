@@ -1,6 +1,7 @@
-import { useContext, useEffect, useState } from 'react'
+import { useContext, useEffect, useState } from 'react';
 import { jwtDecode } from 'jwt-decode';
 import AuthContext from '../../context/AuthContext';
+import logo from '../../assets/images/logo.png';
 
 
 export default function Header() {
@@ -18,8 +19,10 @@ export default function Header() {
     const hour = new Date().getHours();
 
     return (
-        <header className="navbar sticky-top bg-dark flex-md-nowrap p-0 shadow" data-bs-theme="dark">
-            <a className="navbar-brand col-md-3 col-lg-2 me-0 px-3 fs-6 text-white" href="#">News-Box</a>
+        <header className="navbar sticky-top flex-md-nowrap p-0 shadow" style={{backgroundColor: 'blueviolet'}}>
+            <a className="navbar-brand col-md-3 col-lg-2 me-0 px-3 fs-6 text-white" href="#">
+                <img src={logo} alt="NewsBox" width='80' />
+            </a>
 
             <ul className="navbar-nav flex-row d-md-none">
                 <li className="text-white align-self-center">
@@ -41,8 +44,10 @@ export default function Header() {
                 </li>
                 <li className="nav-item text-nowrap">
                     <button className="nav-link px-3 text-white" type="button" data-bs-toggle="offcanvas" data-bs-target="#sidebarMenu" aria-controls="sidebarMenu" aria-expanded="false" aria-label="Toggle navigation">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-list" viewBox="0 0 16 16">
-                            <path fillRule="evenodd" d="M2.5 12a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5m0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5m0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5"/>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" className="bi bi-filter-right"
+                                viewBox="0 0 16 16">
+                            <path
+                                d="M14 10.5a.5.5 0 0 0-.5-.5h-3a.5.5 0 0 0 0 1h3a.5.5 0 0 0 .5-.5m0-3a.5.5 0 0 0-.5-.5h-7a.5.5 0 0 0 0 1h7a.5.5 0 0 0 .5-.5m0-3a.5.5 0 0 0-.5-.5h-11a.5.5 0 0 0 0 1h11a.5.5 0 0 0 .5-.5" />
                         </svg>
                     </button>
                 </li>

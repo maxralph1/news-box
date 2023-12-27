@@ -172,6 +172,13 @@ class Article(models.Model):
         upload_to='images/articles/',
         default='images/default.png',
     )
+    image_description = models.CharField(
+        verbose_name=_('Image Description'),
+        help_text=_('Description of image (optional)'),
+        max_length=150, 
+        null=True, 
+        blank=True
+    )
     added_by = models.ForeignKey(User, related_name='articles', on_delete=models.CASCADE)
     is_active = models.BooleanField(
         verbose_name=_('Category visibility'),

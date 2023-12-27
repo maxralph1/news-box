@@ -14,9 +14,18 @@ class UserDetailSerializer(serializers.ModelSerializer):
         fields = ['id', 'username', 'first_name', 'last_name']
     
 
+class ProfileSerializer(serializers.ModelSerializer):
+    added_by = serializers.ReadOnlyField(source='added_by.username')
+    image = serializers.ImageField(required=False)
+
+    class Meta:
+        model = Profile
+        fields = ('id', 'bio', 'user', 'created_at', )
+
+
 
 class UserSerializer(serializers.ModelSerializer):
-    # profile = serializers.PrimaryKeyRelatedField(queryset=Profile.objects.all())
+    # profile = ProfileSerializer(many=True)
     categories = serializers.PrimaryKeyRelatedField(many=True, queryset=Category.objects.all())
     sub_categories = serializers.PrimaryKeyRelatedField(many=True, queryset=SubCategory.objects.all())
     articles = serializers.PrimaryKeyRelatedField(many=True, queryset=Article.objects.all())
@@ -25,5 +34,6 @@ class UserSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = User
-        fields = ['id', 'username', 'first_name', 'last_name', 'categories', 'sub_categories', 'articles', 'comments', 'likes']
+        fields = ('id', 'username', 'email', 'first_name', 'last_name', 'created_at', 'categories', 'sub_categories', 'articles', 'comments', 'likes', )
+        # fields = ('id', 'username', 'first_name', 'last_name', 'created_at', 'categories', 'sub_categories', 'articles', 'comments', 'likes', 'profile', )
         # fields = ['id', 'username', 'first_name', 'last_name', 'profile', 'categories', 'sub_categories', 'articles', 'comments', 'likes']

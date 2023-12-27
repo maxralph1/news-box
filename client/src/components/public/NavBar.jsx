@@ -44,9 +44,13 @@ export default function NavBar() {
             <nav className="navbar navbar-expand-lg navbar-dark fixed-top pt-0" aria-label="Fifth navbar example" style={{backgroundColor: 'blueviolet'}}>
                 <div className="container">
                     <div>
-                        <h1><a className="navbar-brand fw-bolder" href="#">
-                            <img src={logo} alt="NewsBox" width='90' />
-                        </a></h1>
+                        <h1>
+                            <Link 
+                                to={route('home')}
+                                className="navbar-brand fw-bolder">
+                                <img src={logo} alt="NewsBox" width='90' />
+                            </Link>
+                        </h1>
                     </div>
                     <div>
                         <span className="text-white mx-2 d-md-none">

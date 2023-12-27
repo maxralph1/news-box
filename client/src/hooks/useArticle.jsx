@@ -55,31 +55,46 @@ export function useArticle(id = null) {
             .finally(() => setLoading(false))
     }
 
-    async function getArticle(id, { signal } = {}) {
+    async function getArticle(id) {
         setLoading(true)
 
-        return axios.get(`http://127.0.0.1:8000/api/posts/articles/${id}`, { signal })
-            .then(response => setData(response.data))
-            .catch(() => {})
-            .finally(() => setLoading(false))
+        try {
+            const response = await fetch(`http://127.0.0.1:8000/api/posts/articles/${id}/`);
+            if (!response.ok) {
+                throw new Error(
+                    `This is an HTTP error: The status is ${response.status}`
+                );
+            }
+            let actualData = await response.json()
+            setData(actualData);
+            console.log(actualData);
+            setErrors(null)
+        } catch (err) {
+            setErrors(err.message);
+            setData(null);
+        } finally {
+            setLoading(false);
+        }
     }
 
     async function updateArticle(article) {
         setLoading(true)
         setErrors({})
+        console.log(article)
 
-        return axios.put(`articles/${article.id}`, article)
-            .then(() => navigate(route('articles.index')))
+        return axiosInstance.put(`posts/articles/${article.id}/`, article)
+            .then(() => navigate(route('dashboard.articles.index')))
             .catch(error => {
                 if (error.response) {
-                    setErrors(error.response.data.errors)
+                    setErrors(error.response);
+                    swalUnauthAlert(error);
                 }
             })
             .finally(() => setLoading(false))
     }
 
     async function destroyArticle(article) {
-        return axios.delete(`articles/${article.id}`)
+        return axiosInstance.delete(`posts/articles/${article.id}/`)
     }
 
     return {

@@ -12,6 +12,8 @@ class User(AbstractUser):
     is_staff = models.BooleanField(default=False)
     is_superuser = models.BooleanField(default=False)
     is_active = models.BooleanField(default=True)
+    created_at = models.DateTimeField(
+        _('Created at'), auto_now_add=True, editable=False)
 
     USERNAME_FIELD = 'username'
     REQUIRED_FIELDS = ['email']
@@ -36,8 +38,8 @@ class Profile(models.Model):
     bio = models.TextField(_('Bio'), max_length=500, blank=True)
     image = models.ImageField(_('Image'), upload_to="images/users", default="images/users/default.png")
     verified = models.BooleanField(_('Verified'), default=False)
-    created_at = models.DateTimeField(
-        _('Created at'), auto_now_add=True, editable=False)
+    # created_at = models.DateTimeField(
+    #     _('Created at'), auto_now_add=True, editable=False)
     role = models.CharField(
         max_length=3,
         choices=ROLE_CHOICES,

@@ -16,7 +16,7 @@ export default function Hero() {
                                 <div className="card text-bg-dark rounded-0 border-0 shadow-lg" key={article.id}>
                                     <img src={'http://localhost:8000/' + article.image} className="card-img rounded-0" alt="..." />
                                     <div className="card-img-overlay d-flex flex-column justify-content-end">
-                                        <h3 className="card-title fs-5 fw-semibold p-1 align-self-start" style={{backgroundColor: 'blueviolet'}}>Books</h3>
+                                        <h3 className="card-title fs-5 fw-semibold p-1 align-self-start" style={{backgroundColor: 'blueviolet'}}>{article.sub_category.title}</h3>
                                         <p className="card-text fs-3 fw-semibold" style={{textShadow: '.2px .2px 1px black'}}>{article.title}</p>
                                         <p className="card-text fs-5 fw-semibold" style={{textShadow: '.2px .2px 1px black'}}><small>by @{article.added_by} |
                                         {intlFormat(new Date(article.created_at), {
@@ -44,7 +44,7 @@ export default function Hero() {
                             return (
                                 <div className="card mb-3 shadow-lg rounded-0 border-0" key={article.id}>
                                     <div className="card-body">
-                                        <h3 className="card-title fs-6 fw-semibold" style={{color: 'blueviolet'}}>Books</h3>
+                                        <h3 className="card-title fs-6 fw-semibold" style={{color: 'blueviolet'}}>{article.sub_category.title}</h3>
                                         <p className="card-text fw-semibold">{article.title}</p>
                                         <p className="card-text fw-semibold text-secondary fs-6">by @{article.added_by} | {intlFormat(new Date(article.created_at), {
                                             year: 'numeric',

@@ -1,5 +1,3 @@
-import { Link, useNavigate } from 'react-router-dom';
-import { route } from '../../../routes';
 import { useCategories } from '../../../hooks/useCategories';
 import { useSubCategory } from '../../../hooks/useSubCategory';
 import Layout from '../../../components/dashboard/Layout';
@@ -8,7 +6,6 @@ import Layout from '../../../components/dashboard/Layout';
 export default function CreateSubCategory() {
     const { categories } = useCategories()
     const { subCategory, createSubCategory } = useSubCategory()
-    const navigate = useNavigate()
     
     async function handleSubmit(event) {
         event.preventDefault()
@@ -18,11 +15,11 @@ export default function CreateSubCategory() {
 
     return (
         <Layout>
-            <div className="container w-100">
+            <section className="container-fluid w-100 my-4">
 
-                <h2 className='my-4'>Create Sub-Category</h2>
+                <h2 className='mb-4 fw-bold' style={{ color: 'blueviolet'}}>Create Sub-Category</h2>
 
-                <div className="container card shadow py-4">
+                <div className="container-fluid card rounded-0 shadow py-4">
                     <form onSubmit={ handleSubmit } className="needs-validation">
                         <div className="row g-3">
                             <div className="mb-3 col-sm-12">
@@ -36,7 +33,7 @@ export default function CreateSubCategory() {
                                         ...subCategory.data,
                                         title: event.target.value,
                                     }) }
-                                    className="form-control" 
+                                    className="form-control rounded-0" 
                                     placeholder="Sample Sub-category" 
                                     disabled={ subCategory.loading }
                                     required 
@@ -52,7 +49,7 @@ export default function CreateSubCategory() {
                                         ...subCategory.data,
                                         description: event.target.value,
                                     }) }
-                                    className="form-control" 
+                                    className="form-control rounded-0" 
                                     placeholder="Sample Sub-category description" 
                                     disabled={ subCategory.loading } 
                                     required 
@@ -70,7 +67,7 @@ export default function CreateSubCategory() {
                                     category: event.target.value,
                                     }) }
                                     disabled={ subCategory.loading }
-                                    className="form-select" 
+                                    className="form-select rounded-0" 
                                     required
                                 >
                                     { categories.length > 0 && categories.map((category) => {
@@ -86,13 +83,13 @@ export default function CreateSubCategory() {
                         <hr className="my-4" />
 
                         <div className='d-flex justify-content-end'>
-                            <button className="btn btn-secondary text-end" type="submit">Save</button>
+                            <button className="btn btn-secondary rounded-0" type="submit">Save</button>
                         </div>
                         
                     </form>
                 </div>
 
-            </div>
+            </section>
         </Layout>
     )
 }

@@ -6,7 +6,7 @@ from rest_framework.views import APIView
 from rest_framework.pagination import PageNumberPagination
 from rest_framework.response import Response
 from posts.models import Category, SubCategory, Article, Comment, Like 
-from .serializers import CategorySerializer, SubCategorySerializer, ArticleSerializer, CommentSerializer, LikeSerializer, CategoryMainSerializer, SubCategoryMainSerializer, ArticleMainSerializer
+from .serializers import CategorySerializer, SubCategorySerializer, ArticleSerializer, CommentSerializer, LikeSerializer, CategoryExplicitSerializer, SubCategoryExplicitSerializer, ArticleExplicitSerializer
 from .permissions import IsOwnerOrReadOnly
 
 
@@ -68,7 +68,7 @@ class CategoryList(APIView):
     # List all categories, or create a new category.
     def get(self, request, format=None):
         categories = Category.objects.filter(is_active=True).order_by('-created_at')
-        serializer = CategoryMainSerializer(categories, many=True)
+        serializer = CategoryExplicitSerializer(categories, many=True)
         return Response(serializer.data)
 
     def post(self, request, format=None):
@@ -101,7 +101,7 @@ class CategoryDetail(APIView):
 
     def get(self, request, pk, format=None):
         category = self.get_object(pk)
-        serializer = CategoryMainSerializer(category)
+        serializer = CategoryExplicitSerializer(category)
         return Response(serializer.data)
     
     def put(self, request, pk, format=None):
@@ -151,7 +151,7 @@ class SubCategoryList(APIView):
     # List all sub-categories, or create a new category.
     def get(self, request, format=None):
         sub_categories = SubCategory.objects.filter(is_active=True).order_by('-created_at')
-        serializer = SubCategoryMainSerializer(sub_categories, many=True)
+        serializer = SubCategoryExplicitSerializer(sub_categories, many=True)
         return Response(serializer.data)
 
     def post(self, request, format=None):
@@ -178,7 +178,7 @@ class SubCategoryDetail(APIView):
 
     def get(self, request, pk, format=None):
         sub_category = self.get_object(pk)
-        serializer = SubCategoryMainSerializer(sub_category)
+        serializer = SubCategoryExplicitSerializer(sub_category)
         return Response(serializer.data)
 
     def put(self, request, pk, format=None):
@@ -227,7 +227,7 @@ class ArticleList(APIView):
     # List all articles, or create a new article.
     def get(self, request, format=None):
         articles = Article.objects.filter(is_active=True).order_by('-created_at')
-        serializer = ArticleMainSerializer(articles, many=True)
+        serializer = ArticleExplicitSerializer(articles, many=True)
         return Response(serializer.data)
 
     def post(self, request, format=None):
@@ -242,8 +242,8 @@ For Infinite Scroll for Articles
 '''
 class StandardResultsSetPagination(PageNumberPagination):
     page_size = 10
-    page_size_query_param = 'page_size'
-    max_page_size = 1000
+    # page_size_query_param = 'page_size'
+    # max_page_size = 1000
 
 class ArticleListPaginated(generics.ListAPIView):
     permission_classes = (permissions.IsAuthenticatedOrReadOnly, )
@@ -252,7 +252,7 @@ class ArticleListPaginated(generics.ListAPIView):
     # List all articles, or create a new article.
     def get(self, request, format=None):
         articles = Article.objects.filter(is_active=True).order_by('-created_at')
-        serializer = ArticleMainSerializer(articles, many=True)
+        serializer = ArticleExplicitSerializer(articles, many=True)
         return Response(serializer.data)
 
 class ArticleListForSubCategoryPaginated(generics.ListAPIView):
@@ -262,7 +262,7 @@ class ArticleListForSubCategoryPaginated(generics.ListAPIView):
     # List all articles, or create a new article.
     def get(self, request, sub_category_pk, format=None):
         articles = Article.objects.filter(sub_category=sub_category_pk, is_active=True).order_by('-created_at')
-        serializer = ArticleMainSerializer(articles, many=True)
+        serializer = ArticleExplicitSerializer(articles, many=True)
         return Response(serializer.data)
     
 '''
@@ -285,7 +285,7 @@ class ArticleDetail(APIView):
 
     def get(self, request, pk, format=None):
         article = self.get_object(pk)
-        serializer = ArticleMainSerializer(article)
+        serializer = ArticleExplicitSerializer(article)
         return Response(serializer.data)
     
     def put(self, request, pk, format=None):

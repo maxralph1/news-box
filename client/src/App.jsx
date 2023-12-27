@@ -26,6 +26,10 @@ import DashboardArticles from './views/dashboard/articles/Articles.jsx';
 import DashboardArticleCreate from './views/dashboard/articles/CreateArticle.jsx';
 import DashboardArticle from './views/dashboard/articles/Article.jsx'; 
 import DashboardArticleEdit from './views/dashboard/articles/EditArticle.jsx';
+import DashboardAuthors from './views/dashboard/authors/Authors.jsx';
+import DashboardAuthor from './views/dashboard/authors/Author.jsx';
+import DashboardAuthorEdit from './views/dashboard/authors/EditAuthor.jsx';
+import Profile from './views/dashboard/profile/Index.jsx';
 
 
 export default function App() {
@@ -62,6 +66,10 @@ export default function App() {
             <Route element={<DashboardArticleCreate/>} path={ route('dashboard.articles.create') } /> 
             <Route element={<DashboardArticle/>} path={ route('dashboard.articles.show') } />
             <Route element={<DashboardArticleEdit/>} path={ route('dashboard.articles.edit') } />
+            <Route element={<DashboardAuthors/>} path={ route('dashboard.authors.index') } /> 
+            <Route element={<DashboardAuthor/>} path={ route('dashboard.authors.show') } />
+            <Route element={<DashboardAuthorEdit/>} path={ route('dashboard.authors.edit') } />
+            <Route element={<Profile/>} path={ route('dashboard.profile') } />
           </Route>
 
         </Routes>

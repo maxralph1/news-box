@@ -35,41 +35,54 @@ export function useAuthor(id = null) {
         }
     }, [id])
 
-    async function createAuthor(author) {
-        setLoading(true)
-        setErrors({})
-        console.log(author)
+    // async function createAuthor(author) {
+    //     setLoading(true)
+    //     setErrors({})
+    //     console.log(author)
 
-        return axiosInstance.post('accounts/authors/', author, {
-            headers: {
-                "Content-Type": "multipart/form-data",
-            },
-        })
-            .then(() => navigate(route('dashboard.authors.index')))
-            .catch(error => {
-                if (error.response) {
-                    setErrors(error.response)
-                    swalUnauthAlert(error)
-                }
-            })
-            .finally(() => setLoading(false))
-    }
+    //     return axiosInstance.post('accounts/authors/', author, {
+    //         headers: {
+    //             "Content-Type": "multipart/form-data",
+    //         },
+    //     })
+    //         .then(() => navigate(route('dashboard.authors.index')))
+    //         .catch(error => {
+    //             if (error.response) {
+    //                 setErrors(error.response)
+    //                 swalUnauthAlert(error)
+    //             }
+    //         })
+    //         .finally(() => setLoading(false))
+    // }
 
     async function getAuthor(id, { signal } = {}) {
         setLoading(true)
 
-        return axios.get(`http://127.0.0.1:8000/api/accounts/authors/${id}`, { signal })
-            .then(response => setData(response.data))
-            .catch(() => {})
-            .finally(() => setLoading(false))
+        try {
+            const response = await fetch(`http://127.0.0.1:8000/api/accounts/authors/${id}/`);
+            if (!response.ok) {
+                throw new Error(
+                    `This is an HTTP error: The status is ${response.status}`
+                );
+            }
+            let actualData = await response.json()
+            setData(actualData);
+            console.log(actualData);
+            setErrors(null)
+        } catch (err) {
+            setErrors(err.message);
+            setData(null);
+        } finally {
+            setLoading(false);
+        }
     }
 
     async function updateAuthor(author) {
         setLoading(true)
         setErrors({})
 
-        return axios.put(`authors/${author.id}`, author)
-            .then(() => navigate(route('authors.index')))
+        return axiosInstance.put(`accounts/authors/${author.username}/`, author)
+            .then(() => navigate(route('dashboard.authors.index')))
             .catch(error => {
                 if (error.response) {
                     setErrors(error.response.data.errors)
@@ -79,12 +92,12 @@ export function useAuthor(id = null) {
     }
 
     async function destroyAuthor(author) {
-        return axios.delete(`authors/${author.id}`)
+        return axiosInstance.delete(`accounts/authors/${author.username}/`)
     }
 
     return {
         author: { data, setData, errors, loading }, 
-        createAuthor, 
+        // createAuthor, 
         updateAuthor, 
         destroyAuthor, 
     }

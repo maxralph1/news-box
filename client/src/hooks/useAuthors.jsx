@@ -13,7 +13,7 @@ export function useAuthors() {
     }, []);
 
     async function getAuthors({ signal } = {}) {
-        return axios.get('http://127.0.0.1:8000/api/posts/authors/', { signal })
+        return axios.get('http://127.0.0.1:8000/api/accounts/authors/', { signal })
         // return axiosInstance.get('posts/authors/', { signal })
             .then(response => setAuthors(response.data))
             .catch(() => {});

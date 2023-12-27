@@ -1,55 +1,25 @@
-import { useEffect, useState } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
-import { route } from '../../../routes';
+import { useParams } from 'react-router-dom';
 import { useCategory } from '../../../hooks/useCategory';
 import Layout from '../../../components/dashboard/Layout';
-import axios from 'axios'
 
 
 export default function EditCategory() {
     const params = useParams()
     const { category, updateCategory } = useCategory(params.id)
-    const navigate = useNavigate()
-    // const [focusCategory, setFocusCategory] = useState({})
-    console.log(category.data)
-    // console.log(getCategory)
 
-    // useEffect(() => {
-    //     console.log(getCategory(params.id))
-    // }, [params.id])
-
-    // // Initially fetch category in question
-    // useEffect(() => {
-    //     const controller = new AbortController()
-    //     getCategory(params, { signal: controller.signal })
-    //     return () => controller.abort()
-    // }, [params.id])
-
-    // async function getCategory(params, { signal } = {}) {
-    //     return axios.get(`http://localhost:8000/api/posts/categories/${params.id}`, { signal })
-    //     .then(response => {
-    //         setFocusCategory(response.data)
-    //         console.log(response.data)
-    //     })
-    //     .catch(() => {})
-    // }
-
-    // Update category
     async function handleSubmit(event) {
         event.preventDefault()
     
         await updateCategory(category.data)
     }
 
-    
-
     return (
         <Layout>
-            <div className="container w-100">
+            <section className="container-fluid w-100 my-4">
 
-                <h2 className='my-4'>Edit Category</h2>
+                <h2 className='mb-4 fw-bold' style={{ color: 'blueviolet'}}>Edit Category</h2>
 
-                <div className="container card shadow py-4">
+                <div className="container-fluid card rounded-0 shadow py-4">
                     <form onSubmit={ handleSubmit } className="needs-validation">
                         <div className="row g-3">
                             <div className="mb-3 col-sm-12">
@@ -63,7 +33,7 @@ export default function EditCategory() {
                                         ...category.data, 
                                         title: event.target.value,
                                     }) }
-                                    className="form-control" 
+                                    className="form-control rounded-0" 
                                     placeholder="Sample Category" 
                                     disabled={ category.loading }
                                     required 
@@ -79,7 +49,7 @@ export default function EditCategory() {
                                         ...category.data,
                                         description: event.target.value,
                                     }) }
-                                    className="form-control" 
+                                    className="form-control rounded-0" 
                                     disabled={ category.loading } 
                                     required 
                                     rows="3">
@@ -90,13 +60,13 @@ export default function EditCategory() {
                         <hr className="my-4" />
 
                         <div className='d-flex justify-content-end'>
-                            <button className="btn btn-warning text-end" type="submit">Update</button>
+                            <button className="btn btn-warning rounded-0" type="submit">Update</button>
                         </div>
                         
                     </form>
                 </div>
                 
-            </div>
+            </section>
         </Layout>
     )
 }
