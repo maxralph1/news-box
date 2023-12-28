@@ -1,15 +1,30 @@
 import { useEffect, useState } from 'react'; 
 import { Link, useNavigate, useParams } from 'react-router-dom';
+import dayjs from 'dayjs';
 import axios from 'axios';
-import { intlFormat } from 'date-fns';
+// import { intlFormat } from 'date-fns';
 import { route } from '../../routes';
 import Layout from '../../components/public/Layout.jsx';
 import { useArticle } from '../../hooks/useArticle';
+import { useComments } from '../../hooks/useComments';
+import { useComment } from '../../hooks/useComment';
+import { useCommentReplies } from '../../hooks/useCommentReplies';
 
 export default function Article() {
   const params = useParams();
   const { article, updateArticle } = useArticle(params.id);
-  console.log(article)
+  // console.log(article)
+  const { comments, error, loading, getComments } = useComments();
+  const { comment, createComment } = useComment()
+  const { commentReplies, getCommentReplies } = useCommentReplies();
+
+  const submitComment = async e => {
+      e.preventDefault();
+      const body = e.target.comment_body.value;
+      const article = e.target.comment_article.value;
+
+      body.length > 0 && await createComment(body, article);
+  }
 
   return (
     <Layout>
@@ -17,20 +32,14 @@ export default function Article() {
         <div className="my-3">
           <h2 className="fw-bolder">{article.data.title}</h2>
           <p className="fs-6 fw-semibold text-secondary">By @
-          <span>
-            <Link 
-              to={ route('authors.show', { id: article.data.added_by }) }
-              style={{color: 'blueviolet', textDecoration: 'underline'}}
-            >
-              {article.data.added_by}
-            </Link> | 
-            {/* {intlFormat(new Date(article.data.created_at), {
-                year: 'numeric',
-                month: 'short',
-                day: 'numeric',
-            })} */}
-          </span>
-            
+            <span>
+              <Link 
+                to={ route('authors.show', { id: article.data.added_by }) }
+                style={{color: 'blueviolet', textDecoration: 'underline'}}
+              >
+                {article.data.added_by}
+              </Link> | {dayjs(article.data.created_at).format('MMM D, YYYY')}
+            </span>
           </p>
           {/* <p className="fs-5 fw-semibold">{article.data.body}</p> */}
         </div>
@@ -65,13 +74,72 @@ export default function Article() {
         </div>
       </section> */}
 
-      <section className='comments'>
+      <section className='comments my-5'>
           <div className='comment-box'>
-
+            <form onSubmit={submitComment} className='d-flex flex-column align-items-end'>
+              <textarea 
+                name="comment_body" 
+                id="comment_body" 
+                className="form-control rounded-0 mb-1" 
+                placeholder="Write your comment ..." 
+                disabled={ comment.loading } 
+                required 
+                rows="2">
+              </textarea>
+              <input 
+                  name="comment_article" 
+                  id="comment_article" 
+                  // type="hidden" 
+                  value={ article.data.id }
+                  className="form-control rounded-0" 
+              />
+              <button type="submit" className='bg-secondary text-white border-0 py-1 px-2'>Comment</button>
+            </form>
           </div>
 
           <div className='user-comments'>
+            {(comments.length < 1) ? (
+                <div className="d-flex justify-content-end my-5">
+                  <p>No comments yet</p>
+                </div>
+            ) : (comments.length > 0 && !loading) ? comments.filter(comment => comment.article == article.data.id).map(filteredComment => {
+                return (
+                  <div key={filteredComment.id} className="d-flex flex-wrap justify-content-around gap-2">
+                    <div className="card rounded-0 shadow-lg border-0" style={{maxWidth: '15rem'}}>
+                      <div className="card-body">
+                          <p className="card-text fs-5 fw-bold">{filteredComment.body}</p>
+                          <p className="card-text text-secondary fw-bold mt-0">by @{filteredComment.added_by}</p>
 
+                          <div className='comment-reply-box'>
+                            <form className='d-flex flex-column align-items-end'>
+                              <textarea class="form-control rounded-0 mb-1" id="" rows="2"></textarea>
+                              <button type="submit" className='bg-secondary text-white border-0 py-1 px-2'>Comment</button>
+                            </form>
+                          </div>
+
+                          <div className='comment-replies'>
+                            {(commentReplies.length > 0 && !loading) && commentReplies.filter(commentReply => commentReply.comment == filteredComment.id).map(filteredCommentReply => {
+                              return (
+                                  <div key={filteredCommentReply.id} className="card rounded-0 shadow-lg border-0" style={{maxWidth: '15rem'}}>
+                                      <div className="card-body">
+                                          <p className="card-text fs-5 fw-bold">{filteredCommentReply.body}</p>
+                                          <p className="card-text text-secondary fw-bold mt-0">by @{filteredCommentReply.added_by}</p>
+                                      </div>
+                                  </div>
+                                )
+                              })}
+                          </div>
+                      </div>
+                    </div>
+                  </div>
+                )
+            }) : (
+              <div className="d-flex justify-content-center my-5">
+                  <div className="spinner-border" role="status">
+                      <span className="visually-hidden">Loading...</span>
+                  </div>
+              </div>
+            )}
           </div>
       </section>
     </Layout>

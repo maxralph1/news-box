@@ -31,7 +31,6 @@ export default function Register() {
               showConfirmButton: false,
           })
       }
-      
   }
 
   return (

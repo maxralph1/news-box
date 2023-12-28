@@ -5,8 +5,8 @@ from rest_framework import generics, permissions, status
 from rest_framework.views import APIView
 from rest_framework.pagination import PageNumberPagination
 from rest_framework.response import Response
-from posts.models import Category, SubCategory, Article, Comment, Like 
-from .serializers import CategorySerializer, SubCategorySerializer, ArticleSerializer, CommentSerializer, LikeSerializer, CategoryExplicitSerializer, SubCategoryExplicitSerializer, ArticleExplicitSerializer
+from posts.models import Category, SubCategory, Article, Comment, CommentReply, Like 
+from .serializers import CategorySerializer, SubCategorySerializer, ArticleSerializer, CommentSerializer, CommentReplySerializer, LikeSerializer, CategoryExplicitSerializer, SubCategoryExplicitSerializer, ArticleExplicitSerializer
 from .permissions import IsOwnerOrReadOnly
 
 
@@ -501,6 +501,87 @@ class CommentSoftDeleteOrReactivate(APIView):
             data = f"You have successfully reactivated the comment {comment.title}"
             return Response({'response': data}, status=status.HTTP_200_OK)
 
+
+
+
+'''
+COMMENT REPLY SECTION
+'''
+class CommentReplyList(APIView):
+    permission_classes = (permissions.IsAuthenticatedOrReadOnly, )
+    permission_classes_by_action = {
+        'get': (permissions.IsAdminUser, ),
+        'post': (permissions.IsAuthenticated, ),
+    }
+
+    # List all comments, or create a new comment reply.
+    def get(self, request, format=None):
+        comment_replies = CommentReply.objects.filter(is_active=True).order_by('-created_at')
+        serializer = CommentReplySerializer(comment_replies, many=True)
+        return Response(serializer.data)
+
+    def post(self, request, format=None):
+        serializer = CommentReplySerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save(added_by=self.request.user)
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+
+class CommentReplyDetail(APIView):
+    permission_classes_by_action = {
+        'get': (permissions.IsAuthenticatedOrReadOnly, ),
+        'put': (permissions.IsAuthenticated, ),
+        'delete': (permissions.IsAuthenticated, permissions.IsAdminUser, ),
+    }
+
+    def get_object(self, pk):
+        try:
+            return CommentReply.objects.get(pk=pk, is_active=True)
+        except CommentReply.DoesNotExist:
+            raise Http404
+
+    def get(self, request, pk, format=None):
+        comment_reply = self.get_object(pk)
+        serializer = CommentReplySerializer(comment_reply)
+        return Response(serializer.data)
+    
+    def put(self, request, pk, format=None):
+        comment_reply = self.get_object(pk)
+        serializer = CommentReplySerializer(comment_reply, data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+    def delete(self, request, pk, format=None):
+        comment_reply = self.get_object(pk)
+        Like.objects.filter(comment_reply__pk=pk).delete()
+        comment_reply.delete()
+        return Response(status=status.HTTP_204_NO_CONTENT)
+
+
+class CommentReplySoftDeleteOrReactivate(APIView):
+    permission_classes = (permissions.IsAuthenticated, permissions.IsAdminUser, )
+  
+    def get_object(self, pk):
+        try:
+            return CommentReply.objects.get(pk=pk, is_active=True)
+        except CommentReply.DoesNotExist:
+            raise Http404
+    
+    def put(self, request, pk, format=None):
+        comment_reply = self.get_object(pk)
+
+        if comment_reply.is_active:
+            comment_reply.deactivate()
+            return Response(status=status.HTTP_204_NO_CONTENT)
+        elif comment_reply.is_active == False:
+            comment_reply.reactivate()
+            data = f"You have successfully reactivated the comment {comment_reply.title}"
+            return Response({'response': data}, status=status.HTTP_200_OK)
+    
 
 
 '''

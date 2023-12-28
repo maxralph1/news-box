@@ -223,11 +223,6 @@ class Article(models.Model):
 
 class Comment(models.Model):
     article = models.ForeignKey(Article, related_name='comments', on_delete=models.CASCADE)
-    title = models.CharField(
-        verbose_name=_('Comment Title'),
-        help_text=_('Comment Title'),
-        max_length=255
-    )
     slug = models.SlugField(
         verbose_name=_(
             'Comment safe URL'),
@@ -251,6 +246,43 @@ class Comment(models.Model):
 
     def save(self, *args, **kwargs):
         # self.is_active = True
+        super().save(*args, **kwargs)
+
+    def deactivate(self, *args, **kwargs):
+        self.is_active = False
+        self.deleted_at = datetime.now()
+        super().save(*args, **kwargs)
+
+    def reactivate(self, *args, **kwargs):
+        self.is_active = True
+        # self.deleted_at = ''
+        super().save(*args, **kwargs)
+    
+
+class CommentReply(models.Model):
+    comment = models.ForeignKey(Comment, related_name='comments', on_delete=models.CASCADE)
+    slug = models.SlugField(
+        verbose_name=_(
+            'Comment Reply safe URL'),
+        max_length=255,
+        unique=True)
+    body = models.TextField(
+        verbose_name=_('Comment Reply Body'),
+        help_text=_('Message must not exceed 255 characters'),
+        max_length=255
+    )
+    added_by = models.ForeignKey(User, related_name='comment_replies', on_delete=models.CASCADE)
+    is_active = models.BooleanField(
+        verbose_name=_('Comment reply visibility'),
+        help_text=_('Change comment reply visibility'),
+        default=True,
+    )
+    created_at = models.DateTimeField(
+        _('Created at'), auto_now_add=True, editable=False)
+    updated_at = models.DateTimeField(_('Updated at'), auto_now=True)
+    deleted_at = models.DateTimeField(null=True, blank=True)
+
+    def save(self, *args, **kwargs):
         super().save(*args, **kwargs)
 
     def deactivate(self, *args, **kwargs):
@@ -288,6 +320,13 @@ class Like(models.Model):
     )
     comment = models.ForeignKey(
         Comment, 
+        related_name='likes', 
+        on_delete=models.CASCADE,
+        null=True,
+        blank=True
+    )
+    comment_reply = models.ForeignKey(
+        CommentReply, 
         related_name='likes', 
         on_delete=models.CASCADE,
         null=True,

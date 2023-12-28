@@ -41,6 +41,11 @@ urlpatterns = [
     path('comments/<int:pk>/', views.CommentDetail.as_view()),
     # path('comments/<slug:like_slug>/likes/', views.CommentLikesList.as_view()),
 
+    # Comment Replies
+    path('comment-replies/', views.CommentReplyList.as_view()),
+    path('comment-replies/<int:pk>/', views.CommentReplyDetail.as_view()),
+    # path('comments/<slug:like_slug>/likes/', views.CommentLikesList.as_view()),
+
     # Likes
     path('likes/', views.LikeList.as_view()),
     path('likes/<int:pk>/', views.LikeDetail.as_view()),
