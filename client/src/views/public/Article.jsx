@@ -89,7 +89,7 @@ export default function Article() {
               <input 
                   name="comment_article" 
                   id="comment_article" 
-                  // type="hidden" 
+                  type="hidden" 
                   value={ article.data.id }
                   className="form-control rounded-0" 
               />
