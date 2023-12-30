@@ -91,7 +91,7 @@ class AuthorSetAsSuperuser(APIView):
 
     def get_object(self, username):
         try:
-            return User.objects.get(username=username, is_active=True)
+            return User.objects.get(username=username)
         except User.DoesNotExist:
             raise Http404
         

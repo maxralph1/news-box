@@ -159,7 +159,7 @@ export default function Index() {
                                     />
                                 </div>
                                 <div className="mb-3 col-sm-12">
-                                    <p>Current image: <img src={`http://localhost:8000/${author.data.image}`} alt="" width={20} /></p>
+                                    {/* <p>Current image: <img src={`http://localhost:8000/${author.data.image}`} alt="" width={20} /></p> */}
                                     <label htmlFor="image" className="form-label">Update Image</label>
                                     <input 
                                         name="image" 

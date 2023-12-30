@@ -59,10 +59,10 @@ export function useAuthor(id = null) {
     async function updateAuthor(author, formData) {
         setLoading(true)
         setErrors({})
-        console.log(author) 
+        console.log(author.username) 
         console.log(formData) 
 
-        return axiosInstance.putForm(`accounts/authors/${author.username}/`, formData)
+        return axiosInstance.put(`accounts/authors/${author.username}/`, formData)
             .then(() => navigate(route('dashboard.authors.index')))
             .catch(error => {
                 if (error.response) {
