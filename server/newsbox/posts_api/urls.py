@@ -34,6 +34,7 @@ urlpatterns = [
     path('articles/<int:pk>/set-as-gallery/', views.ArticleSetAsGallery.as_view()),
     # path('articles/<int:pk>/set-as-gallery-centered/', views.ArticleSetAsGalleryCentered.as_view()),
     # path('articles/<slug:like_slug>/likes/', views.ArticleLikesList.as_view()),
+    path('categories/<int:category_pk>/articles/paginated/', views.ArticleListForCategoryPaginated.as_view()),
     path('sub-categories/<int:sub_category_pk>/articles/paginated/', views.ArticleListForSubCategoryPaginated.as_view()),
 
     # Comments
@@ -49,6 +50,9 @@ urlpatterns = [
     # Likes
     path('likes/', views.LikeList.as_view()),
     path('likes/<int:pk>/', views.LikeDetail.as_view()),
+
+
+    path('articles/<int:article>/like-unlike/', views.article_like_unlike),
 
 ]
 

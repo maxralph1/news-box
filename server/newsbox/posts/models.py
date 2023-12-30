@@ -223,11 +223,11 @@ class Article(models.Model):
 
 class Comment(models.Model):
     article = models.ForeignKey(Article, related_name='comments', on_delete=models.CASCADE)
-    slug = models.SlugField(
-        verbose_name=_(
-            'Comment safe URL'),
-        max_length=255,
-        unique=True)
+    # slug = models.SlugField(
+    #     verbose_name=_(
+    #         'Comment safe URL'),
+    #     max_length=255,
+    #     unique=True)
     body = models.TextField(
         verbose_name=_('Comment Body'),
         help_text=_('Message must not exceed 255 characters'),
@@ -245,7 +245,7 @@ class Comment(models.Model):
     deleted_at = models.DateTimeField(null=True, blank=True)
 
     def save(self, *args, **kwargs):
-        # self.is_active = True
+        self.is_active = True
         super().save(*args, **kwargs)
 
     def deactivate(self, *args, **kwargs):
@@ -261,11 +261,11 @@ class Comment(models.Model):
 
 class CommentReply(models.Model):
     comment = models.ForeignKey(Comment, related_name='comments', on_delete=models.CASCADE)
-    slug = models.SlugField(
-        verbose_name=_(
-            'Comment Reply safe URL'),
-        max_length=255,
-        unique=True)
+    # slug = models.SlugField(
+    #     verbose_name=_(
+    #         'Comment Reply safe URL'),
+    #     max_length=255,
+    #     unique=True)
     body = models.TextField(
         verbose_name=_('Comment Reply Body'),
         help_text=_('Message must not exceed 255 characters'),
@@ -283,6 +283,7 @@ class CommentReply(models.Model):
     deleted_at = models.DateTimeField(null=True, blank=True)
 
     def save(self, *args, **kwargs):
+        self.is_active = True
         super().save(*args, **kwargs)
 
     def deactivate(self, *args, **kwargs):
@@ -337,12 +338,12 @@ class Like(models.Model):
         help_text=_('Like/Dislike'),
         default=True,
     )
-    slug = models.SlugField(
-        verbose_name=_(
-            'Like safe URL'),
-        max_length=255,
-        unique=True
-    )
+    # slug = models.SlugField(
+    #     verbose_name=_(
+    #         'Like safe URL'),
+    #     max_length=255,
+    #     unique=True
+    # )
     added_by = models.ForeignKey(User, related_name='likes', on_delete=models.CASCADE)
     is_active = models.BooleanField(
         verbose_name=_('Like visibility'),
@@ -355,5 +356,5 @@ class Like(models.Model):
     deleted_at = models.DateTimeField(null=True, blank=True)
 
     def save(self, *args, **kwargs):
-        # self.is_active = True
+        self.is_active = True
         super().save(*args, **kwargs)

@@ -14,10 +14,10 @@ class CustomTokenObtainPairSerializer(TokenObtainPairSerializer):
         token['last_name'] = user.last_name
         token['username'] = user.username
         token['email'] = user.email
+        token['role'] = user.role
         token['bio'] = user.profile.bio
         token['image'] = str(user.profile.image)
         token['verified'] = user.profile.verified
-        token['role'] = user.profile.role
 
         return token
 

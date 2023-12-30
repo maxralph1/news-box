@@ -8,7 +8,6 @@ import Layout from '../../components/public/Layout.jsx';
 import { useSubCategories } from '../../hooks/useSubCategories';
 import { useSubCategory } from '../../hooks/useSubCategory.jsx';
 import { useArticles } from '../../hooks/useArticles';
-import Article from '../../components/Articles';
 import { useArticle } from '../../hooks/useArticle';
 
 export default function SubCategory() {
@@ -182,9 +181,6 @@ export default function SubCategory() {
           </div>
         </InfiniteScroll>
       </section>
-      {/* <div>
-        <Article />
-      </div> */}
     </Layout>
   )
 }

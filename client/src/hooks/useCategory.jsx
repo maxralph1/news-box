@@ -45,7 +45,7 @@ export function useCategory(id = null) {
             .then(() => navigate(route('dashboard.categories.index')))
             .catch(error => {
                 console.log(error);
-                setErrors(error.response.data.errors);
+                setErrors(error.response);
                 swalUnauthAlert(error);
             })
             .finally(() => setLoading(false));
@@ -76,6 +76,13 @@ export function useCategory(id = null) {
 
     async function destroyCategory(category) {
         return axiosInstance.delete(`posts/categories/${category.id}/`)
+            .then(() => navigate(route('dashboard.categories.index')))
+            .catch(error => {
+                console.log(error);
+                setErrors(error.response);
+                swalUnauthAlert(error);
+            })
+            .finally(() => setLoading(false));
     }
 
     return {

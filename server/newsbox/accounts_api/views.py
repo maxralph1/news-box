@@ -1,4 +1,5 @@
 from datetime import datetime
+from django.db import transaction
 from django.http import Http404
 from rest_framework import permissions, status
 from rest_framework.views import APIView
@@ -81,3 +82,75 @@ class UserSoftDeleteOrReactivate(APIView):
             user.reactivate()
             data = f"You have successfully reactivated the user {user.title}"
             return Response({'response': data}, status=status.HTTP_200_OK)
+        
+
+
+# Roles Set
+class AuthorSetAsSuperuser(APIView):
+    permission_classes = (permissions.IsAdminUser, )
+
+    def get_object(self, username):
+        try:
+            return User.objects.get(username=username, is_active=True)
+        except User.DoesNotExist:
+            raise Http404
+        
+    def put(self, request, username, format=None):
+        user = self.get_object(username)
+
+        # if user.is_superuser == False:
+            # User.objects.get(username=username, is_active=True).update(is_superuser=True, is_staff=True, role='SUP')
+            # # user.update(is_superuser=True, is_staff=True, role='SUP')
+            # serializer = UserSerializer(user)
+            # return Response(serializer.data)
+        
+        # user.is_superuser = True
+        # user.is_staff = True
+        # user.role = 'SUP'
+        user.setAsSuperuser()
+        serializer = UserSerializer()
+        return Response(serializer.data)
+        
+
+
+class AuthorSetAsContributor(APIView):
+    permission_classes = (permissions.IsAdminUser, )
+
+    def get_object(self, username):
+        try:
+            return User.objects.get(username=username, is_active=True)
+        except User.DoesNotExist:
+            raise Http404
+        
+    def put(self, request, username, format=None):
+        user = self.get_object(username)
+
+        # if user.is_staff == False:
+        #     User.objects.get(username=username, is_active=True).update(is_superuser=False, is_staff=True, role='CBT')
+        #     # user.update(is_superuser=False, is_staff=True, role='CBT')
+        #     serializer = UserSerializer(user)
+        #     return Response(serializer.data)
+        user.setAsContributor()
+        serializer = UserSerializer()
+        return Response(serializer.data)
+
+
+class AuthorSetAsReader(APIView):
+    permission_classes = (permissions.IsAdminUser, )
+
+    def get_object(self, username):
+        try:
+            return User.objects.get(username=username, is_active=True)
+        except User.DoesNotExist:
+            raise Http404
+        
+    def put(self, request, username, format=None):
+        user = self.get_object(username)
+
+        # User.objects.get(username=username, is_active=True).update(is_superuser=False, is_staff=False, role='RDR')
+        # # user.update(is_superuser=False, is_staff=False, role='RDR')
+        # serializer = UserSerializer(user)
+        # return Response(serializer.data)
+        user.setAsReader()
+        serializer = UserSerializer()
+        return Response(serializer.data)

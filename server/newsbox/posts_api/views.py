@@ -2,6 +2,7 @@ from datetime import datetime
 from django.db import transaction
 from django.http import Http404
 from rest_framework import generics, permissions, status
+from rest_framework.decorators import api_view
 from rest_framework.views import APIView
 from rest_framework.pagination import PageNumberPagination
 from rest_framework.response import Response
@@ -10,66 +11,21 @@ from .serializers import CategorySerializer, SubCategorySerializer, ArticleSeria
 from .permissions import IsOwnerOrReadOnly
 
 
-# @api_view(['GET', 'POST'])
-# def category_list(request):
-#     # List all categories, or create a new category.
-#     if request.method == 'GET':
-#         categories = Category.objects.all()
-#         serializer = CategorySerializer(categories, many=True)
-#         return Response(serializer.data)
-
-#     elif request.method == 'POST':
-#         serializer = CategorySerializer(data=request.data)
-#         if serializer.is_valid():
-#             serializer.save(added_by=request.user)
-#             return Response(serializer.data, status=status.HTTP_201_CREATED)
-#         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-    
-#     # def perform_create(self, serializer):
-#     #     serializer.save(added_by=self.request.user)
-
-
-
-# @api_view(['GET', 'PUT', 'DELETE'])
-# def category_detail(request, pk):
-#     # Retrieve, update or delete a category.
-#     try:
-#         category = Category.objects.get(pk=pk)
-#     except Category.DoesNotExist:
-#         return Response(status=status.HTTP_404_NOT_FOUND)
-
-#     if request.method == 'GET':
-#         serializer = CategorySerializer(category)
-#         return Response(serializer.data)
-
-#     elif request.method == 'PUT':
-#         serializer = CategorySerializer(category, data=request.data)
-#         if serializer.is_valid():
-#             serializer.save()
-#             return Response(serializer.data)
-#         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
-#     elif request.method == 'DELETE':
-#         category.delete()
-#         return Response(status=status.HTTP_204_NO_CONTENT)
-    
 
 '''
 CATEGORY SECTION
 '''
 
 class CategoryList(APIView):
-    # permission_classes = (permissions.IsAuthenticatedOrReadOnly, )
-    permission_classes_by_action = {
-        'get': (permissions.IsAuthenticatedOrReadOnly, ),
-        'post': (permissions.IsAuthenticated, permissions.IsAdminUser, ),
-    }
+    permission_classes = [permissions.IsAuthenticatedOrReadOnly]
+    # permission_classes = [CustomPermissionClass]
 
     # List all categories, or create a new category.
     def get(self, request, format=None):
         categories = Category.objects.filter(is_active=True).order_by('-created_at')
         serializer = CategoryExplicitSerializer(categories, many=True)
         return Response(serializer.data)
+    
 
     def post(self, request, format=None):
         categories_count = Category.objects.all().count()
@@ -87,11 +43,7 @@ class CategoryList(APIView):
 
 
 class CategoryDetail(APIView):
-    permission_classes_by_action = {
-        'get': (permissions.IsAuthenticatedOrReadOnly, ),
-        'put': (permissions.IsAuthenticated, permissions.IsAdminUser, ),
-        'delete': (permissions.IsAuthenticated, permissions.IsAdminUser, ),
-    }
+    permission_classes = (permissions.IsAuthenticatedOrReadOnly, )
     
     def get_object(self, pk):
         try:
@@ -252,6 +204,16 @@ class ArticleListPaginated(generics.ListAPIView):
     # List all articles, or create a new article.
     def get(self, request, format=None):
         articles = Article.objects.filter(is_active=True).order_by('-created_at')
+        serializer = ArticleExplicitSerializer(articles, many=True)
+        return Response(serializer.data)
+
+class ArticleListForCategoryPaginated(generics.ListAPIView):
+    permission_classes = (permissions.IsAuthenticatedOrReadOnly, )
+    pagination_class = StandardResultsSetPagination
+
+    # List all articles, or create a new article.
+    def get(self, request, category_pk, format=None):
+        articles = Article.objects.filter(category=category_pk, is_active=True).order_by('-created_at')
         serializer = ArticleExplicitSerializer(articles, many=True)
         return Response(serializer.data)
 
@@ -631,3 +593,21 @@ class LikeDetail(APIView):
 
 
 
+# Article Like/Unlike
+    
+@api_view(['POST'])
+def article_like_unlike(request, article):
+    """
+    Retrieve, add or delete an article like.
+    """
+    try:
+        like = Like.objects.get(article=article, added_by=request.user)
+        like.delete()
+        return Response(status=status.HTTP_204_NO_CONTENT)
+    except Like.DoesNotExist:
+        # return Response(status=status.HTTP_404_NOT_FOUND)
+        serializer = LikeSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save(added_by=request.user)
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)

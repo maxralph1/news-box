@@ -45,7 +45,8 @@ export default function Authors() {
                                     </button>
                                 </div>
                                 <Link 
-                                    to={ route('dashboard.authors.show', { id: author.username }) } className='text-dark'>
+                                    to={ route('dashboard.authors.show', { id: author.username }) } className='text-dark d-flex flex-column align-items-start'>
+                                    <span className='text-white px-1 d-block mb-2' style={{ backgroundColor: 'blueviolet' }}>{author.role == 'SUP' ? 'Super User' : author.role == 'CBT' ? 'Contributor' : 'Reader'}</span>
                                     <h4 className='fw-bold fs-5'>{author.first_name ? (author.first_name + ' ' + author.last_name) : '(User has yet to set their name)'}</h4>
                                     <p>@<span className='fw-semibold' style={{color: 'blueviolet'}}>{author.username}</span></p>
                                     <p className='fw-semibold text-secondary'>joined: | {dayjs(author.created_at).format('MMM D, YYYY')}</p>

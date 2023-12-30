@@ -5,7 +5,7 @@ import { route } from '../routes';
 import useAxios from '../utils/useAxios';
 
 
-export function useComment(id = null) {
+export function useLike(id = null) {
     const [errors, setErrors] = useState({});
     const [loading, setLoading] = useState(false);
     const [data, setData] = useState({});
@@ -30,17 +30,17 @@ export function useComment(id = null) {
     useEffect(() => {
         if (id !== null) {
             const controller = new AbortController();
-            getComment(id, { signal: controller.signal });
+            getLike(id, { signal: controller.signal });
             return () => controller.abort()
         }
     }, [id])
 
-    async function createComment(body, article) {
+    async function createLike(article) {
         setLoading(true)
         setErrors({})
-        console.log(body, article)
+        // console.log(article)
 
-        return axiosInstance.post('posts/comments/', {body, article})
+        return axiosInstance.post(`posts/articles/${article}/like-unlike/`, {article})
             .then(() => {})
             .catch(error => {
                 if (error.response) {
@@ -52,11 +52,11 @@ export function useComment(id = null) {
             .finally(() => setLoading(false))
     }
 
-    async function getComment(id) {
+    async function getLike(id) {
         setLoading(true)
 
         try {
-            const response = await fetch(`http://127.0.0.1:8000/api/posts/comments/${id}/`);
+            const response = await fetch(`http://127.0.0.1:8000/api/posts/likes/${id}/`);
             if (!response.ok) {
                 throw new Error(
                     `This is an HTTP error: The status is ${response.status}`
@@ -74,23 +74,8 @@ export function useComment(id = null) {
         }
     }
 
-    async function updateComment(comment) {
-        setLoading(true)
-        setErrors({})
-        console.log(comment)
-
-        return axiosInstance.put(`posts/comments/${comment.id}/`, comment)
-            .catch(error => {
-                if (error.response) {
-                    setErrors(error.response);
-                    swalUnauthAlert(error);
-                }
-            })
-            .finally(() => setLoading(false))
-    }
-
-    async function destroyComment(comment) {
-        return axiosInstance.delete(`posts/comments/${comment.id}/`)
+    async function destroyLike(like) {
+        return axiosInstance.delete(`posts/likes/${like.id}/`)
             .catch(error => {
                 if (error.response) {
                     setErrors(error.response);
@@ -101,10 +86,9 @@ export function useComment(id = null) {
     }
 
     return {
-        comment: { data, setData, errors, loading }, 
-        getComment, 
-        createComment, 
-        updateComment, 
-        destroyComment, 
+        like: { data, setData, errors, loading }, 
+        getLike, 
+        createLike, 
+        destroyLike, 
     }
 }

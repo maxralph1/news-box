@@ -104,6 +104,7 @@ export function useSubCategory(id = null) {
 
     return {
         subCategory: { data, setData, errors, loading }, 
+        getSubCategory, 
         createSubCategory, 
         updateSubCategory, 
         destroySubCategory, 

@@ -40,7 +40,7 @@ export default function NavBar() {
     }
 
     return (
-        <header>
+        <header className='d-flex align-items-center'>
             <nav className="navbar navbar-expand-lg navbar-dark fixed-top pt-0" aria-label="Fifth navbar example" style={{backgroundColor: 'blueviolet'}}>
                 <div className="container">
                     <div>
@@ -97,10 +97,20 @@ export default function NavBar() {
                                 return (
                                     <li key={category.id} className="categories nav-item dropdown">
                                         {(category.sub_categories.length > 0) 
-                                            ? <a className="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown"
-                                            aria-expanded="false">{category.title.slice(0, 15)}</a>
-                                            : <a className="nav-link" href="#" data-bs-toggle="dropdown"
-                                            aria-expanded="false">{category.title.slice(0, 15)}</a>}
+                                            ? <a 
+                                                key={category.id}
+                                                className="nav-link dropdown-toggle" 
+                                                href={ route('categories.show', { id: category.id }) } 
+                                                data-bs-toggle="dropdown" 
+                                                aria-expanded="false">
+                                                    {category.title.slice(0, 15)}
+                                                </a>
+                                            : <a 
+                                                key={category.id}
+                                                className="nav-link" 
+                                                href={ route('categories.show', { id: category.id }) }>
+                                                    {category.title.slice(0, 15)}
+                                                </a>}
 
                                         {(category.sub_categories.length > 0) && 
                                             <ul className="dropdown-menu rounded-0">

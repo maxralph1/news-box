@@ -3,11 +3,8 @@ import { AuthProvider } from './context/AuthContext';
 import { route } from './routes';
 import PrivateRoute from './utils/PrivateRoute.jsx';
 import Home from './views/public/Home.jsx';
-import Categories from './views/public/Categories.jsx';
 import Category from './views/public/Category.jsx';
-import SubCategories from './views/public/SubCategories.jsx'; 
 import SubCategory from './views/public/SubCategory.jsx'; 
-import Articles from './views/public/Articles.jsx';
 import Article from './views/public/Article.jsx';
 import Author from './views/public/Author.jsx';
 import Search from './views/public/Search.jsx';
@@ -40,11 +37,8 @@ export default function App() {
 
           {/* Public routes */}
           <Route element={<Home />} path={ route('home') } />
-          <Route element={<Categories />} path={ route('categories.index') } />
           <Route element={<Category />} path={ route('categories.show') } />
-          <Route element={<SubCategories />} path={ route('sub-categories.index') } />
           <Route element={<SubCategory />} path={ route('sub-categories.show') } />
-          <Route element={<Articles />} path={ route('articles.index') } />
           <Route element={<Article />} path={ route('articles.show') } />
           <Route element={<Author />} path={ route('authors.show') } />
           <Route element={<Search />} path={ route('search') } />

@@ -1,8 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import swal from 'sweetalert2';
-import { route } from '../routes'; 
-import axios from 'axios'; 
+import { route } from '../routes';
 import useAxios from '../utils/useAxios';
 
 export function useAuthor(id = null) {
@@ -35,26 +34,6 @@ export function useAuthor(id = null) {
         }
     }, [id])
 
-    // async function createAuthor(author) {
-    //     setLoading(true)
-    //     setErrors({})
-    //     console.log(author)
-
-    //     return axiosInstance.post('accounts/authors/', author, {
-    //         headers: {
-    //             "Content-Type": "multipart/form-data",
-    //         },
-    //     })
-    //         .then(() => navigate(route('dashboard.authors.index')))
-    //         .catch(error => {
-    //             if (error.response) {
-    //                 setErrors(error.response)
-    //                 swalUnauthAlert(error)
-    //             }
-    //         })
-    //         .finally(() => setLoading(false))
-    // }
-
     async function getAuthor(id, { signal } = {}) {
         setLoading(true)
 
@@ -77,15 +56,66 @@ export function useAuthor(id = null) {
         }
     }
 
-    async function updateAuthor(author) {
+    async function updateAuthor(author, formData) {
         setLoading(true)
         setErrors({})
+        console.log(author) 
+        console.log(formData) 
 
-        return axiosInstance.put(`accounts/authors/${author.username}/`, author)
+        return axiosInstance.putForm(`accounts/authors/${author.username}/`, formData)
             .then(() => navigate(route('dashboard.authors.index')))
             .catch(error => {
                 if (error.response) {
-                    setErrors(error.response.data.errors)
+                    setErrors(error.response);
+                    swalUnauthAlert(error);
+                }
+            })
+            .finally(() => setLoading(false));
+    }
+
+    async function setAsSuperuser(username) {
+        setLoading(true)
+        setErrors({})
+
+        return axiosInstance.put(`accounts/authors/${username}/set-as-superuser/`)
+            .then(() => navigate(route('dashboard.authors.index')))
+            .catch(error => {
+                if (error.response) {
+                    setErrors(error.response);
+                    console.log(error.response);
+                    swalUnauthAlert(error);
+                }
+            })
+            .finally(() => setLoading(false))
+    }
+
+    async function setAsContributor(username) {
+        setLoading(true)
+        setErrors({})
+
+        return axiosInstance.put(`accounts/authors/${username}/set-as-contributor/`)
+            .then(() => navigate(route('dashboard.authors.index')))
+            .catch(error => {
+                if (error.response) {
+                    setErrors(error.response);
+                    console.log(error.response);
+                    swalUnauthAlert(error);
+                }
+            })
+            .finally(() => setLoading(false))
+    }
+
+    async function setAsReader(username) {
+        setLoading(true)
+        setErrors({})
+
+        return axiosInstance.put(`accounts/authors/${username}/set-as-reader/`)
+            .then(() => navigate(route('dashboard.authors.index')))
+            .catch(error => {
+                if (error.response) {
+                    setErrors(error.response);
+                    console.log(error.response);
+                    swalUnauthAlert(error);
                 }
             })
             .finally(() => setLoading(false))
@@ -93,12 +123,23 @@ export function useAuthor(id = null) {
 
     async function destroyAuthor(author) {
         return axiosInstance.delete(`accounts/authors/${author.username}/`)
+            .then(() => navigate(route('dashboard.authors.index')))
+            .catch(error => {
+                if (error.response) {
+                    setErrors(error.response);
+                    swalUnauthAlert(error);
+                }
+            })
+            .finally(() => setLoading(false));
     }
 
     return {
         author: { data, setData, errors, loading }, 
-        // createAuthor, 
+        getAuthor, 
         updateAuthor, 
+        setAsSuperuser, 
+        setAsContributor, 
+        setAsReader, 
         destroyAuthor, 
     }
 }

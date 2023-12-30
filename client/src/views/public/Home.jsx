@@ -7,9 +7,7 @@ import { route } from '../../routes';
 import Layout from '../../components/public/Layout.jsx';
 import Hero from '../../components/public/Hero.jsx';
 import { useSubCategories } from '../../hooks/useSubCategories';
-import { useSubCategory } from '../../hooks/useSubCategory';
 import { useArticles } from '../../hooks/useArticles';
-import { useArticle } from '../../hooks/useArticle';
 
 export default function Home() {
     const { subCategories, getSubCategories } = useSubCategories();

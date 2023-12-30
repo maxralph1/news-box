@@ -74,47 +74,50 @@ class ArticleSerializer(serializers.ModelSerializer):
     #     return data
 
 
-class CommentSerializer(serializers.HyperlinkedModelSerializer):
+
+class CommentSerializer(serializers.ModelSerializer):
     added_by = serializers.ReadOnlyField(source='added_by.username')
+    # article = serializers.ReadOnlyField(source='article.slug')
 
     class Meta:
         model = Comment
-        fields = ('id', 'article', 'body', 'added_by', 'is_active')
+        fields = ('id', 'article', 'body', 'added_by', 'is_active', )
 
-    def to_representation(self, instance):
-        data = super().to_representation(instance)
-        data['article'] = ArticleSerializer(Article.objects.get(pk=data['article'])).data
-        return data
+    # def to_representation(self, instance):
+    #     data = super().to_representation(instance)
+    #     data['article'] = ArticleSerializer(Article.objects.get(pk=data['article'])).data
+    #     return data
 
 
-class CommentReplySerializer(serializers.HyperlinkedModelSerializer):
+
+class CommentReplySerializer(serializers.ModelSerializer):
     added_by = serializers.ReadOnlyField(source='added_by.username')
 
     class Meta:
         model = CommentReply
-        fields = ('id', 'comment', 'body', 'added_by', 'is_active')
+        fields = ('id', 'comment', 'body', 'added_by', 'is_active', )
 
-    def to_representation(self, instance):
-        data = super().to_representation(instance)
-        data['comment'] = CommentSerializer(Comment.objects.get(pk=data['comment'])).data
-        return data
+    # def to_representation(self, instance):
+    #     data = super().to_representation(instance)
+    #     data['comment'] = CommentSerializer(Comment.objects.get(pk=data['comment'])).data
+    #     return data
 
 
-class LikeSerializer(serializers.HyperlinkedModelSerializer):
+class LikeSerializer(serializers.ModelSerializer):
     added_by = serializers.ReadOnlyField(source='added_by.username')
 
     class Meta:
         model = Like
-        fields = ('id', 'category', 'sub_category', 'article', 'comment', 'comment_reply', 'body', 'added_by', 'is_active')
+        fields = ('id', 'category', 'sub_category', 'article', 'comment', 'comment_reply', 'added_by', 'is_active')
 
-    def to_representation(self, instance):
-        data = super().to_representation(instance)
-        data['category'] = CategorySerializer(Category.objects.get(pk=data['category'])).data
-        data['sub_category'] = SubCategorySerializer(SubCategory.objects.get(pk=data['sub_category'])).data
-        data['article'] = ArticleSerializer(Article.objects.get(pk=data['article'])).data
-        data['comment'] = CommentSerializer(Comment.objects.get(pk=data['comment'])).data
-        data['comment_reply'] = CommentReplySerializer(CommentReply.objects.get(pk=data['comment_reply'])).data
-        return data
+    # def to_representation(self, instance):
+    #     data = super().to_representation(instance)
+    #     data['category'] = CategorySerializer(Category.objects.get(pk=data['category'])).data
+    #     data['sub_category'] = SubCategorySerializer(SubCategory.objects.get(pk=data['sub_category'])).data
+    #     data['article'] = ArticleSerializer(Article.objects.get(pk=data['article'])).data
+    #     data['comment'] = CommentSerializer(Comment.objects.get(pk=data['comment'])).data
+    #     data['comment_reply'] = CommentReplySerializer(CommentReply.objects.get(pk=data['comment_reply'])).data
+    #     return data
     
 
 # Explicit

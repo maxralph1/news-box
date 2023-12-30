@@ -13,8 +13,19 @@ export default function CreateArticle() {
     
     async function handleSubmit(event) {
         event.preventDefault()
-    
-        await createArticle(article.data)
+
+        // await createArticle(article)
+
+        const formData = new FormData();
+        formData.append('title', article.data.title);
+        formData.append('category', article.data.category);
+        formData.append('sub_category', article.data.sub_category);
+        formData.append('image', article.data.image);
+        formData.append('image_description', article.data.image_description);
+        formData.append('body', article.data.body);
+
+        // console.log(formData)
+        await createArticle(formData)
     }
 
     return (
@@ -44,7 +55,7 @@ export default function CreateArticle() {
                                 </textarea>
                             </div>
                             <div className="mb-3 col-sm-6">
-                                <label htmlFor="sub-category" className="form-label">Category</label>
+                                <label htmlFor="category" className="form-label">Category</label>
                                 <select 
                                     name="category" 
                                     id="category" 
@@ -99,7 +110,7 @@ export default function CreateArticle() {
                                     // value={ article.data.image ?? '' }
                                     onChange={ event => article.setData({
                                         ...article.data,
-                                        image: event.target.files,
+                                        image: event.target.files[0],
                                     }) }
                                     className="form-control rounded-0" 
                                     placeholder="Add an image..." 

@@ -1,11 +1,15 @@
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
+import { route } from '../../../routes';
 import { useAuthor } from '../../../hooks/useAuthor';
 import Layout from '../../../components/dashboard/Layout';
 
 
 export default function EditAuthor() {
+    const navigate = useNavigate()
     const params = useParams()
-    const { author, updateAuthor } = useAuthor(params.id)
+    const { author, updateAuthor, setAsSuperuser, setAsContributor, setAsReader } = useAuthor(params.id)
+    console.log(params.id)
+    console.log(author.data?.username)
 
     async function handleSubmit(event) {
         event.preventDefault()
@@ -20,6 +24,37 @@ export default function EditAuthor() {
                 <h2 className='mb-4 fw-bold' style={{ color: 'blueviolet'}}>Edit Author</h2>
 
                 <div className="container-fluid card rounded-0 shadow py-4">
+
+                    <div className='role d-flex justify-content-end gap-2 pb-4'>
+                        <span 
+                            type="button" 
+                            className='btn btn-sm btn-outline-secondary rounded-0'
+                            onClick={ async () => {
+                                await setAsSuperuser(author.data?.username)
+                            } }
+                        >
+                            Set as Superuser
+                        </span>
+                        <span 
+                            type="button" 
+                            className='btn btn-sm btn-outline-secondary rounded-0'
+                            onClick={ async () => {
+                                await setAsContributor(author.data?.username)
+                            } }
+                        >
+                            Set as Contributor
+                        </span>
+                        <span 
+                            type="button" 
+                            className='btn btn-sm btn-outline-secondary rounded-0'
+                            onClick={ async () => {
+                                await setAsReader(author.data?.username)
+                            } }
+                        >
+                            Set as Reader
+                        </span>
+                    </div>
+
                     <form onSubmit={ handleSubmit } className="needs-validation">
                         <div className="row g-3">
                             <div className="mb-3 col-sm-12 col-md-6">

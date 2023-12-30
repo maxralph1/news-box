@@ -38,13 +38,10 @@ export function useArticle(id = null) {
     async function createArticle(article) {
         setLoading(true)
         setErrors({})
-        console.log(article)
+        // console.log(axios.toFormData({'title':article.title}))
+        // console.log(article)
 
-        return axiosInstance.post('posts/articles/', article, {
-            headers: {
-                "Content-Type": "multipart/form-data",
-            },
-        })
+        return axiosInstance.postForm('posts/articles/', article)
             .then(() => navigate(route('dashboard.articles.index')))
             .catch(error => {
                 if (error.response) {
@@ -90,15 +87,24 @@ export function useArticle(id = null) {
                     swalUnauthAlert(error);
                 }
             })
-            .finally(() => setLoading(false))
+            .finally(() => setLoading(false));
     }
 
     async function destroyArticle(article) {
         return axiosInstance.delete(`posts/articles/${article.id}/`)
+            .then(() => navigate(route('dashboard.articles.index')))
+            .catch(error => {
+                if (error.response) {
+                    setErrors(error.response);
+                    swalUnauthAlert(error);
+                }
+            })
+            .finally(() => setLoading(false));
     }
 
     return {
         article: { data, setData, errors, loading }, 
+        getArticle, 
         createArticle, 
         updateArticle, 
         destroyArticle, 
