@@ -4,7 +4,7 @@ from rest_framework.validators import UniqueValidator
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 from accounts.models import User, Profile
 # from django.contrib.auth.models import User
-from posts.models import Category, SubCategory, Article, Comment, Like
+from posts.models import Category, SubCategory, Article, Comment, CommentReply, Like
 
     
 
@@ -31,11 +31,12 @@ class UserSerializer(serializers.ModelSerializer):
     sub_categories = serializers.PrimaryKeyRelatedField(many=True, queryset=SubCategory.objects.all())
     articles = serializers.PrimaryKeyRelatedField(many=True, queryset=Article.objects.all())
     comments = serializers.PrimaryKeyRelatedField(many=True, queryset=Comment.objects.all())
+    comment_replies = serializers.PrimaryKeyRelatedField(many=True, queryset=CommentReply.objects.all())
     likes = serializers.PrimaryKeyRelatedField(many=True, queryset=Like.objects.all())
     image = serializers.ImageField(required=False)
 
     class Meta:
         model = User
-        fields = ('id', 'username', 'email', 'first_name', 'last_name', 'image', 'bio', 'created_at', 'role', 'categories', 'sub_categories', 'articles', 'comments', 'likes', )
+        fields = ('id', 'username', 'email', 'first_name', 'last_name', 'image', 'bio', 'created_at', 'role', 'categories', 'sub_categories', 'articles', 'comments', 'comment_replies', 'likes', )
         # fields = ('id', 'username', 'first_name', 'last_name', 'created_at', 'categories', 'sub_categories', 'articles', 'comments', 'likes', 'profile', )
         # fields = ['id', 'username', 'first_name', 'last_name', 'profile', 'categories', 'sub_categories', 'articles', 'comments', 'likes']

@@ -77,11 +77,11 @@ class ArticleSerializer(serializers.ModelSerializer):
 
 class CommentSerializer(serializers.ModelSerializer):
     added_by = serializers.ReadOnlyField(source='added_by.username')
-    # article = serializers.ReadOnlyField(source='article.slug')
+    article = serializers.ReadOnlyField(source='article.title')
 
     class Meta:
         model = Comment
-        fields = ('id', 'article', 'body', 'added_by', 'is_active', )
+        fields = ('id', 'article', 'body', 'added_by', 'created_at', )
 
     # def to_representation(self, instance):
     #     data = super().to_representation(instance)
@@ -92,10 +92,11 @@ class CommentSerializer(serializers.ModelSerializer):
 
 class CommentReplySerializer(serializers.ModelSerializer):
     added_by = serializers.ReadOnlyField(source='added_by.username')
+    comment = serializers.ReadOnlyField(source='comment.body')
 
     class Meta:
         model = CommentReply
-        fields = ('id', 'comment', 'body', 'added_by', 'is_active', )
+        fields = ('id', 'comment', 'body', 'added_by', 'created_at', )
 
     # def to_representation(self, instance):
     #     data = super().to_representation(instance)
@@ -105,10 +106,12 @@ class CommentReplySerializer(serializers.ModelSerializer):
 
 class LikeSerializer(serializers.ModelSerializer):
     added_by = serializers.ReadOnlyField(source='added_by.username')
+    article = serializers.ReadOnlyField(source='article.title')
 
     class Meta:
         model = Like
-        fields = ('id', 'category', 'sub_category', 'article', 'comment', 'comment_reply', 'added_by', 'is_active')
+        fields = ('id', 'article', 'added_by', 'created_at', )
+        # fields = ('id', 'category', 'sub_category', 'article', 'comment', 'comment_reply', 'added_by', 'is_active')
 
     # def to_representation(self, instance):
     #     data = super().to_representation(instance)

@@ -52,6 +52,8 @@ export const AuthProvider = ({children}) => {
             })
         } else {
             console.log(response.status);
+            console.log(response);
+            // console.log(error);
             console.log('Something went wrong!');
             swal.fire({
                 title: 'Username or password does not exists',
@@ -94,9 +96,10 @@ export const AuthProvider = ({children}) => {
             })
         } else {
             console.log(response.status);
+            console.log(response);
             console.log('Something went wrong!');
             swal.fire({
-                title: 'An Error Occured ' + response.status,
+                title: 'An Error Occured ' + response.status + ': Check the password (ensure alphanumeric password not less than 15 characters). You should also check the other details you entered.',
                 icon: 'error',
                 toast: true,
                 timer: 6000,

@@ -89,8 +89,7 @@ export default function NavBar() {
                             </svg>
                         </button>
                     </div>
-                    
-            
+
                     <div className="collapse navbar-collapse" id="navbarsExample05">
                         <ul className="navbar-nav me-auto mb-2 mb-lg-0">
                             {(categories.length > 0 && !loading) ? categories.map(category => {
@@ -139,9 +138,9 @@ export default function NavBar() {
                             
                         </ul>
                         <div className="d-flex align-items-center text-white column-gap-3">
-                            <form role="search">
+                            {/* <form role="search">
                                 <input className="form-control rounded-0" type="search" placeholder="Search" aria-label="Search" />
-                            </form>
+                            </form> */}
                             {token ? 
                                 <>
                                     <span className="d-none d-md-block">

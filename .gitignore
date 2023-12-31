@@ -11,18 +11,4 @@ venv/
 htmlcov
 dev-notes.txt
 
-server-with-dj-rest-auth/
-server-with-djoser-auth/
-templates/pages/index2.html
-templates/pages/index3.html
-templates/gentelella
-templates/build
-templates/js
-templates/production
-templates/src
-templates/vendors
-templates/style.css.map
-templates/style.scss
-templates/style2.css
-templates/style2.scss.map
-templates/style2.scss
+

@@ -23,6 +23,13 @@ import DashboardArticles from './views/dashboard/articles/Articles.jsx';
 import DashboardArticleCreate from './views/dashboard/articles/CreateArticle.jsx';
 import DashboardArticle from './views/dashboard/articles/Article.jsx'; 
 import DashboardArticleEdit from './views/dashboard/articles/EditArticle.jsx';
+import DashboardComments from './views/dashboard/comments/Comments.jsx';
+import DashboardCommentCreate from './views/dashboard/comments/CreateComment.jsx';
+import DashboardComment from './views/dashboard/comments/Comment.jsx'; 
+import DashboardCommentEdit from './views/dashboard/comments/EditComment.jsx';
+import DashboardCommentReplies from './views/dashboard/comment-replies/CommentReplies.jsx';
+import DashboardCommentReplyEdit from './views/dashboard/comment-replies/EditCommentReply.jsx';
+import DashboardLikes from './views/dashboard/likes/Likes.jsx';
 import DashboardAuthors from './views/dashboard/authors/Authors.jsx';
 import DashboardAuthor from './views/dashboard/authors/Author.jsx';
 import DashboardAuthorEdit from './views/dashboard/authors/EditAuthor.jsx';
@@ -60,6 +67,13 @@ export default function App() {
             <Route element={<DashboardArticleCreate/>} path={ route('dashboard.articles.create') } /> 
             <Route element={<DashboardArticle/>} path={ route('dashboard.articles.show') } />
             <Route element={<DashboardArticleEdit/>} path={ route('dashboard.articles.edit') } />
+            <Route element={<DashboardComments/>} path={ route('dashboard.comments.index') } /> 
+            <Route element={<DashboardCommentCreate/>} path={ route('dashboard.comments.create') } /> 
+            <Route element={<DashboardComment/>} path={ route('dashboard.comments.show') } />
+            <Route element={<DashboardCommentEdit/>} path={ route('dashboard.comments.edit') } /> 
+            <Route element={<DashboardCommentReplies/>} path={ route('dashboard.comment-replies.index') } /> 
+            <Route element={<DashboardCommentReplyEdit/>} path={ route('dashboard.comment-replies.edit') } /> 
+            <Route element={<DashboardLikes/>} path={ route('dashboard.likes.index') } /> 
             <Route element={<DashboardAuthors/>} path={ route('dashboard.authors.index') } /> 
             <Route element={<DashboardAuthor/>} path={ route('dashboard.authors.show') } />
             <Route element={<DashboardAuthorEdit/>} path={ route('dashboard.authors.edit') } />
