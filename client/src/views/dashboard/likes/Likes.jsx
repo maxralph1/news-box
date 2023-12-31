@@ -1,3 +1,4 @@
+import { useContext } from 'react';
 import { Link } from 'react-router-dom';
 import dayjs from 'dayjs';
 import { route } from '../../../routes';
@@ -5,13 +6,15 @@ import { useArticles } from '../../../hooks/useArticles';
 import { useArticle } from '../../../hooks/useArticle';
 import { useLikes } from '../../../hooks/useLikes';
 import Layout from '../../../components/dashboard/Layout';
+import AuthContext from '../../../context/AuthContext';
 
 
 export default function Likes() {
     const { articles,  getArticles } = useArticles();
     const { destroyArticle } = useArticle();
     const { likes,  getLikes } = useLikes();
-    console.log(likes)
+    const { user } = useContext(AuthContext);
+    // console.log(likes);
 
     return (
         <Layout>
@@ -45,6 +48,7 @@ export default function Likes() {
                                         </svg> &nbsp;
                                         Modify
                                     </Link> */}
+                                    { user.role == 'SUP' && 
                                     <button 
                                         className="btn btn-sm btn-outline-danger" 
                                         type="button" 
@@ -57,6 +61,7 @@ export default function Likes() {
                                         </svg> &nbsp;
                                         Delete
                                     </button>
+                                    }
                                 </div>
                                 <span className='text-secondary fw-semibold'>like by @
                                     <Link 

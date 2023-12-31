@@ -5,7 +5,8 @@ import AuthContext from '../../context/AuthContext';
 
 
 export default function SideBar() {
-    const {logoutUser} = useContext(AuthContext)
+    const { user, logoutUser } = useContext(AuthContext);
+    console.log(user);
 
     return (
         <div className="sidebar border border-right col-md-3 col-lg-2 p-0 bg-body-tertiary">
@@ -50,6 +51,8 @@ export default function SideBar() {
                                 Articles
                             </Link>
                         </li>
+                        { user.role == 'SUP' && 
+                        <>
                         <li className="nav-item">
                             <Link to={route('dashboard.comments.index')} className="nav-link d-flex align-items-center gap-2 text-dark">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-chat-left-text" viewBox="0 0 16 16">
@@ -75,6 +78,7 @@ export default function SideBar() {
                                 Likes
                             </Link>
                         </li>
+                        
                         <li className="nav-item">
                             <Link 
                                 to={route('dashboard.authors.index')} 
@@ -85,6 +89,8 @@ export default function SideBar() {
                                 Authors/Users
                             </Link>
                         </li>
+                        </>
+                        }
                         <li className="nav-item">
                             <Link 
                                 to={ route('dashboard.profile') } className="nav-link d-flex align-items-center gap-2 text-dark">

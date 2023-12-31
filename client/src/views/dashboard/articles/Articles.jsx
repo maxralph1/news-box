@@ -1,20 +1,24 @@
+import { useContext } from 'react';
 import { Link } from 'react-router-dom';
 import dayjs from 'dayjs';
 import { route } from '../../../routes';
 import { useArticles } from '../../../hooks/useArticles';
 import { useArticle } from '../../../hooks/useArticle';
 import Layout from '../../../components/dashboard/Layout';
+import AuthContext from '../../../context/AuthContext';
 
 
 export default function Articles() {
     const { articles,  getArticles } = useArticles();
-    const { destroyArticle } = useArticle()
+    const { destroyArticle } = useArticle();
+    const { user } = useContext(AuthContext);
 
     return (
         <Layout>
             <h2 className='my-4 fw-bold' style={{ color: 'blueviolet'}}>Articles</h2>
 
             <div className="d-grid gap-2 d-md-flex justify-content-md-end mb-3">
+                { user.role == 'SUP' || user.role == 'CBT' && 
                 <Link 
                     to={ route('dashboard.articles.create') } 
                     className="btn btn-sm btn-outline-secondary rounded-0" type="button">
@@ -23,6 +27,7 @@ export default function Articles() {
                     </svg> &nbsp;
                     Add Article
                 </Link>
+                }
             </div>
 
             <section className='mb-5'>
@@ -33,6 +38,8 @@ export default function Articles() {
                         return (
                             <li key={article.id} className="list-group-item">
                                 <div className="d-grid gap-2 d-md-flex justify-content-end mb-3">
+                                    { user.role == 'SUP' && 
+                                    <>
                                     <Link 
                                         to={ route('dashboard.articles.edit', { id: article.id }) }
                                         className="btn btn-sm btn-outline-warning me-md-2 text-dark rounded-0" type="button">
@@ -54,6 +61,8 @@ export default function Articles() {
                                         </svg> &nbsp;
                                         Delete
                                     </button>
+                                    </>
+                                    }
                                 </div>
                                 <Link 
                                     to={ route('dashboard.articles.show', { id: article.id }) }   className='text-dark'>

@@ -1,3 +1,4 @@
+import { useContext } from 'react';
 import { Link } from 'react-router-dom';
 import dayjs from 'dayjs';
 import { route } from '../../../routes';
@@ -5,13 +6,15 @@ import { useArticles } from '../../../hooks/useArticles';
 import { useArticle } from '../../../hooks/useArticle';
 import { useComments } from '../../../hooks/useComments';
 import Layout from '../../../components/dashboard/Layout';
+import AuthContext from '../../../context/AuthContext';
 
 
 export default function Comments() {
     const { articles,  getArticles } = useArticles();
     const { destroyArticle } = useArticle();
     const { comments,  getComments } = useComments();
-    console.log(comments)
+    const { user } = useContext(AuthContext);
+    // console.log(comments);
 
     return (
         <Layout>
@@ -36,6 +39,8 @@ export default function Comments() {
                         return (
                             <li key={comment.id} className="list-group-item">
                                 <div className="d-grid gap-2 d-md-flex justify-content-end mb-3">
+                                    { user.role == 'SUP' && 
+                                    <>
                                     <Link 
                                         to={ route('dashboard.comments.edit', { id: comment.id }) }
                                         className="btn btn-sm btn-outline-warning me-md-2 text-dark rounded-0" type="button">
@@ -57,6 +62,8 @@ export default function Comments() {
                                         </svg> &nbsp;
                                         Delete
                                     </button>
+                                    </>
+                                    }
                                 </div>
                                 <Link 
                                     to={ route('dashboard.comments.show', { id: comment.id }) }   className='text-dark'>

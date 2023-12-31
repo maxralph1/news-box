@@ -1,13 +1,16 @@
+import { useContext } from 'react';
 import { Link } from 'react-router-dom';
 import dayjs from 'dayjs';
 import { route } from '../../../routes';
 import { useCommentReplies } from '../../../hooks/useCommentReplies';
 import Layout from '../../../components/dashboard/Layout';
+import AuthContext from '../../../context/AuthContext';
 
 
 export default function CommentReplies() {
     const { commentReplies,  getCommentReplies } = useCommentReplies();
-    console.log(commentReplies);
+    const { user } = useContext(AuthContext);
+    // console.log(commentReplies);
 
     return (
         <Layout>
@@ -32,6 +35,8 @@ export default function CommentReplies() {
                         return (
                             <li key={commentReply.id} className="list-group-item">
                                 <div className="d-grid gap-2 d-md-flex justify-content-end mb-3">
+                                    { user.role == 'SUP' && 
+                                    <>
                                     <Link 
                                         to={ route('dashboard.comment-replies.edit', { id: commentReply.id }) }
                                         className="btn btn-sm btn-outline-warning me-md-2 text-dark rounded-0" type="button">
@@ -53,6 +58,8 @@ export default function CommentReplies() {
                                         </svg> &nbsp;
                                         Delete
                                     </button>
+                                    </>
+                                    }
                                 </div>
                                 <span className='text-dark'>
                                     <h4 className='fw-bold fs-6'>{ commentReply.body }</h4>
