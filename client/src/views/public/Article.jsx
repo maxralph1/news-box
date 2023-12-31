@@ -136,7 +136,7 @@ export default function Article() {
                   <p>No comments yet</p>
                 </div>
             // ) : (comments.length > 0 && !loading) ? article.data?.comments.map(filteredComment => {
-            ) : (comments.length > 0 && !loading) ? comments.filter(comment => comment.article == article.data.id).map(filteredComment => {
+            ) : (comments.length > 0 && !loading) ? comments.filter(comment => comment.article == article.data.title).map(filteredComment => {
                 return (
                   <div key={filteredComment.id} className="">
                     <div className="">
@@ -167,7 +167,7 @@ export default function Article() {
                         </div>
 
                         <div className='comment-replies mt-4'>
-                          {(commentReplies.length > 0 && !loading) && commentReplies.filter(commentReply => commentReply.comment == filteredComment.id).map(filteredCommentReply => {
+                          {(commentReplies.length > 0 && !loading) && commentReplies.filter(commentReply => commentReply.comment == filteredComment.body).map(filteredCommentReply => {
                             return (
                                 <div key={filteredCommentReply.id} className="">
                                     <div className="d-flex flex-column text-end">
