@@ -2,6 +2,12 @@ import { useEffect, useState } from 'react';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import dayjs from 'dayjs';
 import axios from 'axios';
+import {
+  AdvertisingProvider,
+  AdvertisingSlot,
+  // logVersionInfo
+} from 'react-advertising';
+// import config from '../../config';
 import { route } from '../../routes';
 import Layout from '../../components/public/Layout.jsx';
 import { useArticle } from '../../hooks/useArticle';
@@ -45,9 +51,23 @@ export default function Article() {
       await getArticle(params.id);
   }
 
+  // logVersionInfo();
+
+  const config = {
+    slots: [
+      {
+        id: "banner-ad",
+        path: "/6355419/Travel/Europe/France/Paris",
+        sizes: [[300, 250]]
+      }
+    ]
+  };
+
   return (
     <Layout>
+      <AdvertisingProvider config={config}>
       <section className="mt-5 pt-3">
+        <AdvertisingSlot id="banner-ad" />
         <div className="my-3">
           <h2 className="fw-bolder">{article.data.title}</h2>
           <p className="fs-6 fw-semibold text-secondary">By @
@@ -191,6 +211,7 @@ export default function Article() {
             )}
           </div>
       </section>
+      </AdvertisingProvider>
     </Layout>
   )
 }
