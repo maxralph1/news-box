@@ -1,0 +1,17 @@
+Collecting Pillow
+  Downloading pillow-12.2.0.tar.gz (47.0 MB)
+     ━━━━━━━━━━━━ 47.0/47.0 MB 912.6 kB/s  0:00:48
+  Installing build dependencies: started
+  Installing build dependencies: finished with status 'done'
+  Getting requirements to build wheel: started
+  Getting requirements to build wheel: finished with status 'done'
+  Preparing metadata (pyproject.toml): started
+  Preparing metadata (pyproject.toml): finished with status 'done'
+Building wheels for collected packages: Pillow
+  Building wheel for Pillow (pyproject.toml): started
+  Building wheel for Pillow (pyproject.toml): finished with status 'done'
+  Created wheel for Pillow: filename=pillow-12.2.0-cp313-cp313-android_24_arm64_v8a.whl size=1203153 sha256=431d23e87d3523291bbc31da6500520e03f9cf21976de9b78ec414e17b2affd3
+  Stored in directory: /data/data/com.termux/files/home/.cache/pip/wheels/f7/ab/b1/a419f72634e07eed3ae5d532f8bc47c1b52bcd8beff7ce0d10
+Successfully built Pillow
+Installing collected packages: Pillow
+Successfully installed Pillow-12.2.0
