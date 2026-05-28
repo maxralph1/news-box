@@ -17,21 +17,21 @@ DEBUG = True
 # DEBUG = False
 
 ALLOWED_HOSTS = ['*'] 
-# ALLOWED_HOSTS = ['newsboxserver.up.railway.app', 'http://localhost:5173']
+ALLOWED_HOSTS = ['newsbox-server.up.railway.app', 'http://localhost:5173']
 
 CORS_ALLOWED_ORIGINS = [
     'http://localhost:5173',
-    # 'https://newsboxclient.up.railway.app',
+    'https://newsbox.up.railway.app',
 ] 
 
 CORS_WEB_ORIGINS = [
     'http://localhost:5173',
-    # 'https://newsboxclient.up.railway.app',
+    'https://newsbox.up.railway.app',
 ]
 
-# CSRF_TRUSTED_ORIGINS = [
-#     'https://newsboxserver.up.railway.app',
-# ]
+CSRF_TRUSTED_ORIGINS = [
+    'https://newsbox-server.up.railway.app',
+]
 
 
 # Application definition
