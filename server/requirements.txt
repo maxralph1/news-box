@@ -13,10 +13,9 @@ inflection==0.5.1
 iniconfig==2.0.0
 lxml==5.4.0
 packaging==26.2
-Pillow==9.5.0
+Pillow>=11.0.0
 platformdirs==3.2.0
 pluggy==1.0.0
-psycopg2==2.9.6
 pycodestyle==2.10.0
 python-dateutil==2.8.2
 pytz==2023.3
@@ -25,7 +24,6 @@ soupsieve==2.4.1
 sqlparse==0.4.3
 typing_extensions==4.5.0
 tzdata==2023.3
-vboxapi==1.0
 virtualenv==20.21.0
 virtualenvwrapper-win==1.2.7
 whitenoise==6.5.0
