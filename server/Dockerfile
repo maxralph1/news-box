@@ -21,12 +21,18 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     && rm -rf /var/lib/apt/lists/*
 
 # Copy and install Python dependencies
+# Your requirements.txt is likely in the server directory
 COPY requirements.txt /app/
 RUN pip install --no-cache-dir --upgrade pip setuptools wheel \
     && pip install --no-cache-dir -r requirements.txt
 
-# Copy the entire Django project into the container
+# Copy the entire project into the container
+# This copies everything from 'server' directory to /app/
 COPY . /app/
+
+# Change to the directory containing manage.py
+# This navigates to /app/newsbox/newsbox
+WORKDIR /app/newsbox/newsbox
 
 # Collect static files
 RUN python manage.py collectstatic --noinput
@@ -35,40 +41,5 @@ RUN python manage.py collectstatic --noinput
 EXPOSE 8000
 
 # Define the command to run the application
-CMD ["gunicorn", "newsbox.newsbox.wsgi:application", "--bind", "0.0.0.0:8000", "--log-file", "-"]
-
-
-
-
-
-
-
-# FROM python:3.13.2-slim
-
-# ENV PYTHONDONTWRITEBYTECODE=1 \
-#     PYTHONUNBUFFERED=1
-
-# WORKDIR /app
-
-# # Install all required system dependencies
-# RUN apt-get update && apt-get install -y --no-install-recommends \
-#     gcc \
-#     libpq-dev \
-#     python3-dev \
-#     libxml2-dev \
-#     libxslt1-dev \
-#     && apt-get clean \
-#     && rm -rf /var/lib/apt/lists/*
-
-# COPY requirements.txt /app/
-# RUN pip install --no-cache-dir --upgrade pip setuptools wheel && \
-#     pip install --no-cache-dir -r requirements.txt
-
-# COPY . /app/
-
-# # Make sure your project name is correct here
-# RUN python manage.py collectstatic --noinput || true
-
-# EXPOSE 8000
-
-# CMD ["gunicorn", "YOUR_PROJECT_NAME.wsgi:application", "--bind", "0.0.0.0:8000"]
+# From /app/newsbox/newsbox, wsgi is in the current 'newsbox' directory
+CMD ["gunicorn", "newsbox.wsgi:application", "--bind", "0.0.0.0:8000", "--log-file", "-"]
